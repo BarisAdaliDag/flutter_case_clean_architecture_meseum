@@ -31,9 +31,9 @@ class _MainViewState extends State<MainView> {
             builder: (context, state) {
               // var cubit = context.read<MainCubit>();
 
-              if (state.networkResult == NetworkResult.off) {
-                return Container();
-              }
+              // if (state.networkResult == NetworkResult.off) {
+              //   return Container();
+              // }
               return IndexedStack(
                 key: const ValueKey('main'),
                 index: state.selectedIndex,

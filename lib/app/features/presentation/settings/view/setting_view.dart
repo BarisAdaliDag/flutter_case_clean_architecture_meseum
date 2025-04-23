@@ -1,0 +1,29 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:metropolitan_museum/app/common/constants/app_image.dart';
+
+import 'package:flutter/material.dart';
+
+@RoutePage()
+
+/// Settings View
+final class SettingView extends StatelessWidget {
+  /// Settings View constructor
+  const SettingView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('SettingView'),
+      ),
+      body: const SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Image(image: AssetImage(AppImage.logo.path)),
+          ],
+        ),
+      ),
+    );
+  }
+}
