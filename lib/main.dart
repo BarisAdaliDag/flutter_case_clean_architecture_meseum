@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:metropolitan_museum/app/features/presentation/main/cubit/main_cubit.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'package:metropolitan_museum/app/common/constants/app_theme_data.dart';
@@ -10,10 +11,14 @@ import 'package:metropolitan_museum/app/features/presentation/test/cubit/test_cu
 import 'package:metropolitan_museum/core/helpers/navigation_helper/navigation_helper.dart';
 import 'package:metropolitan_museum/core/keys/keys.dart';
 
+import 'app/common/router/app_router.dart';
+
 Future<void> main() async {
   await AppFunctions.instance.init();
   runApp(const MainApp());
 }
+
+final _appRouter = AppRouter();
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -27,12 +32,15 @@ class MainApp extends StatelessWidget {
             BlocProvider(
               create: (context) => getIt.get<TestCubit>(),
             ),
+            BlocProvider(
+              create: (context) => getIt.get<MainCubit>(),
+            ),
           ],
-          child: MaterialApp(
-            navigatorKey: Navigation.navigationKey,
+          child: MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: _appRouter.config(),
             scaffoldMessengerKey: AppKeys.scaffoldMessengerKey,
             theme: AppThemeData.themeData,
-            home: const SplashView(),
           ),
         );
       },

@@ -1,8 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
+import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/features/presentation/test/cubit/test_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/test/view/test_view.dart';
 import 'package:flutter/material.dart';
 
+@RoutePage()
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
 
@@ -20,11 +23,7 @@ class _SplashViewState extends State<SplashView> {
   Future<void> init() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       getIt.get<TestCubit>().getAllTests();
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const TestView()),
-        (_) => false,
-      );
+      context.replaceRoute(const MainRoute());
     });
   }
 

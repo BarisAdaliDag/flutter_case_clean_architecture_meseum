@@ -1,6 +1,7 @@
 import 'package:metropolitan_museum/app/features/data/datasources/local/test_local_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/test_remote_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/repositories/test_repository.dart';
+import 'package:metropolitan_museum/app/features/presentation/main/cubit/main_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/test/cubit/test_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -47,6 +48,7 @@ final class ServiceLocator {
     getIt.registerLazySingleton<TestCubit>(
       () => TestCubit(testRepository: getIt<TestRepository>()),
     );
+    getIt.registerLazySingleton<MainCubit>(() => MainCubit());
   }
 
   /// **Resets dependencies for Test and Debug**
