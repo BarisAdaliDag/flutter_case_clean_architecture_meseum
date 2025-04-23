@@ -6,9 +6,9 @@ final class Config {
   static String get apiBaseUrl {
     switch (currentEnvironment) {
       case Environment.production:
-        return 'https://xxx.com/api/prod';
+        return 'https://collectionapi.metmuseum.org/public/collection/v1/';
       case Environment.development:
-        return 'https://xxx.com/api/dev';
+        return 'https://collectionapi.metmuseum.org/public/collection/v1/';
     }
   }
 

@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 
 import '../../features/presentation/collection/collection_view.dart';
-import '../../features/presentation/home/home_view.dart';
+import '../../features/presentation/home/view/home_view.dart';
 import '../../features/presentation/info/info_view.dart';
 import '../../features/presentation/main/view/main_view.dart';
 import '../../features/presentation/splash/view/splash_view.dart';

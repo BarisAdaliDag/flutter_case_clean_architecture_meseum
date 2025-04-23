@@ -1,8 +1,11 @@
 import 'package:metropolitan_museum/app/features/data/datasources/local/test_local_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/test_remote_datasource.dart';
+import 'package:metropolitan_museum/app/features/data/datasources/remote/home_remote_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/repositories/test_repository.dart';
+import 'package:metropolitan_museum/app/features/data/repositories/home_repository.dart';
 import 'package:metropolitan_museum/app/features/presentation/main/cubit/main_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/test/cubit/test_cubit.dart';
+import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -30,6 +33,9 @@ final class ServiceLocator {
       )
       ..registerLazySingleton<TestLocalDatasource>(
         () => TestLocalDatasourceImpl(),
+      )
+      ..registerLazySingleton<HomeRemoteDatasource>(
+        () => HomeRemoteDatasourceImpl(),
       );
   }
 
@@ -41,6 +47,11 @@ final class ServiceLocator {
         localDatasource: getIt<TestLocalDatasource>(),
       ),
     );
+    getIt.registerLazySingleton<HomeRepository>(
+      () => HomeRepositoryImpl(
+        remoteDatasource: getIt<HomeRemoteDatasource>(),
+      ),
+    );
   }
 
   /// **BLoC, Cubit and ViewModel Dependency**
@@ -49,6 +60,9 @@ final class ServiceLocator {
       () => TestCubit(testRepository: getIt<TestRepository>()),
     );
     getIt.registerLazySingleton<MainCubit>(() => MainCubit());
+    getIt.registerLazySingleton<HomeCubit>(
+      () => HomeCubit(homeRepository: getIt<HomeRepository>()),
+    );
   }
 
   /// **Resets dependencies for Test and Debug**
