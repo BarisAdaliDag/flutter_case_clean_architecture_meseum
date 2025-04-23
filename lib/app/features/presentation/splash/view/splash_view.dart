@@ -22,7 +22,7 @@ class _SplashViewState extends State<SplashView> {
 
   Future<void> init() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      getIt.get<TestCubit>().getAllTests();
+      // getIt.get<TestCubit>().getAllTests();
       context.replaceRoute(const MainRoute());
     });
   }

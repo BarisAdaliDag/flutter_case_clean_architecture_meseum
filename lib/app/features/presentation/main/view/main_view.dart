@@ -4,7 +4,9 @@ import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:metropolitan_museum/app/common/constants/app_icons.dart';
+import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 import 'package:metropolitan_museum/app/features/presentation/main/cubit/main_cubit.dart';
 import 'package:metropolitan_museum/core/network_control/network_control.dart';
 
@@ -41,6 +43,28 @@ class _MainViewState extends State<MainView> {
               );
             },
           ),
+          floatingActionButton: Transform.translate(
+            offset: const Offset(10, 0), // Sağa 20 piksel kaydırır
+            child: SizedBox(
+              width: 80,
+              height: 80,
+              child: FloatingActionButton(
+                backgroundColor: AppColors.whiteBottomAppbar,
+                onPressed: () {
+                  context.tabsRouter.setActiveIndex(1);
+                },
+                shape: const CircleBorder(), // Yuvarlak şekil
+                child: Image.asset(
+                  context.tabsRouter.activeIndex == 1
+                      ? AppIcons.tabbarCollectionSelected.assetPath
+                      : AppIcons.tabbarCollectionUnselected.assetPath,
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+            ),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: BlocBuilder<MainCubit, MainState>(
             builder: (context, state) {
               return SafeArea(
@@ -56,12 +80,13 @@ class _MainViewState extends State<MainView> {
   Widget buildBottomNavBar(BuildContext context, TabsRouter tabsRouter) {
     final hideNavBar = tabsRouter.topMatch.meta['hideNavBar'] == true;
     double iconSize = 24;
+    final activeIndex = tabsRouter.activeIndex;
     return hideNavBar
         ? const SizedBox.shrink()
         : Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.transparent,
               borderRadius: BorderRadius.circular(32),
               boxShadow: [
                 BoxShadow(
@@ -73,43 +98,66 @@ class _MainViewState extends State<MainView> {
               ],
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(58),
-              child: BottomNavigationBar(
-                currentIndex: tabsRouter.activeIndex,
-                //    unselectedItemColor: AppColors.unSelectedTabColor,
-                type: BottomNavigationBarType.fixed,
-                //    fixedColor: AppColors.ultramarineBlue,
-                //    backgroundColor: AppColors.backgroundColor,
-                items: <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Image.asset(AppIcons.tabbarHomeUnselected.assetPath, width: iconSize, height: iconSize),
-                    activeIcon: Image.asset(AppIcons.tabbarHomeSelected.assetPath, width: iconSize, height: iconSize),
-                    label: 'Home',
+              borderRadius: BorderRadius.circular(16), // Kenarları yuvarlat
+              child: BottomAppBar(
+                color: AppColors.whiteBottomAppbar,
+                shape: const CircularNotchedRectangle(),
+                notchMargin: 15.0,
+                child: SizedBox(
+// height: kBottomNavigationBarHeight * 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GestureDetector(
+                        onTap: () => tabsRouter.setActiveIndex(0),
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              tabsRouter.activeIndex == 0
+                                  ? AppIcons.tabbarHomeSelected.assetPath
+                                  : AppIcons.tabbarHomeUnselected.assetPath,
+                              width: iconSize,
+                              height: iconSize,
+                            ),
+                            Text(
+                              "Home",
+                              style: TxStyleHelper.body.copyWith(
+                                color: activeIndex == 0 ? AppColors.redValencia : Colors.grey,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 32), // Ortadaki boşluk (FAB için)
+                      GestureDetector(
+                        onTap: () => tabsRouter.setActiveIndex(2),
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              tabsRouter.activeIndex == 2
+                                  ? AppIcons.tabbarInfoSelected.assetPath
+                                  : AppIcons.tabbarInfoUnselected.assetPath,
+                              width: iconSize,
+                              height: iconSize,
+                            ),
+
+                            //
+                            //   onPressed: () => tabsRouter.setActiveIndex(0),
+                            Text(
+                              "Info",
+                              style: TxStyleHelper.body.copyWith(
+                                color: activeIndex == 2 ? AppColors.redValencia : Colors.grey,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  BottomNavigationBarItem(
-                    icon: Image.asset(AppIcons.tabbarCollectionUnselected.assetPath, width: iconSize, height: iconSize),
-                    activeIcon:
-                        Image.asset(AppIcons.tabbarCollectionSelected.assetPath, width: iconSize, height: iconSize),
-                    label: 'Collection',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Image.asset(AppIcons.tabbarInfoUnselected.assetPath, width: iconSize, height: iconSize),
-                    activeIcon: Image.asset(AppIcons.tabbarInfoSelected.assetPath, width: iconSize, height: iconSize),
-                    label: 'Info',
-                  ),
-                ],
-                onTap: (index) {
-                  tabsRouter.setActiveIndex(index);
-                  if (index == 0) {}
-                  if (index == 1) {
-                    //    Dependency.profileCubit.fetchStreak();
-                  }
-                  if (index == 2) {
-                    //  Dependency.profileCubit.getUserById();
-                  }
-                },
+                ),
               ),
             ),
           );
   }
 }
+//
