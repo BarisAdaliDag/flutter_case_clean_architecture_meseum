@@ -81,7 +81,7 @@ final class AppButton extends StatelessWidget {
                 : null,
         elevation: 0,
         shadowColor: Colors.transparent,
-        disabledBackgroundColor: AppColors.nickel,
+        disabledBackgroundColor: AppColors.greyNickel,
       ),
       child: icon == null
           ? Text(

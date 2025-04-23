@@ -305,7 +305,7 @@ final class AppTextFormField extends StatelessWidget {
         prefixIcon: prefixIcon,
         errorText: errorText,
         hintStyle: const TextStyle(
-          color: AppColors.nickel,
+          color: AppColors.greyNickel,
           fontWeight: FontWeight.w500,
           fontStyle: FontStyle.normal,
           fontSize: 16,

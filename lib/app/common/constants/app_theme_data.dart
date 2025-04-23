@@ -14,8 +14,8 @@ final class AppThemeData {
     backgroundColor: AppColors.ghostWhite,
     elevation: 0,
     type: BottomNavigationBarType.fixed,
-    selectedItemColor: AppColors.ghostWhite,
-    unselectedItemColor: AppColors.ghostWhite,
+    selectedItemColor: AppColors.redValencia,
+    unselectedItemColor: AppColors.greyNickel,
     unselectedLabelStyle: TextStyle(
       color: AppColors.ghostWhite,
       fontSize: 12,
@@ -29,13 +29,13 @@ final class AppThemeData {
   );
 
   static const AppBarTheme _appBarTheme = AppBarTheme(
-    backgroundColor: AppColors.ghostWhite,
+    // backgroundColor: AppColors.ghostWhite,
     centerTitle: false,
     elevation: 0,
     titleTextStyle: TextStyle(
       fontSize: 24,
       fontWeight: FontWeight.w600,
-      color: AppColors.ghostWhite,
+      //   color: AppColors.ghostWhite,
     ),
     scrolledUnderElevation: 0,
   );

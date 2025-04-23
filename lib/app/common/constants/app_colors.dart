@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 final class AppColors {
   static const Color ghostWhite = Color(0xffFAF9FC);
   static const Color smokyBlack = Color(0xff0D0D0D);
-  static const Color nickel = Color(0xff737373);
+  static const Color greyNickel = Color(0xff737373);
   static const Color platinum = Color(0xffE6E6E6);
   static const Color pureWhite = Color(0xffFFFEFE);
   static const Color buttonBlue = Color(0xff2EA2EF);
@@ -23,4 +23,7 @@ final class AppColors {
   static const Color coralRed = Color(0xffFF453A);
   static const Color azure = Color(0xff007AFF);
   static const Color spanishGray = Color(0xff9E9E9E);
+
+  //
+  static const Color redValencia = Color(0xFFD82F35);
 }

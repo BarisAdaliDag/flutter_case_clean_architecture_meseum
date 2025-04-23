@@ -23,7 +23,7 @@ class TestView extends StatelessWidget {
             return const Center(
                 child: Text(
               "No Data",
-              style: TextStyle(color: AppColors.azure),
+              style: TextStyle(color: Colors.red),
             ));
           }
           return ListView.separated(
