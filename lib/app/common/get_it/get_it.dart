@@ -1,13 +1,13 @@
 import 'package:path_provider/path_provider.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/local/test_local_datasource.dart';
-import 'package:metropolitan_museum/app/features/data/datasources/remote/home_local_datasource.dart';
+import 'package:metropolitan_museum/app/features/data/datasources/remote/collection_local_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/test_remote_datasource.dart';
-import 'package:metropolitan_museum/app/features/data/datasources/remote/home_remote_datasource.dart';
+import 'package:metropolitan_museum/app/features/data/datasources/remote/collection_remote_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/repositories/test_repository.dart';
-import 'package:metropolitan_museum/app/features/data/repositories/home_repository.dart';
+import 'package:metropolitan_museum/app/features/data/repositories/collection_repository.dart';
 import 'package:metropolitan_museum/app/features/presentation/main/cubit/main_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/test/cubit/test_cubit.dart';
-import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
+import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:metropolitan_museum/objectbox.g.dart';
 import 'package:objectbox/objectbox.dart';
@@ -40,11 +40,11 @@ final class ServiceLocator {
       ..registerLazySingleton<TestLocalDatasource>(
         () => TestLocalDatasourceImpl(),
       )
-      ..registerLazySingleton<HomeRemoteDatasource>(
-        () => HomeRemoteDatasourceImpl(),
+      ..registerLazySingleton<CollectionRemoteDatasource>(
+        () => CollectionRemoteDatasourceImpl(),
       )
-      ..registerLazySingleton<HomeLocalDatasource>(
-        () => HomeLocalDatasourceImpl(getIt<Store>()),
+      ..registerLazySingleton<CollectionLocalDatasource>(
+        () => CollectionLocalDatasourceImpl(getIt<Store>()),
       );
   }
 
@@ -56,10 +56,10 @@ final class ServiceLocator {
         localDatasource: getIt<TestLocalDatasource>(),
       ),
     );
-    getIt.registerLazySingleton<HomeRepository>(
-      () => HomeRepositoryImpl(
-        remoteDatasource: getIt<HomeRemoteDatasource>(),
-        localDatasource: getIt<HomeLocalDatasource>(),
+    getIt.registerLazySingleton<CollectionRepository>(
+      () => CollectionRepositoryImpl(
+        remoteDatasource: getIt<CollectionRemoteDatasource>(),
+        localDatasource: getIt<CollectionLocalDatasource>(),
       ),
     );
   }
@@ -70,8 +70,8 @@ final class ServiceLocator {
       () => TestCubit(testRepository: getIt<TestRepository>()),
     );
     getIt.registerLazySingleton<MainCubit>(() => MainCubit());
-    getIt.registerLazySingleton<HomeCubit>(
-      () => HomeCubit(homeRepository: getIt<HomeRepository>()),
+    getIt.registerLazySingleton<CollectionCubit>(
+      () => CollectionCubit(homeRepository: getIt<CollectionRepository>()),
     );
   }
 

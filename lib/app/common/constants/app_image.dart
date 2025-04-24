@@ -1,6 +1,4 @@
-enum AppImage {
-  logo,
-}
+enum AppImage { logo, home_01 }
 
 extension AppImagePath on AppImage {
   String get path => 'assets/images/$name.png';

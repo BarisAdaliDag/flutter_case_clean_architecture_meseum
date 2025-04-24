@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
+import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/main/cubit/main_cubit.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -37,7 +37,7 @@ class MainApp extends StatelessWidget {
               create: (context) => getIt.get<MainCubit>(),
             ),
             BlocProvider(
-              create: (context) => getIt.get<HomeCubit>(),
+              create: (context) => getIt.get<CollectionCubit>(),
             ),
           ],
           child: MaterialApp.router(

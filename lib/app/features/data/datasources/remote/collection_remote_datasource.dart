@@ -1,30 +1,46 @@
 import 'package:metropolitan_museum/core/dio_manager/api_response_model.dart';
 import 'package:metropolitan_museum/core/dio_manager/dio_manager.dart';
+import 'package:metropolitan_museum/app/features/data/models/departments_model.dart';
 import 'package:metropolitan_museum/app/features/data/models/objects_id_model.dart';
 import 'package:metropolitan_museum/app/features/data/models/object_model.dart';
 
 import '../../../../../core/errors/exceptions.dart';
-import '../../../../common/config/config.dart';
 
-abstract class HomeRemoteDatasource {
-  Future<ApiResponseModel<ObjectsIdModel>> getObjectsIdQuery({required String query});
+abstract class CollectionRemoteDatasource {
+  Future<ApiResponseModel<DepartmentsModel>> getDepartments();
+  Future<ApiResponseModel<ObjectsIdModel>> getObjectsByDepartmentId({
+    required int departmentId,
+  });
   Future<ApiResponseModel<ObjectModel>> getObjectDetails({
     required int objectId,
   });
 }
 
-final class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
+final class CollectionRemoteDatasourceImpl implements CollectionRemoteDatasource {
   final DioApiManager _dioApiManager = DioApiManager(
-    baseUrl: Config.apiBaseUrl,
+    baseUrl: 'https://collectionapi.metmuseum.org/public/collection/v1',
   );
 
   @override
-  Future<ApiResponseModel<ObjectsIdModel>> getObjectsIdQuery({
-    required String query,
+  Future<ApiResponseModel<DepartmentsModel>> getDepartments() async {
+    try {
+      final response = await _dioApiManager.get(
+        '/departments',
+        converter: (data) => DepartmentsModel.fromJson(data),
+      );
+      return response;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<ApiResponseModel<ObjectsIdModel>> getObjectsByDepartmentId({
+    required int departmentId,
   }) async {
     try {
       final response = await _dioApiManager.get(
-        '/search?q=$query',
+        '/objects?departmentIds=$departmentId',
         converter: (data) => ObjectsIdModel.fromJson(data),
       );
       return response;

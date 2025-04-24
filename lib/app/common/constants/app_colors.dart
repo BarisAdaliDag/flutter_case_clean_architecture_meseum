@@ -27,4 +27,5 @@ final class AppColors {
   //
   static const Color redValencia = Color(0xFFD82F35);
   static const Color whiteBottomAppbar = Color(0xFFF7F7F7);
+  static const Color grey = Colors.grey;
 }

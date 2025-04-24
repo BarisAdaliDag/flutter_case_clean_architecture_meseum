@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class ObjectIdModel extends Equatable {
+class ObjectModel extends Equatable {
   @Id()
   int id;
 
@@ -13,7 +13,7 @@ class ObjectIdModel extends Equatable {
   final String title;
   final String objectName;
 
-  ObjectIdModel({
+  ObjectModel({
     this.id = 0,
     required this.departmentIds,
     required this.primaryImageSmall,
@@ -23,8 +23,8 @@ class ObjectIdModel extends Equatable {
     required this.objectName,
   });
 
-  factory ObjectIdModel.fromJson(Map<String, dynamic> json) {
-    return ObjectIdModel(
+  factory ObjectModel.fromJson(Map<String, dynamic> json) {
+    return ObjectModel(
       departmentIds: json['objectID'] as int,
       primaryImageSmall: json['primaryImageSmall'] as String,
       culture: json['culture'] as String,

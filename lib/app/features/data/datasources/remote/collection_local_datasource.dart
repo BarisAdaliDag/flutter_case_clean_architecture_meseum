@@ -2,30 +2,30 @@ import 'package:path_provider/path_provider.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'package:metropolitan_museum/app/features/data/models/departments_model.dart';
-import 'package:metropolitan_museum/app/features/data/models/department_id_model.dart';
-import 'package:metropolitan_museum/app/features/data/models/object_id_model.dart';
+import 'package:metropolitan_museum/app/features/data/models/objects_id_model.dart';
+import 'package:metropolitan_museum/app/features/data/models/object_model.dart';
 
 import '../../../../../objectbox.g.dart';
 
-abstract class HomeLocalDatasource {
+abstract class CollectionLocalDatasource {
   Future<List<DepartmentModel>> getDepartments();
-  Future<DepartmentIdModel?> getObjectsByDepartmentId({required int departmentId});
-  Future<ObjectIdModel?> getObjectDetails({required int objectId});
+  Future<ObjectsIdModel?> getObjectsByDepartmentId({required int departmentId});
+  Future<ObjectModel?> getObjectDetails({required int objectId});
   Future<void> saveDepartments(List<DepartmentModel> departments);
-  Future<void> saveObjectsByDepartmentId(DepartmentIdModel departmentIdModel);
-  Future<void> saveObjectDetails(ObjectIdModel objectIdModel);
+  Future<void> saveObjectsByDepartmentId(ObjectsIdModel departmentIdModel);
+  Future<void> saveObjectDetails(ObjectModel objectIdModel);
 }
 
-final class HomeLocalDatasourceImpl implements HomeLocalDatasource {
+final class CollectionLocalDatasourceImpl implements CollectionLocalDatasource {
   final Store store;
   late final Box<DepartmentModel> _departmentBox;
-  late final Box<DepartmentIdModel> _departmentIdBox;
-  late final Box<ObjectIdModel> _objectIdBox;
+  late final Box<ObjectsIdModel> _departmentIdBox;
+  late final Box<ObjectModel> _objectIdBox;
 
-  HomeLocalDatasourceImpl(this.store) {
+  CollectionLocalDatasourceImpl(this.store) {
     _departmentBox = store.box<DepartmentModel>();
-    _departmentIdBox = store.box<DepartmentIdModel>();
-    _objectIdBox = store.box<ObjectIdModel>();
+    _departmentIdBox = store.box<ObjectsIdModel>();
+    _objectIdBox = store.box<ObjectModel>();
   }
 
   @override
@@ -40,12 +40,12 @@ final class HomeLocalDatasourceImpl implements HomeLocalDatasource {
   }
 
   @override
-  Future<DepartmentIdModel?> getObjectsByDepartmentId({required int departmentId}) async {
+  Future<ObjectsIdModel?> getObjectsByDepartmentId({required int departmentId}) async {
     return _departmentIdBox.query(DepartmentIdModel_.id.equals(departmentId)).build().findFirst();
   }
 
   @override
-  Future<void> saveObjectsByDepartmentId(DepartmentIdModel departmentIdModel) async {
+  Future<void> saveObjectsByDepartmentId(ObjectsIdModel departmentIdModel) async {
     // Aynı departmentId'ye sahip eski kaydı sil
     final old = _departmentIdBox.query(DepartmentIdModel_.id.equals(departmentIdModel.id)).build().findFirst();
     if (old != null) {
@@ -55,12 +55,12 @@ final class HomeLocalDatasourceImpl implements HomeLocalDatasource {
   }
 
   @override
-  Future<ObjectIdModel?> getObjectDetails({required int objectId}) async {
+  Future<ObjectModel?> getObjectDetails({required int objectId}) async {
     return _objectIdBox.query(ObjectIdModel_.id.equals(objectId)).build().findFirst();
   }
 
   @override
-  Future<void> saveObjectDetails(ObjectIdModel objectIdModel) async {
+  Future<void> saveObjectDetails(ObjectModel objectIdModel) async {
     // Aynı objectId'ye sahip eski kaydı sil
     final old = _objectIdBox.query(ObjectIdModel_.id.equals(objectIdModel.id)).build().findFirst();
     if (old != null) {
