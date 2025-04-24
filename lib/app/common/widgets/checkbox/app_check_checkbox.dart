@@ -27,7 +27,7 @@ final class AppCheckCheckbox extends StatelessWidget {
           borderRadius: BorderRadius.circular(6),
           color: Colors.transparent,
           border: Border.all(
-            color: isSelected || isIndeterminate ? AppColors.hanPurple : AppColors.platinum,
+            color: isSelected || isIndeterminate ? AppColors.purpleHan : AppColors.platinum,
             width: 1.5,
           ),
         ),
@@ -38,7 +38,7 @@ final class AppCheckCheckbox extends StatelessWidget {
                 width: 16,
                 child: Icon(
                   Icons.check,
-                  color: AppColors.hanPurple,
+                  color: AppColors.purpleHan,
                   size: 16,
                 ),
               ))
@@ -49,7 +49,7 @@ final class AppCheckCheckbox extends StatelessWidget {
                     width: 16,
                     child: Icon(
                       Icons.remove,
-                      color: AppColors.hanPurple,
+                      color: AppColors.purpleHan,
                       size: 16,
                     ),
                   ))

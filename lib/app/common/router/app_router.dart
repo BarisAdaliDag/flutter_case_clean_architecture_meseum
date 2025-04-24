@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:metropolitan_museum/app/features/presentation/home/view/home_see_all_view.dart';
 import 'package:metropolitan_museum/app/features/presentation/settings/view/setting_view.dart';
 
 import '../../features/presentation/collection/collection_view.dart';
@@ -34,6 +36,9 @@ class AppRouter extends RootStackRouter {
               page: InfoRoute.page,
             ),
           ],
+        ),
+        AutoRoute(
+          page: HomeSeeAllRoute.page,
         ),
       ];
 }

@@ -29,13 +29,13 @@ final class AppThemeData {
   );
 
   static const AppBarTheme _appBarTheme = AppBarTheme(
-    // backgroundColor: AppColors.ghostWhite,
-    centerTitle: false,
+    backgroundColor: AppColors.ghostWhite,
+    centerTitle: true,
     elevation: 0,
     titleTextStyle: TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.w600,
-      //   color: AppColors.ghostWhite,
+      fontSize: 18,
+      fontWeight: FontWeight.w400,
+      color: AppColors.black,
     ),
     scrolledUnderElevation: 0,
   );

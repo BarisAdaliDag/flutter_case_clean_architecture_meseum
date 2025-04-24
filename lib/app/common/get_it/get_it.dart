@@ -1,3 +1,6 @@
+import 'package:metropolitan_museum/app/features/data/datasources/remote/home_remote_datasource.dart';
+import 'package:metropolitan_museum/app/features/data/repositories/home_repository.dart';
+import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/local/test_local_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/collection_local_datasource.dart';
@@ -45,6 +48,9 @@ final class ServiceLocator {
       )
       ..registerLazySingleton<CollectionLocalDatasource>(
         () => CollectionLocalDatasourceImpl(getIt<Store>()),
+      )
+      ..registerLazySingleton<HomeRemoteDatasource>(
+        () => HomeRemoteDatasourceImpl(),
       );
   }
 
@@ -62,6 +68,11 @@ final class ServiceLocator {
         localDatasource: getIt<CollectionLocalDatasource>(),
       ),
     );
+    getIt.registerLazySingleton<HomeRepository>(
+      () => HomeRepositoryImpl(
+        remoteDatasource: getIt<HomeRemoteDatasource>(),
+      ),
+    );
   }
 
   /// **BLoC, Cubit and ViewModel Dependency**
@@ -72,6 +83,9 @@ final class ServiceLocator {
     getIt.registerLazySingleton<MainCubit>(() => MainCubit());
     getIt.registerLazySingleton<CollectionCubit>(
       () => CollectionCubit(homeRepository: getIt<CollectionRepository>()),
+    );
+    getIt.registerLazySingleton<HomeCubit>(
+      () => HomeCubit(homeRepository: getIt<HomeRepository>()),
     );
   }
 

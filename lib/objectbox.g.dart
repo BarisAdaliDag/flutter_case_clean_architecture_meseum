@@ -9,56 +9,107 @@
 import 'dart:typed_data';
 
 import 'package:flat_buffers/flat_buffers.dart' as fb;
-import 'package:objectbox/internal.dart' as obx_int; // generated code can access "internal" functionality
+import 'package:objectbox/internal.dart'
+    as obx_int; // generated code can access "internal" functionality
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'app/features/data/models/objects_id_model.dart';
 import 'app/features/data/models/departments_model.dart';
 import 'app/features/data/models/object_model.dart';
+import 'app/features/data/models/objects_id_model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <obx_int.ModelEntity>[
-  obx_int.ModelEntity(
-      id: const obx_int.IdUid(1, 2005382772286482214),
-      name: 'DepartmentIdModel',
-      lastPropertyId: const obx_int.IdUid(3, 4318745208563361530),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(id: const obx_int.IdUid(1, 5762214532375241073), name: 'id', type: 6, flags: 1),
-        obx_int.ModelProperty(id: const obx_int.IdUid(2, 3003926016077999899), name: 'total', type: 6, flags: 0),
-        obx_int.ModelProperty(id: const obx_int.IdUid(3, 4318745208563361530), name: 'objectIDs', type: 27, flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
       id: const obx_int.IdUid(2, 5475996658203390412),
       name: 'DepartmentModel',
       lastPropertyId: const obx_int.IdUid(3, 7190084115167499356),
       flags: 0,
       properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(id: const obx_int.IdUid(1, 2350785078065324102), name: 'id', type: 6, flags: 1),
-        obx_int.ModelProperty(id: const obx_int.IdUid(2, 6403487009252886625), name: 'departmentId', type: 6, flags: 0),
-        obx_int.ModelProperty(id: const obx_int.IdUid(3, 7190084115167499356), name: 'displayName', type: 9, flags: 0)
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2350785078065324102),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 6403487009252886625),
+            name: 'departmentId',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7190084115167499356),
+            name: 'displayName',
+            type: 9,
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(3, 1329421160356030135),
-      name: 'ObjectIdModel',
-      lastPropertyId: const obx_int.IdUid(7, 4584109204548615607),
+      id: const obx_int.IdUid(4, 5806641028288434369),
+      name: 'ObjectModel',
+      lastPropertyId: const obx_int.IdUid(7, 8110009432797247021),
       flags: 0,
       properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(id: const obx_int.IdUid(1, 3090068201813187168), name: 'id', type: 6, flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 4296559971420567934), name: 'departmentIds', type: 6, flags: 0),
+            id: const obx_int.IdUid(1, 9075708574073163943),
+            name: 'id',
+            type: 6,
+            flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 3109092497442005793), name: 'primaryImageSmall', type: 9, flags: 0),
-        obx_int.ModelProperty(id: const obx_int.IdUid(4, 8976986827056688994), name: 'culture', type: 9, flags: 0),
-        obx_int.ModelProperty(id: const obx_int.IdUid(5, 1147415214413816624), name: 'department', type: 9, flags: 0),
-        obx_int.ModelProperty(id: const obx_int.IdUid(6, 8128210964047801124), name: 'title', type: 9, flags: 0),
-        obx_int.ModelProperty(id: const obx_int.IdUid(7, 4584109204548615607), name: 'objectName', type: 9, flags: 0)
+            id: const obx_int.IdUid(2, 325006578264002764),
+            name: 'departmentIds',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3379168914037494507),
+            name: 'primaryImageSmall',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 2785635296157797548),
+            name: 'culture',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 300564792458783477),
+            name: 'department',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 3542570408666178654),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8110009432797247021),
+            name: 'objectName',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(5, 8372765202816072250),
+      name: 'ObjectsIdModel',
+      lastPropertyId: const obx_int.IdUid(3, 4914825977522452698),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8854064509654213253),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 5545932228813138534),
+            name: 'total',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4914825977522452698),
+            name: 'objectIDs',
+            type: 27,
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
@@ -99,49 +150,32 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(3, 1329421160356030135),
+      lastEntityId: const obx_int.IdUid(5, 8372765202816072250),
       lastIndexId: const obx_int.IdUid(0, 0),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
-      retiredEntityUids: const [],
+      retiredEntityUids: const [2005382772286482214, 1329421160356030135],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [
+        5762214532375241073,
+        3003926016077999899,
+        4318745208563361530,
+        3090068201813187168,
+        4296559971420567934,
+        3109092497442005793,
+        8976986827056688994,
+        1147415214413816624,
+        8128210964047801124,
+        4584109204548615607
+      ],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
 
   final bindings = <Type, obx_int.EntityDefinition>{
-    ObjectsIdModel: obx_int.EntityDefinition<ObjectsIdModel>(
-        model: _entities[0],
-        toOneRelations: (ObjectsIdModel object) => [],
-        toManyRelations: (ObjectsIdModel object) => {},
-        getId: (ObjectsIdModel object) => object.id,
-        setId: (ObjectsIdModel object, int id) {
-          object.id = id;
-        },
-        objectToFB: (ObjectsIdModel object, fb.Builder fbb) {
-          final objectIDsOffset = fbb.writeListInt64(object.objectIDs);
-          fbb.startTable(4);
-          fbb.addInt64(0, object.id);
-          fbb.addInt64(1, object.total);
-          fbb.addOffset(2, objectIDsOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final totalParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
-          final objectIDsParam =
-              const fb.ListReader<int>(fb.Int64Reader(), lazy: false).vTableGet(buffer, rootOffset, 8, []);
-          final object = ObjectsIdModel(id: idParam, total: totalParam, objectIDs: objectIDsParam);
-
-          return object;
-        }),
     DepartmentModel: obx_int.EntityDefinition<DepartmentModel>(
-        model: _entities[1],
+        model: _entities[0],
         toOneRelations: (DepartmentModel object) => [],
         toManyRelations: (DepartmentModel object) => {},
         getId: (DepartmentModel object) => object.id,
@@ -160,15 +194,22 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectFromFB: (obx.Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-          final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final departmentIdParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
-          final displayNameParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 8, '');
-          final object = DepartmentModel(id: idParam, departmentId: departmentIdParam, displayName: displayNameParam);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final departmentIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final displayNameParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final object = DepartmentModel(
+              id: idParam,
+              departmentId: departmentIdParam,
+              displayName: displayNameParam);
 
           return object;
         }),
     ObjectModel: obx_int.EntityDefinition<ObjectModel>(
-        model: _entities[2],
+        model: _entities[1],
         toOneRelations: (ObjectModel object) => [],
         toManyRelations: (ObjectModel object) => {},
         getId: (ObjectModel object) => object.id,
@@ -176,7 +217,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (ObjectModel object, fb.Builder fbb) {
-          final primaryImageSmallOffset = fbb.writeString(object.primaryImageSmall);
+          final primaryImageSmallOffset =
+              fbb.writeString(object.primaryImageSmall);
           final cultureOffset = fbb.writeString(object.culture);
           final departmentOffset = fbb.writeString(object.department);
           final titleOffset = fbb.writeString(object.title);
@@ -195,14 +237,21 @@ obx_int.ModelDefinition getObjectBoxModel() {
         objectFromFB: (obx.Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
-          final idParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final departmentIdsParam = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final departmentIdsParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
           final primaryImageSmallParam =
-              const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 8, '');
-          final cultureParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 10, '');
-          final departmentParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 12, '');
-          final titleParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 14, '');
-          final objectNameParam = const fb.StringReader(asciiOptimization: true).vTableGet(buffer, rootOffset, 16, '');
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, '');
+          final cultureParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final departmentParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 12, '');
+          final titleParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final objectNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 16, '');
           final object = ObjectModel(
               id: idParam,
               departmentIds: departmentIdsParam,
@@ -213,56 +262,101 @@ obx_int.ModelDefinition getObjectBoxModel() {
               objectName: objectNameParam);
 
           return object;
+        }),
+    ObjectsIdModel: obx_int.EntityDefinition<ObjectsIdModel>(
+        model: _entities[2],
+        toOneRelations: (ObjectsIdModel object) => [],
+        toManyRelations: (ObjectsIdModel object) => {},
+        getId: (ObjectsIdModel object) => object.id,
+        setId: (ObjectsIdModel object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ObjectsIdModel object, fb.Builder fbb) {
+          final objectIDsOffset = fbb.writeListInt64(object.objectIDs);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.total);
+          fbb.addOffset(2, objectIDsOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final totalParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final objectIDsParam =
+              const fb.ListReader<int>(fb.Int64Reader(), lazy: false)
+                  .vTableGet(buffer, rootOffset, 8, []);
+          final object = ObjectsIdModel(
+              id: idParam, total: totalParam, objectIDs: objectIDsParam);
+
+          return object;
         })
   };
 
   return obx_int.ModelDefinition(model, bindings);
 }
 
-/// [ObjectsIdModel] entity fields to define ObjectBox queries.
-class DepartmentIdModel_ {
-  /// See [ObjectsIdModel.id].
-  static final id = obx.QueryIntegerProperty<ObjectsIdModel>(_entities[0].properties[0]);
-
-  /// See [ObjectsIdModel.total].
-  static final total = obx.QueryIntegerProperty<ObjectsIdModel>(_entities[0].properties[1]);
-
-  /// See [ObjectsIdModel.objectIDs].
-  static final objectIDs = obx.QueryIntegerVectorProperty<ObjectsIdModel>(_entities[0].properties[2]);
-}
-
 /// [DepartmentModel] entity fields to define ObjectBox queries.
 class DepartmentModel_ {
   /// See [DepartmentModel.id].
-  static final id = obx.QueryIntegerProperty<DepartmentModel>(_entities[1].properties[0]);
+  static final id =
+      obx.QueryIntegerProperty<DepartmentModel>(_entities[0].properties[0]);
 
   /// See [DepartmentModel.departmentId].
-  static final departmentId = obx.QueryIntegerProperty<DepartmentModel>(_entities[1].properties[1]);
+  static final departmentId =
+      obx.QueryIntegerProperty<DepartmentModel>(_entities[0].properties[1]);
 
   /// See [DepartmentModel.displayName].
-  static final displayName = obx.QueryStringProperty<DepartmentModel>(_entities[1].properties[2]);
+  static final displayName =
+      obx.QueryStringProperty<DepartmentModel>(_entities[0].properties[2]);
 }
 
 /// [ObjectModel] entity fields to define ObjectBox queries.
-class ObjectIdModel_ {
+class ObjectModel_ {
   /// See [ObjectModel.id].
-  static final id = obx.QueryIntegerProperty<ObjectModel>(_entities[2].properties[0]);
+  static final id =
+      obx.QueryIntegerProperty<ObjectModel>(_entities[1].properties[0]);
 
   /// See [ObjectModel.departmentIds].
-  static final departmentIds = obx.QueryIntegerProperty<ObjectModel>(_entities[2].properties[1]);
+  static final departmentIds =
+      obx.QueryIntegerProperty<ObjectModel>(_entities[1].properties[1]);
 
   /// See [ObjectModel.primaryImageSmall].
-  static final primaryImageSmall = obx.QueryStringProperty<ObjectModel>(_entities[2].properties[2]);
+  static final primaryImageSmall =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[2]);
 
   /// See [ObjectModel.culture].
-  static final culture = obx.QueryStringProperty<ObjectModel>(_entities[2].properties[3]);
+  static final culture =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[3]);
 
   /// See [ObjectModel.department].
-  static final department = obx.QueryStringProperty<ObjectModel>(_entities[2].properties[4]);
+  static final department =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[4]);
 
   /// See [ObjectModel.title].
-  static final title = obx.QueryStringProperty<ObjectModel>(_entities[2].properties[5]);
+  static final title =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[5]);
 
   /// See [ObjectModel.objectName].
-  static final objectName = obx.QueryStringProperty<ObjectModel>(_entities[2].properties[6]);
+  static final objectName =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[6]);
+}
+
+/// [ObjectsIdModel] entity fields to define ObjectBox queries.
+class ObjectsIdModel_ {
+  /// See [ObjectsIdModel.id].
+  static final id =
+      obx.QueryIntegerProperty<ObjectsIdModel>(_entities[2].properties[0]);
+
+  /// See [ObjectsIdModel.total].
+  static final total =
+      obx.QueryIntegerProperty<ObjectsIdModel>(_entities[2].properties[1]);
+
+  /// See [ObjectsIdModel.objectIDs].
+  static final objectIDs = obx.QueryIntegerVectorProperty<ObjectsIdModel>(
+      _entities[2].properties[2]);
 }

@@ -4,30 +4,6 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:2005382772286482214",
-      "lastPropertyId": "3:4318745208563361530",
-      "name": "DepartmentIdModel",
-      "properties": [
-        {
-          "id": "1:5762214532375241073",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:3003926016077999899",
-          "name": "total",
-          "type": 6
-        },
-        {
-          "id": "3:4318745208563361530",
-          "name": "objectIDs",
-          "type": 27
-        }
-      ],
-      "relations": []
-    },
-    {
       "id": "2:5475996658203390412",
       "lastPropertyId": "3:7190084115167499356",
       "name": "DepartmentModel",
@@ -52,59 +28,97 @@
       "relations": []
     },
     {
-      "id": "3:1329421160356030135",
-      "lastPropertyId": "7:4584109204548615607",
-      "name": "ObjectIdModel",
+      "id": "4:5806641028288434369",
+      "lastPropertyId": "7:8110009432797247021",
+      "name": "ObjectModel",
       "properties": [
         {
-          "id": "1:3090068201813187168",
+          "id": "1:9075708574073163943",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:4296559971420567934",
+          "id": "2:325006578264002764",
           "name": "departmentIds",
           "type": 6
         },
         {
-          "id": "3:3109092497442005793",
+          "id": "3:3379168914037494507",
           "name": "primaryImageSmall",
           "type": 9
         },
         {
-          "id": "4:8976986827056688994",
+          "id": "4:2785635296157797548",
           "name": "culture",
           "type": 9
         },
         {
-          "id": "5:1147415214413816624",
+          "id": "5:300564792458783477",
           "name": "department",
           "type": 9
         },
         {
-          "id": "6:8128210964047801124",
+          "id": "6:3542570408666178654",
           "name": "title",
           "type": 9
         },
         {
-          "id": "7:4584109204548615607",
+          "id": "7:8110009432797247021",
           "name": "objectName",
           "type": 9
         }
       ],
       "relations": []
+    },
+    {
+      "id": "5:8372765202816072250",
+      "lastPropertyId": "3:4914825977522452698",
+      "name": "ObjectsIdModel",
+      "properties": [
+        {
+          "id": "1:8854064509654213253",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5545932228813138534",
+          "name": "total",
+          "type": 6
+        },
+        {
+          "id": "3:4914825977522452698",
+          "name": "objectIDs",
+          "type": 27
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "3:1329421160356030135",
+  "lastEntityId": "5:8372765202816072250",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    2005382772286482214,
+    1329421160356030135
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    5762214532375241073,
+    3003926016077999899,
+    4318745208563361530,
+    3090068201813187168,
+    4296559971420567934,
+    3109092497442005793,
+    8976986827056688994,
+    1147415214413816624,
+    8128210964047801124,
+    4584109204548615607
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

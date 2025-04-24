@@ -41,13 +41,13 @@ final class CollectionLocalDatasourceImpl implements CollectionLocalDatasource {
 
   @override
   Future<ObjectsIdModel?> getObjectsByDepartmentId({required int departmentId}) async {
-    return _departmentIdBox.query(DepartmentIdModel_.id.equals(departmentId)).build().findFirst();
+    return _departmentIdBox.query(ObjectsIdModel_.id.equals(departmentId)).build().findFirst();
   }
 
   @override
   Future<void> saveObjectsByDepartmentId(ObjectsIdModel departmentIdModel) async {
     // Aynı departmentId'ye sahip eski kaydı sil
-    final old = _departmentIdBox.query(DepartmentIdModel_.id.equals(departmentIdModel.id)).build().findFirst();
+    final old = _departmentIdBox.query(ObjectsIdModel_.id.equals(departmentIdModel.id)).build().findFirst();
     if (old != null) {
       _departmentIdBox.remove(old.id);
     }
@@ -56,13 +56,13 @@ final class CollectionLocalDatasourceImpl implements CollectionLocalDatasource {
 
   @override
   Future<ObjectModel?> getObjectDetails({required int objectId}) async {
-    return _objectIdBox.query(ObjectIdModel_.id.equals(objectId)).build().findFirst();
+    return _objectIdBox.query(ObjectModel_.id.equals(objectId)).build().findFirst();
   }
 
   @override
   Future<void> saveObjectDetails(ObjectModel objectIdModel) async {
     // Aynı objectId'ye sahip eski kaydı sil
-    final old = _objectIdBox.query(ObjectIdModel_.id.equals(objectIdModel.id)).build().findFirst();
+    final old = _objectIdBox.query(ObjectModel_.id.equals(objectIdModel.id)).build().findFirst();
     if (old != null) {
       _objectIdBox.remove(old.id);
     }

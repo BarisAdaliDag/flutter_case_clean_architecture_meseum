@@ -29,6 +29,52 @@ class CollectionRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [HomeSeeAllView]
+class HomeSeeAllRoute extends PageRouteInfo<HomeSeeAllRouteArgs> {
+  HomeSeeAllRoute({
+    Key? key,
+    required bool isFamous,
+    List<PageRouteInfo>? children,
+  }) : super(
+          HomeSeeAllRoute.name,
+          args: HomeSeeAllRouteArgs(
+            key: key,
+            isFamous: isFamous,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeSeeAllRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<HomeSeeAllRouteArgs>();
+      return HomeSeeAllView(
+        key: args.key,
+        isFamous: args.isFamous,
+      );
+    },
+  );
+}
+
+class HomeSeeAllRouteArgs {
+  const HomeSeeAllRouteArgs({
+    this.key,
+    required this.isFamous,
+  });
+
+  final Key? key;
+
+  final bool isFamous;
+
+  @override
+  String toString() {
+    return 'HomeSeeAllRouteArgs{key: $key, isFamous: $isFamous}';
+  }
+}
+
+/// generated route for
 /// [HomeView]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})

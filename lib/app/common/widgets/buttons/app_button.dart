@@ -46,7 +46,7 @@ final class AppButton extends StatelessWidget {
       key: key,
       text: text,
       onPressed: onPressed,
-      backgroundColor: backgroundColor ?? AppColors.hanPurple,
+      backgroundColor: backgroundColor ?? AppColors.purpleHan,
       textColor: textColor ?? AppColors.ghostWhite,
       hasBorder: false,
       icon: icon,
