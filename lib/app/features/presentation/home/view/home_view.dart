@@ -22,24 +22,36 @@ class HomeView extends StatelessWidget {
               if (state.isLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
-              return ListView.builder(
-                itemCount: state.departmentList.length,
-                itemBuilder: (context, deptIndex) {
-                  final department = state.departmentList[deptIndex];
-                  final objects = (deptIndex < state.objectList.length) ? state.objectList[deptIndex] : [];
-                  return ExpansionTile(
-                    title: Text(department.displayName),
-                    children: objects
-                        .map((obj) => ListTile(
-                              title: Text(obj.title),
-                              subtitle: Text(obj.departmentIds.toString()),
-                              leading: obj.primaryImageSmall.isNotEmpty
-                                  ? Image.network(obj.primaryImageSmall, width: 40, height: 40, fit: BoxFit.cover)
-                                  : const SizedBox(width: 40, height: 40),
-                            ))
-                        .toList(),
-                  );
-                },
+              return ListView(
+                children: [
+                  SizedBox(
+                      height: 70,
+                      width: 70,
+                      child: Image.asset(
+                        AppImage.logo.path,
+                      )),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.departmentList.length,
+                    itemBuilder: (context, deptIndex) {
+                      final department = state.departmentList[deptIndex];
+                      final objects = (deptIndex < state.objectList.length) ? state.objectList[deptIndex] : [];
+                      return ExpansionTile(
+                        title: Text(department.displayName),
+                        children: objects
+                            .map((obj) => ListTile(
+                                  title: Text(obj.title),
+                                  subtitle: Text(obj.departmentIds.toString()),
+                                  leading: obj.primaryImageSmall.isNotEmpty
+                                      ? Image.network(obj.primaryImageSmall, width: 40, height: 40, fit: BoxFit.cover)
+                                      : const SizedBox(width: 40, height: 40),
+                                ))
+                            .toList(),
+                      );
+                    },
+                  ),
+                ],
               );
             },
           ),

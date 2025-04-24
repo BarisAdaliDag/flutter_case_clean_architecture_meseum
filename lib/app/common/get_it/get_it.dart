@@ -1,4 +1,6 @@
+import 'package:path_provider/path_provider.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/local/test_local_datasource.dart';
+import 'package:metropolitan_museum/app/features/data/datasources/remote/home_local_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/test_remote_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/home_remote_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/repositories/test_repository.dart';
@@ -7,15 +9,17 @@ import 'package:metropolitan_museum/app/features/presentation/main/cubit/main_cu
 import 'package:metropolitan_museum/app/features/presentation/test/cubit/test_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:get_it/get_it.dart';
+import 'package:metropolitan_museum/objectbox.g.dart';
+import 'package:objectbox/objectbox.dart';
 
 final getIt = GetIt.instance;
 
 /// **Service provider class managing all dependencies**
 final class ServiceLocator {
   /// **Main method to call to set up dependencies**
-  void setup() {
+  Future<void> setup() async {
     _setupRouter();
-    _setupDataSource();
+    await _setupDataSource();
     _setupRepository();
     _setupCubit();
   }
@@ -26,7 +30,9 @@ final class ServiceLocator {
   }
 
   /// **DataSource Dependency**
-  void _setupDataSource() {
+  Future<void> _setupDataSource() async {
+    getIt.registerLazySingletonAsync<Store>(provideStore);
+    await getIt.isReady<Store>();
     getIt
       ..registerLazySingleton<TestRemoteDatasource>(
         () => TestRemoteDatasourceImpl(),
@@ -36,6 +42,9 @@ final class ServiceLocator {
       )
       ..registerLazySingleton<HomeRemoteDatasource>(
         () => HomeRemoteDatasourceImpl(),
+      )
+      ..registerLazySingleton<HomeLocalDatasource>(
+        () => HomeLocalDatasourceImpl(getIt<Store>()),
       );
   }
 
@@ -50,6 +59,7 @@ final class ServiceLocator {
     getIt.registerLazySingleton<HomeRepository>(
       () => HomeRepositoryImpl(
         remoteDatasource: getIt<HomeRemoteDatasource>(),
+        localDatasource: getIt<HomeLocalDatasource>(),
       ),
     );
   }
@@ -68,6 +78,11 @@ final class ServiceLocator {
   /// **Resets dependencies for Test and Debug**
   Future<void> reset() async {
     await getIt.reset();
-    setup();
+    await setup();
   }
+}
+
+Future<Store> provideStore() async {
+  final dir = await getApplicationDocumentsDirectory();
+  return Store(getObjectBoxModel(), directory: '${dir.path}/objectbox');
 }

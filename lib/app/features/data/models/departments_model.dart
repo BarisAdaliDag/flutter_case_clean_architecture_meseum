@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:objectbox/objectbox.dart';
 
 class DepartmentsModel extends Equatable {
   final List<DepartmentModel> departments;
@@ -21,11 +22,16 @@ class DepartmentsModel extends Equatable {
   List<Object?> get props => [departments];
 }
 
+@Entity()
 class DepartmentModel extends Equatable {
-  final int departmentId;
-  final String displayName;
+  @Id()
+  int id = 0; // ObjectBox için gerekli
 
-  const DepartmentModel({
+  int departmentId;
+  String displayName;
+
+  DepartmentModel({
+    this.id = 0,
     required this.departmentId,
     required this.displayName,
   });

@@ -1,3 +1,4 @@
+import 'package:metropolitan_museum/app/features/data/datasources/remote/home_local_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/home_remote_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/models/departments_model.dart';
 import 'package:metropolitan_museum/app/features/data/models/department_id_model.dart';
@@ -9,14 +10,24 @@ abstract class HomeRepository {
   Future<DataResult<DepartmentsModel>> getDepartments();
   Future<DataResult<DepartmentIdModel>> getObjectsByDepartmentId({required int departmentId});
   Future<DataResult<ObjectIdModel>> getObjectDetails({required int objectId});
+  // Local kaynaklardan veri çekmek için eklenen methodlar
+  Future<DataResult<List<DepartmentModel>>> getDepartmentsLocal();
+  Future<DataResult<DepartmentIdModel?>> getObjectsByDepartmentIdLocal({required int departmentId});
+  Future<DataResult<ObjectIdModel?>> getObjectDetailsLocal({required int objectId});
+  Future<void> saveDepartmentsLocal(List<DepartmentModel> departments);
+  Future<void> saveObjectsByDepartmentIdLocal(DepartmentIdModel departmentIdModel);
+  Future<void> saveObjectDetailsLocal(ObjectIdModel objectIdModel);
 }
 
 class HomeRepositoryImpl implements HomeRepository {
   final HomeRemoteDatasource _remoteDatasource;
+  final HomeLocalDatasource _localDatasource;
 
   HomeRepositoryImpl({
     required HomeRemoteDatasource remoteDatasource,
-  }) : _remoteDatasource = remoteDatasource;
+    required HomeLocalDatasource localDatasource,
+  })  : _remoteDatasource = remoteDatasource,
+        _localDatasource = localDatasource;
 
   @override
   Future<DataResult<DepartmentsModel>> getDepartments() async {
@@ -70,5 +81,50 @@ class HomeRepositoryImpl implements HomeRepository {
     }
     AppLogger.instance.log("$runtimeType getObjectDetails() SUCCESS");
     return SuccessDataResult(data: apiResponseModel.data!, message: "$runtimeType getObjectDetails()");
+  }
+
+  @override
+  Future<DataResult<List<DepartmentModel>>> getDepartmentsLocal() async {
+    try {
+      final data = await _localDatasource.getDepartments();
+      return SuccessDataResult(data: data, message: "Local getDepartments");
+    } catch (e) {
+      return ErrorDataResult(message: "Local getDepartments error: $e");
+    }
+  }
+
+  @override
+  Future<DataResult<DepartmentIdModel?>> getObjectsByDepartmentIdLocal({required int departmentId}) async {
+    try {
+      final data = await _localDatasource.getObjectsByDepartmentId(departmentId: departmentId);
+      return SuccessDataResult(data: data, message: "Local getObjectsByDepartmentId");
+    } catch (e) {
+      return ErrorDataResult(message: "Local getObjectsByDepartmentId error: $e");
+    }
+  }
+
+  @override
+  Future<DataResult<ObjectIdModel?>> getObjectDetailsLocal({required int objectId}) async {
+    try {
+      final data = await _localDatasource.getObjectDetails(objectId: objectId);
+      return SuccessDataResult(data: data, message: "Local getObjectDetails");
+    } catch (e) {
+      return ErrorDataResult(message: "Local getObjectDetails error: $e");
+    }
+  }
+
+  @override
+  Future<void> saveDepartmentsLocal(List<DepartmentModel> departments) async {
+    await _localDatasource.saveDepartments(departments);
+  }
+
+  @override
+  Future<void> saveObjectsByDepartmentIdLocal(DepartmentIdModel departmentIdModel) async {
+    await _localDatasource.saveObjectsByDepartmentId(departmentIdModel);
+  }
+
+  @override
+  Future<void> saveObjectDetailsLocal(ObjectIdModel objectIdModel) async {
+    await _localDatasource.saveObjectDetails(objectIdModel);
   }
 }

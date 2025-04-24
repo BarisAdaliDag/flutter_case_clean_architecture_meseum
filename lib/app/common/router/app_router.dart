@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:metropolitan_museum/app/features/presentation/settings/view/setting_view.dart';
 
 import '../../features/presentation/collection/collection_view.dart';
 import '../../features/presentation/home/view/home_view.dart';

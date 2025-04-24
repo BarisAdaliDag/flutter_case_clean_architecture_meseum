@@ -1,10 +1,15 @@
 import 'package:equatable/equatable.dart';
+import 'package:objectbox/objectbox.dart';
 
+@Entity()
 class DepartmentIdModel extends Equatable {
+  @Id()
+  int id = 0; // ObjectBox için gerekli
   final int total;
   final List<int> objectIDs;
 
-  const DepartmentIdModel({
+  DepartmentIdModel({
+    this.id = 0,
     required this.total,
     required this.objectIDs,
   });

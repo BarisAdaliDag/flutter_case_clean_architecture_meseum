@@ -4,8 +4,8 @@ class ApiErrorModel {
 
   ApiErrorModel({required this.message, this.statusCode});
 
-  @override
-  String toString() {
-    return 'ApiError: $message (Status code: $statusCode)';
-  }
+  // @override
+  // String toString() {
+  //   return 'ApiError: $message (Status code: $statusCode)';
+  // }
 }

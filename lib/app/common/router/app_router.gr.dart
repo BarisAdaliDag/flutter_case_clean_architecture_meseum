@@ -86,6 +86,25 @@ class MainRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SettingView]
+class SettingRoute extends PageRouteInfo<void> {
+  const SettingRoute({List<PageRouteInfo>? children})
+      : super(
+          SettingRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SettingRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SettingView();
+    },
+  );
+}
+
+/// generated route for
 /// [SplashView]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute({List<PageRouteInfo>? children})

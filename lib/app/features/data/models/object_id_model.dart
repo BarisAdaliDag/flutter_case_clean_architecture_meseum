@@ -1,6 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:objectbox/objectbox.dart';
 
+@Entity()
 class ObjectIdModel extends Equatable {
+  @Id()
+  int id;
+
   final int departmentIds;
   final String primaryImageSmall;
   final String culture;
@@ -8,7 +13,8 @@ class ObjectIdModel extends Equatable {
   final String title;
   final String objectName;
 
-  const ObjectIdModel({
+  ObjectIdModel({
+    this.id = 0,
     required this.departmentIds,
     required this.primaryImageSmall,
     required this.culture,
