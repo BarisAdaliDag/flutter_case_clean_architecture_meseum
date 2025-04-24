@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_state.dart';
@@ -30,6 +31,7 @@ class HomeView extends StatelessWidget {
                       child: Image.asset(
                         AppImage.logo.path,
                       )),
+                  const Gap(30),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
