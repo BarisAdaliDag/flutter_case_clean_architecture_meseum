@@ -6,47 +6,67 @@ import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_state.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
+import 'package:metropolitan_museum/app/features/presentation/collection/widget/collection_card.dart';
+import 'package:metropolitan_museum/app/features/presentation/collection/widget/collection_header.dart';
+import 'package:metropolitan_museum/app/features/presentation/collection/widget/collection_text_field.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/widgets/home_listview_title.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 @RoutePage()
-final class CollectionView extends StatelessWidget {
+final class CollectionView extends StatefulWidget {
   const CollectionView({super.key});
 
   @override
+  State<CollectionView> createState() => _CollectionViewState();
+}
+
+class _CollectionViewState extends State<CollectionView> {
+  @override
+  void initState() {
+    getIt<CollectionCubit>().loadDepartmentsAndObjects();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider<CollectionCubit>(
-      create: (_) => getIt<CollectionCubit>()..loadDepartmentsAndObjects(),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text("The Met Collection"),
+        ),
         body: SafeArea(
           child: BlocBuilder<CollectionCubit, CollectionState>(
             builder: (context, state) {
               if (state.isLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
+
               return ListView(
                 children: [
+                  const CollectionHeader(),
+                  const Gap(20),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: CollectionTextField(),
+                  ),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: state.departmentList.length,
+                    itemCount: state.filteredDepartmentList.length,
                     itemBuilder: (context, deptIndex) {
-                      final department = state.departmentList[deptIndex];
-                      final objects = (deptIndex < state.objectList.length) ? state.objectList[deptIndex] : [];
-                      return ExpansionTile(
-                        title: HomeListViewHeader(
-                          onTap: () {},
+                      final department = state.filteredDepartmentList[deptIndex];
+                      final originalIndex = state.departmentList.indexOf(department);
+                      final objects = (originalIndex < state.objectList.length) ? state.objectList[originalIndex] : [];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        child: CollectionCard(
+                          image: objects.isNotEmpty ? objects.first.primaryImageSmall : "",
                           title: department.displayName,
+                          id: department.departmentId.toString(),
                         ),
-                        children: objects
-                            .map((obj) => ListTile(
-                                  title: Text(obj.title),
-                                  subtitle: Text(obj.departmentIds.toString()),
-                                  leading: obj.primaryImageSmall.isNotEmpty
-                                      ? Image.network(obj.primaryImageSmall, width: 40, height: 40, fit: BoxFit.cover)
-                                      : const SizedBox(width: 40, height: 40),
-                                ))
-                            .toList(),
                       );
                     },
                   ),

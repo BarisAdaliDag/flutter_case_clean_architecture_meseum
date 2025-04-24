@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/features/presentation/test/cubit/test_cubit.dart';
@@ -29,8 +30,15 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Placeholder(),
+    return Scaffold(
+      body: Center(
+        child: SizedBox(
+            height: 70,
+            width: 70,
+            child: Image.asset(
+              AppImage.logo.path,
+            )),
+      ),
     );
   }
 }

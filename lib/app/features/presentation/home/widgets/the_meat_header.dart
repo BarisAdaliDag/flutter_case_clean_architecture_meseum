@@ -22,7 +22,7 @@ class TheMetHeader extends StatelessWidget {
           // Background image
           Positioned.fill(
             child: Image.asset(
-              AppImage.home_01.path,
+              AppImage.header_home.path,
               fit: BoxFit.cover,
             ),
           ),

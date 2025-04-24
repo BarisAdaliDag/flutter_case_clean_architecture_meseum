@@ -5,23 +5,28 @@ import 'package:gap/gap.dart';
 
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
+import 'package:metropolitan_museum/app/features/presentation/home/view/home_view.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
-class HomeCard extends StatelessWidget {
+class CollectionCard extends StatelessWidget {
   final String image;
   final String title;
-  final String subtitle;
-  final bool isImageLocal;
+  final String? id;
 
-  const HomeCard({
+  const CollectionCard({
     super.key,
     required this.image,
     required this.title,
-    required this.subtitle,
-    this.isImageLocal = false,
+    this.id = "1",
   });
 
   @override
   Widget build(BuildContext context) {
+    int idx = int.parse(id ?? "1");
+    if (idx > 22) {
+      idx = 1;
+    }
+
     return Card(
       color: AppColors.greyHomeBackground,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -30,35 +35,21 @@ class HomeCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: image.isNotEmpty
-                ? CachedNetworkImage(
-                    imageUrl: image,
-                    width: double.infinity,
-                    height: 200,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) => const Icon(Icons.image_not_supported),
-                  )
-                : const SizedBox(width: double.infinity, height: 200, child: Icon(Icons.image_not_supported)),
+            child: Image.asset(
+              "assets/images/img_collection_${(idx.toString())}.png",
+              width: double.infinity,
+              height: 150,
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  // height: 40,
-                  child: Text(
-                    subtitle,
-                    style: const TextStyle(color: AppColors.greyNickel),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                const Gap(4),
                 Text(
                   title,
-                  style: TxStyleHelper.body.copyWith(fontWeight: FontWeight.w600),
+                  style: TxStyleHelper.body.copyWith(fontWeight: FontWeight.w400, fontSize: 15.sp),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

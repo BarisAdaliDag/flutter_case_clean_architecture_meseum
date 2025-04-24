@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:metropolitan_museum/core/network_control/network_control.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metropolitan_museum/app/features/data/repositories/collection_repository.dart';
@@ -9,6 +10,7 @@ import 'collection_state.dart';
 
 class CollectionCubit extends Cubit<CollectionState> {
   final CollectionRepository homeRepository;
+  final TextEditingController searchController = TextEditingController();
 
   CollectionCubit({required this.homeRepository})
       : super(const CollectionState(
@@ -16,7 +18,31 @@ class CollectionCubit extends Cubit<CollectionState> {
           departmentList: [],
           objectList: [],
           departmentIdModels: [],
-        ));
+          searchText: '',
+          filteredDepartmentList: [],
+        )) {
+    searchController.addListener(_onSearchChanged);
+  }
+
+  void _onSearchChanged() {
+    search(searchController.text);
+  }
+
+  void search(String query) {
+    final filtered =
+        state.departmentList.where((d) => d.displayName.toLowerCase().contains(query.toLowerCase())).toList();
+    emit(state.copyWith(
+      searchText: query,
+      filteredDepartmentList: filtered,
+    ));
+  }
+
+  @override
+  Future<void> close() {
+    searchController.removeListener(_onSearchChanged);
+    searchController.dispose();
+    return super.close();
+  }
 
   Future<void> loadDepartments() async {
     emit(state.copyWith(isLoading: true));
@@ -41,8 +67,11 @@ class CollectionCubit extends Cubit<CollectionState> {
         departments = localResult.data!;
       }
     }
-    departments = departments.take(3).toList();
-    emit(state.copyWith(isLoading: false, departmentList: departments));
+    emit(state.copyWith(
+      isLoading: false,
+      departmentList: departments,
+      filteredDepartmentList: departments,
+    ));
   }
 
   Future<void> loadObjects() async {
@@ -100,6 +129,6 @@ class CollectionCubit extends Cubit<CollectionState> {
 
   Future<void> loadDepartmentsAndObjects() async {
     await loadDepartments();
-    await loadObjects();
+    //  await loadObjects();
   }
 }

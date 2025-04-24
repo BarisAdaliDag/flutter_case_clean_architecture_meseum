@@ -17,32 +17,14 @@ class HomeSeeAllView extends StatefulWidget {
 
 class _HomeSeeAllViewState extends State<HomeSeeAllView> {
   @override
-  Widget build(BuildContext context) {
-    return _HomeSeeAllViewBody(isFamous: widget.isFamous);
-  }
-}
-
-class _HomeSeeAllViewBody extends StatefulWidget {
-  final bool isFamous;
-  const _HomeSeeAllViewBody({required this.isFamous});
-
-  @override
-  State<_HomeSeeAllViewBody> createState() => _HomeSeeAllViewBodyState();
-}
-
-class _HomeSeeAllViewBodyState extends State<_HomeSeeAllViewBody> {
-  @override
   void initState() {
     super.initState();
-    final cubit = context.read<HomeCubit>();
-    if (!cubit.isClosed) {
-      cubit.fetchObjectList(
-        query: widget.isFamous ? "Famous%20Artworks" : "Current%20Exhibitions",
-        isFamous: widget.isFamous,
-        start: 0,
-        end: 50,
-      );
-    }
+    context.read<HomeCubit>().fetchObjectList(
+          query: widget.isFamous ? "Famous%20Artworks" : "Current%20Exhibitions",
+          isFamous: widget.isFamous,
+          start: 0,
+          end: 50,
+        );
   }
 
   @override
