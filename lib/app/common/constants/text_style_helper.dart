@@ -36,7 +36,7 @@ class TxStyleHelper {
   );
 
   static final TextStyle subheading = TextStyle(
-    fontSize: 20.sp,
+    fontSize: 18.sp,
     fontWeight: FontWeight.w400,
   );
 

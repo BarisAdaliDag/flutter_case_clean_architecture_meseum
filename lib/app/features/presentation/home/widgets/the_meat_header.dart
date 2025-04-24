@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
@@ -38,7 +40,9 @@ class TheMetHeader extends StatelessWidget {
                     style: TxStyleHelper.heading3.copyWith(color: AppColors.white, fontSize: (25.0).sp)),
                 const Gap(10),
                 HomeHeaderButton(
-                  ontap: () {},
+                  ontap: () {
+                    context.router.push(const CollectionRoute());
+                  },
                 )
               ],
             ),
