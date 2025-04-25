@@ -1,4 +1,4 @@
-import 'package:metropolitan_museum/app/features/data/datasources/remote/collection_local_datasource.dart';
+import 'package:metropolitan_museum/app/features/data/datasources/local/collection_local_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/collection_remote_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/models/departments_model.dart';
 import 'package:metropolitan_museum/app/features/data/models/objects_id_model.dart';

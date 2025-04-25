@@ -5,7 +5,7 @@ import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/local/test_local_datasource.dart';
-import 'package:metropolitan_museum/app/features/data/datasources/remote/collection_local_datasource.dart';
+import 'package:metropolitan_museum/app/features/data/datasources/local/collection_local_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/test_remote_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/collection_remote_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/repositories/test_repository.dart';

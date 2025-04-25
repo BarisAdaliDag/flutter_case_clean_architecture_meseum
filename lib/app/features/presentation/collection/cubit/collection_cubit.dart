@@ -130,6 +130,5 @@ class CollectionCubit extends Cubit<CollectionState> {
 
   Future<void> loadDepartmentsAndObjects() async {
     await loadDepartments();
-    //  await loadObjects();
   }
 }
