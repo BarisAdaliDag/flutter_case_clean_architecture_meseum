@@ -13,7 +13,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../data/models/object_model.dart';
 import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
-import '../widgets/home_card_widget.dart';
+import '../../../../common/widgets/home_card_widget.dart';
 import '../widgets/the_meat_header.dart';
 
 @RoutePage()

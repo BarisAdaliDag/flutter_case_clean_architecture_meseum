@@ -184,6 +184,52 @@ class MainRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ObjectDetailView]
+class ObjectDetailRoute extends PageRouteInfo<ObjectDetailRouteArgs> {
+  ObjectDetailRoute({
+    Key? key,
+    required ObjectModel objectModel,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ObjectDetailRoute.name,
+          args: ObjectDetailRouteArgs(
+            key: key,
+            objectModel: objectModel,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ObjectDetailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ObjectDetailRouteArgs>();
+      return ObjectDetailView(
+        key: args.key,
+        objectModel: args.objectModel,
+      );
+    },
+  );
+}
+
+class ObjectDetailRouteArgs {
+  const ObjectDetailRouteArgs({
+    this.key,
+    required this.objectModel,
+  });
+
+  final Key? key;
+
+  final ObjectModel objectModel;
+
+  @override
+  String toString() {
+    return 'ObjectDetailRouteArgs{key: $key, objectModel: $objectModel}';
+  }
+}
+
+/// generated route for
 /// [SettingView]
 class SettingRoute extends PageRouteInfo<void> {
   const SettingRoute({List<PageRouteInfo>? children})

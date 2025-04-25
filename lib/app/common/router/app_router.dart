@@ -4,10 +4,12 @@ import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail
 import 'package:metropolitan_museum/app/features/presentation/home/view/home_see_all_view.dart';
 import 'package:metropolitan_museum/app/features/presentation/settings/view/setting_view.dart';
 
+import '../../features/data/models/object_model.dart';
 import '../../features/presentation/collection/collection_view.dart';
 import '../../features/presentation/home/view/home_view.dart';
 import '../../features/presentation/info/info_view.dart';
 import '../../features/presentation/main/view/main_view.dart';
+import '../../features/presentation/object_detail/object_detail_view.dart';
 import '../../features/presentation/splash/view/splash_view.dart';
 
 part 'app_router.gr.dart';
@@ -43,6 +45,9 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: DepartmentDetailRoute.page,
+        ),
+        AutoRoute(
+          page: ObjectDetailRoute.page,
         ),
       ];
 }

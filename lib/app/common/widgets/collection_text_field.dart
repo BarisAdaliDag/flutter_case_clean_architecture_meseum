@@ -5,8 +5,9 @@ import 'package:metropolitan_museum/app/features/presentation/collection/cubit/c
 class CollectionTextField extends StatefulWidget {
   const CollectionTextField({
     super.key,
+    required this.controller,
   });
-
+  final TextEditingController controller;
   @override
   State<CollectionTextField> createState() => _CollectionTextFieldState();
 }
@@ -37,7 +38,7 @@ class _CollectionTextFieldState extends State<CollectionTextField> {
   Widget build(BuildContext context) {
     return TextField(
       focusNode: _focusNode, // FocusNode'u TextField'a bağlıyoruz
-      controller: context.read<CollectionCubit>().searchController,
+      controller: widget.controller,
       decoration: InputDecoration(
         hintText: "Search",
         hintStyle: TextStyle(
@@ -48,7 +49,7 @@ class _CollectionTextFieldState extends State<CollectionTextField> {
           children: [
             Container(
               width: 1,
-              height: 48,
+              height: 52,
               color: _isFocused ? Colors.black : Colors.grey,
             ),
             Padding(

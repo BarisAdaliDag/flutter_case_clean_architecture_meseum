@@ -9,7 +9,7 @@ import 'package:metropolitan_museum/app/features/presentation/collection/cubit/c
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/widget/collection_card.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/widget/collection_header.dart';
-import 'package:metropolitan_museum/app/features/presentation/collection/widget/collection_text_field.dart';
+import 'package:metropolitan_museum/app/common/widgets/collection_text_field.dart';
 import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/view/department_detail_view.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/widgets/home_listview_title.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -50,9 +50,11 @@ class _CollectionViewState extends State<CollectionView> {
                 children: [
                   const CollectionHeader(),
                   const Gap(20),
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: CollectionTextField(),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: CollectionTextField(
+                      controller: context.read<CollectionCubit>().searchController,
+                    ),
                   ),
                   ListView.builder(
                     shrinkWrap: true,

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_state.dart';
-import 'package:metropolitan_museum/app/features/presentation/home/widgets/home_card_widget.dart';
+import 'package:metropolitan_museum/app/common/widgets/home_card_widget.dart';
 
 @RoutePage()
 class HomeSeeAllView extends StatefulWidget {
