@@ -1,10 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:objectbox/objectbox.dart';
 
+@Entity()
 class DepartmentsModel extends Equatable {
+  @Id()
+  int id = 0;
   final List<DepartmentModel> departments;
 
-  const DepartmentsModel({required this.departments});
+  DepartmentsModel({this.id = 0, required this.departments});
 
   factory DepartmentsModel.fromJson(Map<String, dynamic> json) {
     return DepartmentsModel(
@@ -25,10 +28,9 @@ class DepartmentsModel extends Equatable {
 @Entity()
 class DepartmentModel extends Equatable {
   @Id()
-  int id = 0; // ObjectBox için gerekli
-
-  int departmentId;
-  String displayName;
+  int id = 0;
+  final int departmentId;
+  final String displayName;
 
   DepartmentModel({
     this.id = 0,

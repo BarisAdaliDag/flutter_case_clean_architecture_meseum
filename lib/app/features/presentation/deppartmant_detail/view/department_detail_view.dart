@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/common/widgets/collection_text_field.dart';
@@ -9,6 +10,7 @@ import 'package:metropolitan_museum/app/features/data/models/object_model.dart';
 import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/cubit/departmant_detail_cubit.dart';
 import 'package:metropolitan_museum/app/common/widgets/home_card_widget.dart';
 import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/cubit/departmant_detail_state.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 @RoutePage()
 class DepartmentDetailView extends StatefulWidget {
@@ -44,9 +46,14 @@ class _DepartmentDetailViewState extends State<DepartmentDetailView> {
             if (state.isLoading) {
               return const Center(child: CircularProgressIndicator());
             }
-            // if (objects.isEmpty) {
-            //   return const Center(child: Text("No objects found in this department."));
-            // }
+            if (objects.isEmpty) {
+              return Center(
+                  child: SizedBox(
+                      width: 80.w,
+                      child: Image.asset(
+                        AppImage.nodata.path,
+                      )));
+            }
             return Padding(
               padding: const EdgeInsets.all(12),
               child: Column(

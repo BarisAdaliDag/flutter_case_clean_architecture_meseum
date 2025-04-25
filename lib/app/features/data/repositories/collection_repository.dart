@@ -10,7 +10,6 @@ abstract class CollectionRepository {
   Future<DataResult<DepartmentsModel>> getDepartments();
   Future<DataResult<ObjectsIdModel>> getObjectsByDepartmentId({required int departmentId});
   Future<DataResult<ObjectModel>> getObjectDetails({required int objectId});
-  // Local kaynaklardan veri çekmek için eklenen methodlar
   Future<DataResult<List<DepartmentModel>>> getDepartmentsLocal();
   Future<DataResult<ObjectsIdModel?>> getObjectsByDepartmentIdLocal({required int departmentId});
   Future<DataResult<ObjectModel?>> getObjectDetailsLocal({required int objectId});
@@ -86,30 +85,33 @@ class CollectionRepositoryImpl implements CollectionRepository {
   @override
   Future<DataResult<List<DepartmentModel>>> getDepartmentsLocal() async {
     try {
-      final data = await _localDatasource.getDepartments();
-      return SuccessDataResult(data: data, message: "Local getDepartments");
+      final departments = await _localDatasource.getDepartments();
+      return SuccessDataResult(data: departments, message: "$runtimeType getDepartmentsLocal()");
     } catch (e) {
-      return ErrorDataResult(message: "Local getDepartments error: $e");
+      AppLogger.instance.error("$runtimeType getDepartmentsLocal() $e");
+      return ErrorDataResult(message: "$runtimeType getDepartmentsLocal() $e");
     }
   }
 
   @override
   Future<DataResult<ObjectsIdModel?>> getObjectsByDepartmentIdLocal({required int departmentId}) async {
     try {
-      final data = await _localDatasource.getObjectsByDepartmentId(departmentId: departmentId);
-      return SuccessDataResult(data: data, message: "Local getObjectsByDepartmentId");
+      final departmentIdModel = await _localDatasource.getObjectsByDepartmentId(departmentId: departmentId);
+      return SuccessDataResult(data: departmentIdModel, message: "$runtimeType getObjectsByDepartmentIdLocal()");
     } catch (e) {
-      return ErrorDataResult(message: "Local getObjectsByDepartmentId error: $e");
+      AppLogger.instance.error("$runtimeType getObjectsByDepartmentIdLocal() $e");
+      return ErrorDataResult(message: "$runtimeType getObjectsByDepartmentIdLocal() $e");
     }
   }
 
   @override
   Future<DataResult<ObjectModel?>> getObjectDetailsLocal({required int objectId}) async {
     try {
-      final data = await _localDatasource.getObjectDetails(objectId: objectId);
-      return SuccessDataResult(data: data, message: "Local getObjectDetails");
+      final objectDetail = await _localDatasource.getObjectDetails(objectId: objectId);
+      return SuccessDataResult(data: objectDetail, message: "$runtimeType getObjectDetailsLocal()");
     } catch (e) {
-      return ErrorDataResult(message: "Local getObjectDetails error: $e");
+      AppLogger.instance.error("$runtimeType getObjectDetailsLocal() $e");
+      return ErrorDataResult(message: "$runtimeType getObjectDetailsLocal() $e");
     }
   }
 

@@ -6,14 +6,17 @@ import 'package:metropolitan_museum/app/features/data/repositories/collection_re
 import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/cubit/departmant_detail_state.dart';
 import 'package:metropolitan_museum/core/result/result.dart';
 
-final class DepartmentDetailCubit extends Cubit<DepartmentDetailState> {
+import '../../../../../core/network_control/network_control.dart';
+
+class DepartmentDetailCubit extends Cubit<DepartmentDetailState> {
   final CollectionRepository collectionRepository;
   final TextEditingController searchController = TextEditingController();
 
   DepartmentDetailCubit({required this.collectionRepository})
       : super(DepartmentDetailState(
           isLoading: false,
-          objectsIdModel: ObjectsIdModel(objectIDs: const [], total: 0),
+          error: '',
+          objectsIdModel: ObjectsIdModel(objectIDs: const [], total: 0, departmentId: 0),
           objectList: const [],
           searchText: '',
         )) {
@@ -26,7 +29,6 @@ final class DepartmentDetailCubit extends Cubit<DepartmentDetailState> {
 
   void search(String query) {
     final objectList = state.objectList;
-
     final filtered = objectList.where((d) => d.title!.toLowerCase().contains(query.toLowerCase())).toList();
     emit(state.copyWith(
       searchText: query,
@@ -42,27 +44,68 @@ final class DepartmentDetailCubit extends Cubit<DepartmentDetailState> {
   }
 
   Future<void> loadListCollection(int departmentId) async {
-    emit(state.copyWith(isLoading: true));
-    final objectsResult = await collectionRepository.getObjectsByDepartmentId(departmentId: departmentId);
-    if (objectsResult is SuccessDataResult<ObjectsIdModel> && objectsResult.data != null) {
-      final departmentIdModel = objectsResult.data!;
-      final objectIds = departmentIdModel.objectIDs.take(5).toList();
-      List<ObjectModel> objectDetails = [];
-      for (final objectId in objectIds) {
-        final detailResult = await collectionRepository.getObjectDetails(objectId: objectId);
-        if (detailResult is SuccessDataResult<ObjectModel?> && detailResult.data != null) {
-          objectDetails.add(detailResult.data!);
+    // Eski verileri sıfırla
+    emit(DepartmentDetailState(
+      isLoading: true,
+      objectsIdModel: ObjectsIdModel(objectIDs: const [], total: 0, departmentId: departmentId),
+      objectList: const [],
+      searchText: '',
+      filteredObjectList: const [],
+      error: "",
+    ));
+    final networkControl = NetworkControl();
+    final networkResult = await networkControl.checkNetworkFirstTime();
+    final bool hasInternet = networkResult == NetworkResult.on;
+
+    ObjectsIdModel? departmentIdModel;
+    List<ObjectModel> objectDetails = [];
+
+    if (hasInternet) {
+      // Online veri çekme
+      final objectsResult = await collectionRepository.getObjectsByDepartmentId(departmentId: departmentId);
+      if (objectsResult is SuccessDataResult<ObjectsIdModel> && objectsResult.data != null) {
+        departmentIdModel = objectsResult.data!;
+        await collectionRepository.saveObjectsByDepartmentIdLocal(departmentIdModel);
+        print('Saved ObjectsIdModel for departmentId: $departmentId');
+        final objectIds = departmentIdModel.objectIDs.take(5).toList();
+        for (final objectId in objectIds) {
+          final detailResult = await collectionRepository.getObjectDetails(objectId: objectId);
+          if (detailResult is SuccessDataResult<ObjectModel> && detailResult.data != null) {
+            objectDetails.add(detailResult.data!);
+            await collectionRepository.saveObjectDetailsLocal(detailResult.data!);
+          }
         }
       }
-      print(objectDetails);
-      emit(state.copyWith(
-        isLoading: false,
-        objectList: objectDetails as List<ObjectModel>?,
-        objectsIdModel: departmentIdModel,
-        filteredObjectList: objectDetails as List<ObjectModel>?,
-      ));
-    } else {
-      emit(state.copyWith(isLoading: false));
     }
+
+    // Çevrimdışı veri çekme
+    if (departmentIdModel == null) {
+      final localObjectsResult = await collectionRepository.getObjectsByDepartmentIdLocal(departmentId: departmentId);
+      if (localObjectsResult is SuccessDataResult<ObjectsIdModel?> && localObjectsResult.data != null) {
+        departmentIdModel = localObjectsResult.data!;
+      } else {
+        emit(state.copyWith(
+          isLoading: false,
+          error: 'Veri bulunamadı (çevrimdışı veya çevrimiçi)',
+        ));
+        return;
+      }
+    }
+
+    final objectIds = departmentIdModel.objectIDs.take(5).toList();
+    for (final objectId in objectIds) {
+      final localDetailResult = await collectionRepository.getObjectDetailsLocal(objectId: objectId);
+      if (localDetailResult is SuccessDataResult<ObjectModel?> && localDetailResult.data != null) {
+        objectDetails.add(localDetailResult.data!);
+      }
+    }
+
+    emit(state.copyWith(
+      isLoading: false,
+      objectList: objectDetails,
+      objectsIdModel: departmentIdModel,
+      filteredObjectList: objectDetails,
+      error: null,
+    ));
   }
 }

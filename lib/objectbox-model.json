@@ -123,7 +123,7 @@
     },
     {
       "id": "5:8372765202816072250",
-      "lastPropertyId": "3:4914825977522452698",
+      "lastPropertyId": "4:7088087958311939770",
       "name": "ObjectsIdModel",
       "properties": [
         {
@@ -141,6 +141,11 @@
           "id": "3:4914825977522452698",
           "name": "objectIDs",
           "type": 27
+        },
+        {
+          "id": "4:7088087958311939770",
+          "name": "departmentId",
+          "type": 6
         }
       ],
       "relations": []

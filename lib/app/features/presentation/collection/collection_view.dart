@@ -25,7 +25,7 @@ final class CollectionView extends StatefulWidget {
 class _CollectionViewState extends State<CollectionView> {
   @override
   void initState() {
-    getIt<CollectionCubit>().loadDepartmentsAndObjects();
+    getIt<CollectionCubit>().loadDepartments();
     super.initState();
   }
 
@@ -63,8 +63,7 @@ class _CollectionViewState extends State<CollectionView> {
                     itemCount: state.filteredDepartmentList.length,
                     itemBuilder: (context, deptIndex) {
                       final department = state.filteredDepartmentList[deptIndex];
-                      final originalIndex = state.departmentList.indexOf(department);
-                      final objects = (originalIndex < state.objectList.length) ? state.objectList[originalIndex] : [];
+
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                         child: GestureDetector(
@@ -75,7 +74,7 @@ class _CollectionViewState extends State<CollectionView> {
                             ));
                           },
                           child: CollectionCard(
-                            image: objects.isNotEmpty ? objects.first.primaryImageSmall : "",
+                            image: department.departmentId.toString(),
                             title: department.displayName,
                             id: department.departmentId.toString(),
                           ),

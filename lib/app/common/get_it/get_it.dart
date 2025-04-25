@@ -37,15 +37,15 @@ final class ServiceLocator {
 // / **ObjectBox Dependency**
   Future<void> setupLocal() async {
     // ObjectBoxService'i singleton olarak kaydet
-    // final objectBoxService = await ObjectBoxService.create();
-    // getIt.registerSingleton<ObjectBoxService>(objectBoxService);
+    final objectBoxService = await ObjectBoxService.create();
+    getIt.registerSingleton<ObjectBoxService>(objectBoxService);
   }
 
   /// **DataSource Dependency**
   Future<void> _setupDataSource() async {
-    getIt.registerLazySingletonAsync<Store>(provideStore);
+//  getIt.registerLazySingletonAsync<Store>(provideStore);
 
-    await getIt.isReady<Store>();
+    //   await getIt.isReady<Store>();
     getIt
       ..registerLazySingleton<TestRemoteDatasource>(
         () => TestRemoteDatasourceImpl(),
@@ -57,7 +57,7 @@ final class ServiceLocator {
         () => CollectionRemoteDatasourceImpl(),
       )
       ..registerLazySingleton<CollectionLocalDatasource>(
-        () => CollectionLocalDatasourceImpl(getIt<Store>()),
+        () => CollectionLocalDatasourceImpl(getIt<ObjectBoxService>()),
       )
       ..registerLazySingleton<HomeRemoteDatasource>(
         () => HomeRemoteDatasourceImpl(),

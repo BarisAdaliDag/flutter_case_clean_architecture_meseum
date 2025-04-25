@@ -4,11 +4,10 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class ObjectModel extends Equatable {
   @Id()
-  int id;
-
+  int id = 0;
   final int? objectID;
-  final String? category; // Opsiyonel, API'den gelmiyor
-  final String? culture;
+  final String? category;
+  final String? culture; // Nullable type local
   final String? primaryImageSmall;
   final String? objectDate;
   final String? title;
@@ -26,7 +25,7 @@ class ObjectModel extends Equatable {
   ObjectModel({
     this.id = 0,
     required this.objectID,
-    this.category, // Opsiyonel
+    this.category,
     required this.primaryImageSmall,
     required this.culture,
     required this.department,
@@ -46,7 +45,7 @@ class ObjectModel extends Equatable {
   factory ObjectModel.fromJson(Map<String, dynamic> json) {
     return ObjectModel(
       objectID: json['objectID'] as int?,
-      category: null, // API'den gelmediği için null
+      category: null,
       primaryImageSmall: json['primaryImageSmall'] as String?,
       culture: json['culture'] as String?,
       department: json['department'] as String?,

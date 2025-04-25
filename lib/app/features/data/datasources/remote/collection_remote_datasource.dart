@@ -41,7 +41,10 @@ final class CollectionRemoteDatasourceImpl implements CollectionRemoteDatasource
     try {
       final response = await _dioApiManager.get(
         '/objects?departmentIds=$departmentId',
-        converter: (data) => ObjectsIdModel.fromJson(data),
+        converter: (data) {
+          print('API Response for departmentId $departmentId: $data');
+          return ObjectsIdModel.fromJson(data, departmentId: departmentId);
+        },
       );
       return response;
     } catch (e) {

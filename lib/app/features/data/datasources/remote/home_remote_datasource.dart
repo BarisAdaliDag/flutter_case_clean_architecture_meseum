@@ -25,7 +25,7 @@ final class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
     try {
       final response = await _dioApiManager.get(
         '/search?q=$query',
-        converter: (data) => ObjectsIdModel.fromJson(data),
+        converter: (data) => ObjectsIdModel.fromJson(data, departmentId: 0),
       );
       return response;
     } catch (e) {

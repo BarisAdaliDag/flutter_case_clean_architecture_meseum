@@ -8,6 +8,7 @@ final class DepartmentDetailState extends Equatable {
   final String searchText;
   final List<ObjectModel> filteredObjectList;
   final ObjectsIdModel objectsIdModel;
+  final String error;
 
   const DepartmentDetailState({
     required this.isLoading,
@@ -15,6 +16,7 @@ final class DepartmentDetailState extends Equatable {
     this.searchText = '',
     List<ObjectModel>? filteredObjectList,
     required this.objectsIdModel,
+    this.error = '',
   }) : filteredObjectList = filteredObjectList ?? objectList;
 
   DepartmentDetailState copyWith({
@@ -23,6 +25,7 @@ final class DepartmentDetailState extends Equatable {
     String? searchText,
     List<ObjectModel>? filteredObjectList,
     ObjectsIdModel? objectsIdModel,
+    String? error,
   }) {
     return DepartmentDetailState(
       isLoading: isLoading ?? this.isLoading,
@@ -30,6 +33,7 @@ final class DepartmentDetailState extends Equatable {
       searchText: searchText ?? this.searchText,
       filteredObjectList: filteredObjectList ?? this.filteredObjectList,
       objectsIdModel: objectsIdModel ?? this.objectsIdModel,
+      error: error ?? this.error,
     );
   }
 
@@ -40,5 +44,6 @@ final class DepartmentDetailState extends Equatable {
         searchText,
         filteredObjectList,
         objectsIdModel,
+        error,
       ];
 }

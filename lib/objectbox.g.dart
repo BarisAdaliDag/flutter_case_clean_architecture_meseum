@@ -142,7 +142,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(5, 8372765202816072250),
       name: 'ObjectsIdModel',
-      lastPropertyId: const obx_int.IdUid(3, 4914825977522452698),
+      lastPropertyId: const obx_int.IdUid(4, 7088087958311939770),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -159,6 +159,11 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(3, 4914825977522452698),
             name: 'objectIDs',
             type: 27,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7088087958311939770),
+            name: 'departmentId',
+            type: 6,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -401,10 +406,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (ObjectsIdModel object, fb.Builder fbb) {
           final objectIDsOffset = fbb.writeListInt64(object.objectIDs);
-          fbb.startTable(4);
+          fbb.startTable(5);
           fbb.addInt64(0, object.id);
           fbb.addInt64(1, object.total);
           fbb.addOffset(2, objectIDsOffset);
+          fbb.addInt64(3, object.departmentId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -418,8 +424,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final objectIDsParam =
               const fb.ListReader<int>(fb.Int64Reader(), lazy: false)
                   .vTableGet(buffer, rootOffset, 8, []);
+          final departmentIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           final object = ObjectsIdModel(
-              id: idParam, total: totalParam, objectIDs: objectIDsParam);
+              id: idParam,
+              total: totalParam,
+              objectIDs: objectIDsParam,
+              departmentId: departmentIdParam);
 
           return object;
         })
@@ -527,4 +538,8 @@ class ObjectsIdModel_ {
   /// See [ObjectsIdModel.objectIDs].
   static final objectIDs = obx.QueryIntegerVectorProperty<ObjectsIdModel>(
       _entities[2].properties[2]);
+
+  /// See [ObjectsIdModel.departmentId].
+  static final departmentId =
+      obx.QueryIntegerProperty<ObjectsIdModel>(_entities[2].properties[3]);
 }
