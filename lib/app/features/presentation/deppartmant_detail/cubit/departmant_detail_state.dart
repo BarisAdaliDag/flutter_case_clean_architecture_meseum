@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:metropolitan_museum/app/features/data/models/object_model.dart';
 import 'package:metropolitan_museum/app/features/data/models/objects_id_model.dart';
-
-import '../../../data/models/test_model.dart';
 
 final class DepartmentDetailState extends Equatable {
   final bool isLoading;
@@ -20,7 +19,7 @@ final class DepartmentDetailState extends Equatable {
 
   DepartmentDetailState copyWith({
     bool? isLoading,
-    List<ObjectModel>? objectList,
+    List<ObjectModel>? objectList, // Nullable type
     String? searchText,
     List<ObjectModel>? filteredObjectList,
     ObjectsIdModel? objectsIdModel,

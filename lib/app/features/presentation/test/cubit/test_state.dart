@@ -2,7 +2,7 @@ part of 'test_cubit.dart';
 
 final class TestState extends Equatable {
   final bool isLoading;
-  final List<ObjectModel> testList;
+  final List<ObjectTestModel> testList;
 
   const TestState({
     required this.isLoading,
@@ -11,7 +11,7 @@ final class TestState extends Equatable {
 
   TestState copyWith({
     bool? isLoading,
-    List<ObjectModel>? testList,
+    List<ObjectTestModel>? testList,
   }) {
     return TestState(
       isLoading: isLoading ?? this.isLoading,

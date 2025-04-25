@@ -5,12 +5,12 @@ import 'package:metropolitan_museum/core/logger/app_logger.dart';
 import 'package:metropolitan_museum/core/result/result.dart';
 
 abstract class TestRepository {
-  Future<DataResult<ObjectModel>> getById({
+  Future<DataResult<ObjectTestModel>> getById({
     required String id,
   });
-  Future<DataResult<List<ObjectModel>>> getAll();
+  Future<DataResult<List<ObjectTestModel>>> getAll();
   Future<Result> create({
-    required ObjectModel testModel,
+    required ObjectTestModel testModel,
   });
 }
 
@@ -26,7 +26,7 @@ class TestRepositoryImpl implements TestRepository {
 
   @override
   Future<Result> create({
-    required ObjectModel testModel,
+    required ObjectTestModel testModel,
   }) async {
     var apiResponseModel = await _remoteDatasource.create(testModel: testModel);
     if (!apiResponseModel.isSuccess) {
@@ -41,7 +41,7 @@ class TestRepositoryImpl implements TestRepository {
   }
 
   @override
-  Future<DataResult<List<ObjectModel>>> getAll() async {
+  Future<DataResult<List<ObjectTestModel>>> getAll() async {
     var apiResponseModel = await _remoteDatasource.getAll();
     if (!apiResponseModel.isSuccess) {
       AppLogger.instance.error(
@@ -59,7 +59,7 @@ class TestRepositoryImpl implements TestRepository {
   }
 
   @override
-  Future<DataResult<ObjectModel>> getById({
+  Future<DataResult<ObjectTestModel>> getById({
     required String id,
   }) async {
     var testModel = await _localDatasource.getById(id: id);

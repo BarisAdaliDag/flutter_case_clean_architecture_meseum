@@ -37,6 +37,7 @@ class _CollectionViewState extends State<CollectionView> {
       },
       child: Scaffold(
         appBar: AppBar(
+          // automaticallyImplyLeading: false,
           title: const Text("The Met Collection"),
         ),
         body: SafeArea(

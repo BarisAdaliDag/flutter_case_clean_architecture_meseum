@@ -48,7 +48,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(4, 5806641028288434369),
       name: 'ObjectModel',
-      lastPropertyId: const obx_int.IdUid(7, 8110009432797247021),
+      lastPropertyId: const obx_int.IdUid(18, 4095199526839443258),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -56,11 +56,6 @@ final _entities = <obx_int.ModelEntity>[
             name: 'id',
             type: 6,
             flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 325006578264002764),
-            name: 'departmentIds',
-            type: 6,
-            flags: 0),
         obx_int.ModelProperty(
             id: const obx_int.IdUid(3, 3379168914037494507),
             name: 'primaryImageSmall',
@@ -84,6 +79,61 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelProperty(
             id: const obx_int.IdUid(7, 8110009432797247021),
             name: 'objectName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 4653290671082455133),
+            name: 'objectID',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 7286584604134237700),
+            name: 'objectDate',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 6019066050721474700),
+            name: 'country',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 4486955614193767678),
+            name: 'region',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 4726389520654308950),
+            name: 'creditLine',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 3546914738378389399),
+            name: 'accessionNumber',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 900861678348562936),
+            name: 'dimensions',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 8679726603724706839),
+            name: 'medium',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(16, 5000747988446071560),
+            name: 'geographyType',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(17, 8087451861539367129),
+            name: 'classification',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(18, 4095199526839443258),
+            name: 'category',
             type: 9,
             flags: 0)
       ],
@@ -166,7 +216,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         8976986827056688994,
         1147415214413816624,
         8128210964047801124,
-        4584109204548615607
+        4584109204548615607,
+        325006578264002764
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -217,20 +268,64 @@ obx_int.ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (ObjectModel object, fb.Builder fbb) {
-          final primaryImageSmallOffset =
-              fbb.writeString(object.primaryImageSmall);
-          final cultureOffset = fbb.writeString(object.culture);
-          final departmentOffset = fbb.writeString(object.department);
-          final titleOffset = fbb.writeString(object.title);
-          final objectNameOffset = fbb.writeString(object.objectName);
-          fbb.startTable(8);
+          final primaryImageSmallOffset = object.primaryImageSmall == null
+              ? null
+              : fbb.writeString(object.primaryImageSmall!);
+          final cultureOffset =
+              object.culture == null ? null : fbb.writeString(object.culture!);
+          final departmentOffset = object.department == null
+              ? null
+              : fbb.writeString(object.department!);
+          final titleOffset =
+              object.title == null ? null : fbb.writeString(object.title!);
+          final objectNameOffset = object.objectName == null
+              ? null
+              : fbb.writeString(object.objectName!);
+          final objectDateOffset = object.objectDate == null
+              ? null
+              : fbb.writeString(object.objectDate!);
+          final countryOffset =
+              object.country == null ? null : fbb.writeString(object.country!);
+          final regionOffset =
+              object.region == null ? null : fbb.writeString(object.region!);
+          final creditLineOffset = object.creditLine == null
+              ? null
+              : fbb.writeString(object.creditLine!);
+          final accessionNumberOffset = object.accessionNumber == null
+              ? null
+              : fbb.writeString(object.accessionNumber!);
+          final dimensionsOffset = object.dimensions == null
+              ? null
+              : fbb.writeString(object.dimensions!);
+          final mediumOffset =
+              object.medium == null ? null : fbb.writeString(object.medium!);
+          final geographyTypeOffset = object.geographyType == null
+              ? null
+              : fbb.writeString(object.geographyType!);
+          final classificationOffset = object.classification == null
+              ? null
+              : fbb.writeString(object.classification!);
+          final categoryOffset = object.category == null
+              ? null
+              : fbb.writeString(object.category!);
+          fbb.startTable(19);
           fbb.addInt64(0, object.id);
-          fbb.addInt64(1, object.departmentIds);
           fbb.addOffset(2, primaryImageSmallOffset);
           fbb.addOffset(3, cultureOffset);
           fbb.addOffset(4, departmentOffset);
           fbb.addOffset(5, titleOffset);
           fbb.addOffset(6, objectNameOffset);
+          fbb.addInt64(7, object.objectID);
+          fbb.addOffset(8, objectDateOffset);
+          fbb.addOffset(9, countryOffset);
+          fbb.addOffset(10, regionOffset);
+          fbb.addOffset(11, creditLineOffset);
+          fbb.addOffset(12, accessionNumberOffset);
+          fbb.addOffset(13, dimensionsOffset);
+          fbb.addOffset(14, mediumOffset);
+          fbb.addOffset(15, geographyTypeOffset);
+          fbb.addOffset(16, classificationOffset);
+          fbb.addOffset(17, categoryOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -239,27 +334,60 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
           final idParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final departmentIdsParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          final objectIDParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 18);
+          final categoryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 38);
           final primaryImageSmallParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, '');
+                  .vTableGetNullable(buffer, rootOffset, 8);
           final cultureParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 10, '');
+              .vTableGetNullable(buffer, rootOffset, 10);
           final departmentParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 12, '');
+              .vTableGetNullable(buffer, rootOffset, 12);
           final titleParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 14, '');
+              .vTableGetNullable(buffer, rootOffset, 14);
           final objectNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 16, '');
+              .vTableGetNullable(buffer, rootOffset, 16);
+          final countryParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 22);
+          final regionParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 24);
+          final creditLineParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 26);
+          final accessionNumberParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 28);
+          final dimensionsParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 30);
+          final mediumParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 32);
+          final geographyTypeParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 34);
+          final classificationParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 36);
+          final objectDateParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 20);
           final object = ObjectModel(
               id: idParam,
-              departmentIds: departmentIdsParam,
+              objectID: objectIDParam,
+              category: categoryParam,
               primaryImageSmall: primaryImageSmallParam,
               culture: cultureParam,
               department: departmentParam,
               title: titleParam,
-              objectName: objectNameParam);
+              objectName: objectNameParam,
+              country: countryParam,
+              region: regionParam,
+              creditLine: creditLineParam,
+              accessionNumber: accessionNumberParam,
+              dimensions: dimensionsParam,
+              medium: mediumParam,
+              geographyType: geographyTypeParam,
+              classification: classificationParam,
+              objectDate: objectDateParam);
 
           return object;
         }),
@@ -321,29 +449,69 @@ class ObjectModel_ {
   static final id =
       obx.QueryIntegerProperty<ObjectModel>(_entities[1].properties[0]);
 
-  /// See [ObjectModel.departmentIds].
-  static final departmentIds =
-      obx.QueryIntegerProperty<ObjectModel>(_entities[1].properties[1]);
-
   /// See [ObjectModel.primaryImageSmall].
   static final primaryImageSmall =
-      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[2]);
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[1]);
 
   /// See [ObjectModel.culture].
   static final culture =
-      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[3]);
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[2]);
 
   /// See [ObjectModel.department].
   static final department =
-      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[4]);
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[3]);
 
   /// See [ObjectModel.title].
   static final title =
-      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[5]);
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[4]);
 
   /// See [ObjectModel.objectName].
   static final objectName =
-      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[6]);
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[5]);
+
+  /// See [ObjectModel.objectID].
+  static final objectID =
+      obx.QueryIntegerProperty<ObjectModel>(_entities[1].properties[6]);
+
+  /// See [ObjectModel.objectDate].
+  static final objectDate =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[7]);
+
+  /// See [ObjectModel.country].
+  static final country =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[8]);
+
+  /// See [ObjectModel.region].
+  static final region =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[9]);
+
+  /// See [ObjectModel.creditLine].
+  static final creditLine =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[10]);
+
+  /// See [ObjectModel.accessionNumber].
+  static final accessionNumber =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[11]);
+
+  /// See [ObjectModel.dimensions].
+  static final dimensions =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[12]);
+
+  /// See [ObjectModel.medium].
+  static final medium =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[13]);
+
+  /// See [ObjectModel.geographyType].
+  static final geographyType =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[14]);
+
+  /// See [ObjectModel.classification].
+  static final classification =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[15]);
+
+  /// See [ObjectModel.category].
+  static final category =
+      obx.QueryStringProperty<ObjectModel>(_entities[1].properties[16]);
 }
 
 /// [ObjectsIdModel] entity fields to define ObjectBox queries.

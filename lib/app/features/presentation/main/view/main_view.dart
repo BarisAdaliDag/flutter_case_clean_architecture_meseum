@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
+import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
 import 'package:metropolitan_museum/app/common/constants/app_icons.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 import 'package:metropolitan_museum/app/features/presentation/main/cubit/main_cubit.dart';
@@ -101,7 +102,7 @@ class _MainViewState extends State<MainView> {
               ],
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(16), // Kenarları yuvarlat
+              borderRadius: BorderRadius.circular(AppConstants.radiusMedium), // Kenarları yuvarlat
               child: BottomAppBar(
                 color: AppColors.whiteBottomAppbar,
                 shape: const CircularNotchedRectangle(),

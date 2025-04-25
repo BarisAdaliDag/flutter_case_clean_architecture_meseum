@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
 import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_cubit.dart';
@@ -53,7 +54,7 @@ class _HomeViewState extends State<HomeView> {
                 const TheMetHeader(),
                 const Gap(20),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingMedium),
                   child: Column(
                     children: [
                       if (state.currentList.isNotEmpty)
@@ -76,9 +77,9 @@ class _HomeViewState extends State<HomeView> {
                                   return SizedBox(
                                     width: 195,
                                     child: HomeCard(
-                                      image: obj.primaryImageSmall,
-                                      title: obj.title,
-                                      subtitle: obj.objectName,
+                                      image: obj.primaryImageSmall ?? "",
+                                      title: obj.title ?? "",
+                                      subtitle: obj.objectName ?? "",
                                     ),
                                   );
                                 },
@@ -106,9 +107,9 @@ class _HomeViewState extends State<HomeView> {
                                   return SizedBox(
                                     width: 195,
                                     child: HomeCard(
-                                      image: obj.primaryImageSmall,
-                                      title: obj.title,
-                                      subtitle: obj.objectName,
+                                      image: obj.primaryImageSmall ?? "",
+                                      title: obj.title ?? "",
+                                      subtitle: obj.objectName ?? "",
                                     ),
                                   );
                                 },

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
+import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/view/home_view.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -43,7 +44,7 @@ class CollectionCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppConstants.paddingMedium),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

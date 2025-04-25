@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -23,7 +24,7 @@ class MuseumInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(AppConstants.paddingMedium),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

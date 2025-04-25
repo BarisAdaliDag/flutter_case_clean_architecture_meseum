@@ -6,52 +6,102 @@ class ObjectModel extends Equatable {
   @Id()
   int id;
 
-  final int departmentIds;
-  final String primaryImageSmall;
-  final String culture;
-  final String department;
-  final String title;
-  final String objectName;
+  final int? objectID;
+  final String? category; // Opsiyonel, API'den gelmiyor
+  final String? culture;
+  final String? primaryImageSmall;
+  final String? objectDate;
+  final String? title;
+  final String? department;
+  final String? country;
+  final String? region;
+  final String? objectName;
+  final String? creditLine;
+  final String? accessionNumber;
+  final String? dimensions;
+  final String? medium;
+  final String? geographyType;
+  final String? classification;
 
   ObjectModel({
     this.id = 0,
-    required this.departmentIds,
+    required this.objectID,
+    this.category, // Opsiyonel
     required this.primaryImageSmall,
     required this.culture,
     required this.department,
     required this.title,
     required this.objectName,
+    this.country,
+    this.region,
+    this.creditLine,
+    this.accessionNumber,
+    this.dimensions,
+    this.medium,
+    this.geographyType,
+    this.classification,
+    this.objectDate,
   });
 
   factory ObjectModel.fromJson(Map<String, dynamic> json) {
     return ObjectModel(
-      departmentIds: json['objectID'] as int,
-      primaryImageSmall: json['primaryImageSmall'] as String,
-      culture: json['culture'] as String,
-      department: json['department'] as String,
-      title: json['title'] as String,
-      objectName: json['objectName'] as String,
+      objectID: json['objectID'] as int?,
+      category: null, // API'den gelmediği için null
+      primaryImageSmall: json['primaryImageSmall'] as String?,
+      culture: json['culture'] as String?,
+      department: json['department'] as String?,
+      title: json['title'] as String?,
+      objectName: json['objectName'] as String?,
+      country: json['country'] as String?,
+      region: json['region'] as String?,
+      creditLine: json['creditLine'] as String?,
+      accessionNumber: json['accessionNumber'] as String?,
+      dimensions: json['dimensions'] as String?,
+      medium: json['medium'] as String?,
+      geographyType: json['geographyType'] as String?,
+      classification: json['classification'] as String?,
+      objectDate: json['objectDate'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'objectID': departmentIds,
+      'objectID': objectID,
+      'category': category,
       'primaryImageSmall': primaryImageSmall,
       'culture': culture,
       'department': department,
       'title': title,
       'objectName': objectName,
+      'country': country,
+      'region': region,
+      'creditLine': creditLine,
+      'accessionNumber': accessionNumber,
+      'dimensions': dimensions,
+      'medium': medium,
+      'geographyType': geographyType,
+      'classification': classification,
+      'objectDate': objectDate,
     };
   }
 
   @override
   List<Object?> get props => [
-        departmentIds,
+        objectID,
+        category,
         primaryImageSmall,
         culture,
         department,
         title,
         objectName,
+        country,
+        region,
+        creditLine,
+        accessionNumber,
+        dimensions,
+        medium,
+        geographyType,
+        classification,
+        objectDate,
       ];
 }

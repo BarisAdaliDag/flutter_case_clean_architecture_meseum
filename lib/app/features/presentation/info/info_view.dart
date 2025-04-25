@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
 import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 import 'package:metropolitan_museum/app/features/presentation/info/widget.dart/info_header.dart';
@@ -20,7 +21,7 @@ final class InfoView extends StatelessWidget {
         children: [
           const InfoHeader(),
           Padding(
-            padding: const EdgeInsets.only(top: 16.0, left: 16.0),
+            padding: const EdgeInsets.only(top: AppConstants.paddingMedium, left: AppConstants.paddingMedium),
             child: Row(
               children: [
                 Text(

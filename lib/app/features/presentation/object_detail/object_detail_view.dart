@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
+import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
+import 'package:metropolitan_museum/app/common/widgets/cahche_network_image_widget.dart';
 import 'package:metropolitan_museum/app/features/data/models/object_model.dart';
 import 'package:metropolitan_museum/app/features/presentation/object_detail/widget/detail_item.dart';
 
@@ -19,103 +22,113 @@ class ObjectDetailView extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text('Throne of Njoueteu: Royal Couple'),
+        title: Text(objectModel.title ?? 'Object Detail'),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Resim Bölümü
-            Center(
-              child: Image.network(
-                'https://picsum.photos/200/300',
-                height: 300,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Başlık ve Kültür Bilgisi
-            const Text(
-              'Bamileke people, Chiefdom of Bansoa',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Late 19th–early 20th Century',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey,
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Açıklama Bölümü
-            const Text(
-              'The seat of office was created for a leader in the Grassfields region of western Cameroon. This densely populated region was a prosperous nexus of the trade that gave rise to a proliferation of principalities.',
-              style: TextStyle(fontSize: 14, color: Colors.black87),
-            ),
-            const SizedBox(height: 24),
-
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Artwork Details',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingMedium),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(AppConstants.radiusMedium), // Adjust the radius for desired roundness
+                      child: CacheNetworkImageWidget(
+                        image: objectModel.primaryImageSmall ?? "",
+                        imageHeight: 300,
+                        imageWidth: double.infinity,
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(height: 8),
+                  const SizedBox(height: 16),
 
-                // Detaylar Listesi (Custom Widget Kullanımı)
-                DetailItem(
-                  title: 'Title: ',
-                  value: 'Throne of Njoueteu: Royal Couple',
-                ),
-                DetailItem(
-                  title: 'Date: ',
-                  value: 'Late 19th–early 20th Century, Grassfields region',
-                ),
-                DetailItem(
-                  title: 'Geography: ',
-                  value: 'Cameroon, Grassfields region',
-                ),
-                DetailItem(
-                  title: 'Culture: ',
-                  value: 'Bamileke peoples, Chiefdom of Bansoa',
-                ),
-                DetailItem(
-                  title: 'Medium: ',
-                  value: 'Wood, glass beads, cloth, cowrie shells',
-                ),
-                DetailItem(
-                  title: 'Dimensions: ',
-                  value: 'H. 64 x W. 29 1/4 x D. 28 1/2 in. (162.6 x 74.3 x 67.3 cm)',
-                ),
-                DetailItem(
-                  title: 'Classification: ',
-                  value: 'Wood-Sculpture',
-                ),
-                DetailItem(
-                  title: 'Credit Line: ',
-                  value:
-                      'Purchase, Rogers Fund, Andrea and Robert Bolt Jr., and Laura and James J. Ross, and Anonymous Gifts, 2014',
-                ),
-                DetailItem(
-                  title: 'Object Number: ',
-                  value: '2014.256',
-                ),
-              ],
+                  Text(
+                    objectModel.title ?? 'Unknown Title',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    objectModel.objectDate ?? 'Unknown Date',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Açıklama Bölümü
+                  const Text(
+                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
+                    style: TextStyle(fontSize: 14, color: Colors.black87),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
+            ),
+            Container(
+              color: AppColors.greyHomeBackground,
+              padding: const EdgeInsets.all(AppConstants.paddingMedium),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Artwork Details',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Detaylar Listesi (Custom Widget Kullanımı)
+                  DetailItem(
+                    title: 'Title: ',
+                    value: objectModel.title ?? 'Unknown Title',
+                  ),
+                  DetailItem(
+                    title: 'Date: ',
+                    value: objectModel.objectDate ?? 'Unknown Date',
+                  ),
+                  DetailItem(
+                    title: 'Geography: ',
+                    value: objectModel.geographyType ?? 'Unknown Geography',
+                  ),
+                  DetailItem(
+                    title: 'Culture: ',
+                    value: objectModel.culture ?? 'Unknown Culture',
+                  ),
+                  DetailItem(
+                    title: 'Medium: ',
+                    value: objectModel.medium ?? 'Unknown Medium',
+                  ),
+                  DetailItem(
+                    title: 'Dimensions: ',
+                    value: objectModel.dimensions ?? 'Unknown Dimensions',
+                  ),
+                  DetailItem(
+                    title: 'Classification: ',
+                    value: objectModel.classification ?? 'Unknown Classification',
+                  ),
+                  DetailItem(
+                    title: 'Credit Line: ',
+                    value: objectModel.creditLine ?? 'Unknown Credit Line',
+                  ),
+                  DetailItem(
+                    title: 'Object Number: ',
+                    value: objectModel.accessionNumber ?? 'Unknown Object Number',
+                  ),
+                ],
+              ),
             ),
           ],
         ),

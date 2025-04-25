@@ -2,13 +2,13 @@
 
 import 'package:equatable/equatable.dart';
 
-class ObjectModel extends Equatable {
+class ObjectTestModel extends Equatable {
   String? id;
   String? title;
   int? count;
   bool? hasTest;
 
-  ObjectModel({
+  ObjectTestModel({
     this.id,
     this.title,
     this.count,
@@ -24,8 +24,8 @@ class ObjectModel extends Equatable {
     };
   }
 
-  factory ObjectModel.fromMap(Map<String, dynamic> map) {
-    return ObjectModel(
+  factory ObjectTestModel.fromMap(Map<String, dynamic> map) {
+    return ObjectTestModel(
       id: map['id'] != null ? map['id'] as String : null,
       title: map['title'] != null ? map['title'] as String : null,
       count: map['count'] != null ? map['count'] as int : null,

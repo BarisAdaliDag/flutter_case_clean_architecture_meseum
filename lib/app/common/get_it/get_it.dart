@@ -1,3 +1,4 @@
+import 'package:metropolitan_museum/app/common/service/object_box_service.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/home_remote_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/repositories/home_repository.dart';
 import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/cubit/departmant_detail_cubit.dart';
@@ -23,6 +24,7 @@ final class ServiceLocator {
   /// **Main method to call to set up dependencies**
   Future<void> setup() async {
     _setupRouter();
+    setupLocal();
     await _setupDataSource();
     _setupRepository();
     _setupCubit();
@@ -32,10 +34,17 @@ final class ServiceLocator {
   void _setupRouter() {
     // getIt.registerLazySingleton<AppRouter>(() => AppRouter());
   }
+// / **ObjectBox Dependency**
+  Future<void> setupLocal() async {
+    // ObjectBoxService'i singleton olarak kaydet
+    // final objectBoxService = await ObjectBoxService.create();
+    // getIt.registerSingleton<ObjectBoxService>(objectBoxService);
+  }
 
   /// **DataSource Dependency**
   Future<void> _setupDataSource() async {
     getIt.registerLazySingletonAsync<Store>(provideStore);
+
     await getIt.isReady<Store>();
     getIt
       ..registerLazySingleton<TestRemoteDatasource>(

@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
+import 'package:metropolitan_museum/app/common/widgets/cahche_network_image_widget.dart';
 
 class HomeCard extends StatelessWidget {
   final String image;
@@ -35,14 +36,7 @@ class HomeCard extends StatelessWidget {
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
             child: image.isNotEmpty
-                ? CachedNetworkImage(
-                    imageUrl: image,
-                    width: imageWidth,
-                    height: imageHeight,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) => const Icon(Icons.image_not_supported),
-                  )
+                ? CacheNetworkImageWidget(image: image, imageWidth: imageWidth, imageHeight: imageHeight)
                 : SizedBox(width: imageWidth, height: imageHeight, child: const Icon(Icons.image_not_supported)),
           ),
           Padding(

@@ -41,7 +41,7 @@ class TheMetHeader extends StatelessWidget {
                 const Gap(10),
                 HomeHeaderButton(
                   ontap: () {
-                    context.router.push(const CollectionRoute());
+                    context.tabsRouter.setActiveIndex(1);
                   },
                 )
               ],

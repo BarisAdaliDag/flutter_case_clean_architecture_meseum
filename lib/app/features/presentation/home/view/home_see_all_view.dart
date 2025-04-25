@@ -50,9 +50,9 @@ class _HomeSeeAllViewState extends State<HomeSeeAllView> {
               itemBuilder: (context, index) {
                 final obj = list[index];
                 return HomeCard(
-                  image: obj.primaryImageSmall,
-                  title: obj.title,
-                  subtitle: obj.objectName,
+                  image: obj.primaryImageSmall ?? "",
+                  title: obj.title ?? "",
+                  subtitle: obj.culture ?? "",
                 );
               },
             ),
