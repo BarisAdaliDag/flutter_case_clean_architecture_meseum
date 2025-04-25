@@ -11,6 +11,8 @@ class HomeCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final bool isImageLocal;
+  final double imageHeight;
+  final double imageWidth;
 
   const HomeCard({
     super.key,
@@ -18,6 +20,8 @@ class HomeCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     this.isImageLocal = false,
+    this.imageHeight = 200,
+    this.imageWidth = double.infinity,
   });
 
   @override
@@ -33,13 +37,13 @@ class HomeCard extends StatelessWidget {
             child: image.isNotEmpty
                 ? CachedNetworkImage(
                     imageUrl: image,
-                    width: double.infinity,
-                    height: 200,
+                    width: imageWidth,
+                    height: imageHeight,
                     fit: BoxFit.cover,
                     placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                     errorWidget: (context, url, error) => const Icon(Icons.image_not_supported),
                   )
-                : const SizedBox(width: double.infinity, height: 200, child: Icon(Icons.image_not_supported)),
+                : SizedBox(width: imageWidth, height: imageHeight, child: const Icon(Icons.image_not_supported)),
           ),
           Padding(
             padding: const EdgeInsets.all(12),

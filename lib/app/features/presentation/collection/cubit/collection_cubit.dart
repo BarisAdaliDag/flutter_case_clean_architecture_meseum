@@ -9,10 +9,10 @@ import 'package:metropolitan_museum/core/result/result.dart';
 import 'collection_state.dart';
 
 class CollectionCubit extends Cubit<CollectionState> {
-  final CollectionRepository homeRepository;
+  final CollectionRepository collectionRepository;
   final TextEditingController searchController = TextEditingController();
 
-  CollectionCubit({required this.homeRepository})
+  CollectionCubit({required this.collectionRepository})
       : super(const CollectionState(
           isLoading: false,
           departmentList: [],
@@ -51,18 +51,18 @@ class CollectionCubit extends Cubit<CollectionState> {
     final bool hasInternet = networkResult == NetworkResult.on;
     List<DepartmentModel> departments = [];
     if (hasInternet) {
-      final departmentsResult = await homeRepository.getDepartments();
+      final departmentsResult = await collectionRepository.getDepartments();
       if (departmentsResult is SuccessDataResult<DepartmentsModel> && departmentsResult.data != null) {
         departments = departmentsResult.data!.departments;
-        await homeRepository.saveDepartmentsLocal(departments);
+        await collectionRepository.saveDepartmentsLocal(departments);
       } else {
-        final localResult = await homeRepository.getDepartmentsLocal();
+        final localResult = await collectionRepository.getDepartmentsLocal();
         if (localResult is SuccessDataResult<List<DepartmentModel>> && localResult.data != null) {
           departments = localResult.data!;
         }
       }
     } else {
-      final localResult = await homeRepository.getDepartmentsLocal();
+      final localResult = await collectionRepository.getDepartmentsLocal();
       if (localResult is SuccessDataResult<List<DepartmentModel>> && localResult.data != null) {
         departments = localResult.data!;
       }
@@ -85,21 +85,22 @@ class CollectionCubit extends Cubit<CollectionState> {
     for (final department in departments) {
       ObjectsIdModel? departmentIdModel;
       if (hasInternet) {
-        final objectsResult = await homeRepository.getObjectsByDepartmentId(departmentId: department.departmentId);
+        final objectsResult =
+            await collectionRepository.getObjectsByDepartmentId(departmentId: department.departmentId);
         if (objectsResult is SuccessDataResult<ObjectsIdModel> && objectsResult.data != null) {
           departmentIdModel = objectsResult.data!;
-          await homeRepository.saveObjectsByDepartmentIdLocal(departmentIdModel);
+          await collectionRepository.saveObjectsByDepartmentIdLocal(departmentIdModel);
           final objectIds = departmentIdModel.objectIDs.take(5).toList();
           for (final objectId in objectIds) {
-            final detailResult = await homeRepository.getObjectDetails(objectId: objectId);
+            final detailResult = await collectionRepository.getObjectDetails(objectId: objectId);
             if (detailResult is SuccessDataResult<ObjectModel> && detailResult.data != null) {
-              await homeRepository.saveObjectDetailsLocal(detailResult.data!);
+              await collectionRepository.saveObjectDetailsLocal(detailResult.data!);
             }
           }
         }
       }
       departmentIdModel ??=
-          (await homeRepository.getObjectsByDepartmentIdLocal(departmentId: department.departmentId)).data;
+          (await collectionRepository.getObjectsByDepartmentIdLocal(departmentId: department.departmentId)).data;
       if (departmentIdModel == null) {
         allObjects.add([]);
         allDepartmentIdModels.add(ObjectsIdModel(objectIDs: const [], total: 0));
@@ -111,13 +112,13 @@ class CollectionCubit extends Cubit<CollectionState> {
       for (final objectId in objectIds) {
         ObjectModel? objectDetail;
         if (hasInternet) {
-          final detailResult = await homeRepository.getObjectDetails(objectId: objectId);
+          final detailResult = await collectionRepository.getObjectDetails(objectId: objectId);
           if (detailResult is SuccessDataResult<ObjectModel> && detailResult.data != null) {
             objectDetail = detailResult.data!;
-            await homeRepository.saveObjectDetailsLocal(objectDetail);
+            await collectionRepository.saveObjectDetailsLocal(objectDetail);
           }
         }
-        objectDetail ??= (await homeRepository.getObjectDetailsLocal(objectId: objectId)).data;
+        objectDetail ??= (await collectionRepository.getObjectDetailsLocal(objectId: objectId)).data;
         if (objectDetail != null) {
           objectDetails.add(objectDetail);
         }

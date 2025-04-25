@@ -29,6 +29,58 @@ class CollectionRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [DepartmentDetailView]
+class DepartmentDetailRoute extends PageRouteInfo<DepartmentDetailRouteArgs> {
+  DepartmentDetailRoute({
+    Key? key,
+    required int departmentId,
+    required String departmentName,
+    List<PageRouteInfo>? children,
+  }) : super(
+          DepartmentDetailRoute.name,
+          args: DepartmentDetailRouteArgs(
+            key: key,
+            departmentId: departmentId,
+            departmentName: departmentName,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'DepartmentDetailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<DepartmentDetailRouteArgs>();
+      return DepartmentDetailView(
+        key: args.key,
+        departmentId: args.departmentId,
+        departmentName: args.departmentName,
+      );
+    },
+  );
+}
+
+class DepartmentDetailRouteArgs {
+  const DepartmentDetailRouteArgs({
+    this.key,
+    required this.departmentId,
+    required this.departmentName,
+  });
+
+  final Key? key;
+
+  final int departmentId;
+
+  final String departmentName;
+
+  @override
+  String toString() {
+    return 'DepartmentDetailRouteArgs{key: $key, departmentId: $departmentId, departmentName: $departmentName}';
+  }
+}
+
+/// generated route for
 /// [HomeSeeAllView]
 class HomeSeeAllRoute extends PageRouteInfo<HomeSeeAllRouteArgs> {
   HomeSeeAllRoute({

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/view/department_detail_view.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/view/home_see_all_view.dart';
 import 'package:metropolitan_museum/app/features/presentation/settings/view/setting_view.dart';
 
@@ -39,6 +40,9 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: HomeSeeAllRoute.page,
+        ),
+        AutoRoute(
+          page: DepartmentDetailRoute.page,
         ),
       ];
 }
