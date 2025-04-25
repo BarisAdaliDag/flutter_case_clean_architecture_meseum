@@ -2,8 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
 import 'package:metropolitan_museum/app/common/constants/app_image.dart';
+import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_state.dart';
@@ -87,7 +89,7 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ],
                         ),
-                      if (true)
+                      if (state.famousArtworkList.isNotEmpty)
                         Column(
                           children: [
                             HomeListViewHeader(
@@ -116,6 +118,30 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                           ],
+                        ),
+                      if (state.currentList.isEmpty && state.famousArtworkList.isEmpty && state.errorMessage != null)
+                        //todo: solve try again button
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(state.errorMessage!),
+                              const Gap(10),
+                              TextButton(
+                                onPressed: () {
+                                  getIt<HomeCubit>().fetchHomeData();
+                                },
+                                child: Text(
+                                  'Try Again',
+                                  style: TxStyleHelper.body.copyWith(
+                                    color: AppColors.redValencia,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Colors.red,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                     ],
                   ),

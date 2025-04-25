@@ -1,4 +1,5 @@
 import 'package:metropolitan_museum/app/common/service/object_box_service.dart';
+import 'package:metropolitan_museum/app/features/data/datasources/local/home_local_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/home_remote_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/repositories/home_repository.dart';
 import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/cubit/departmant_detail_cubit.dart';
@@ -61,6 +62,9 @@ final class ServiceLocator {
       )
       ..registerLazySingleton<HomeRemoteDatasource>(
         () => HomeRemoteDatasourceImpl(),
+      )
+      ..registerLazySingleton<HomeLocalDatasource>(
+        () => HomeLocalDatasourceImpl(getIt<ObjectBoxService>()),
       );
   }
 
@@ -81,6 +85,7 @@ final class ServiceLocator {
     getIt.registerLazySingleton<HomeRepository>(
       () => HomeRepositoryImpl(
         remoteDatasource: getIt<HomeRemoteDatasource>(),
+        localDatasource: getIt<HomeLocalDatasource>(),
       ),
     );
   }

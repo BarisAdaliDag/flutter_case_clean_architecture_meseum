@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_state.dart';
@@ -23,7 +24,7 @@ class _HomeSeeAllViewState extends State<HomeSeeAllView> {
           query: widget.isFamous ? "Famous%20Artworks" : "Current%20Exhibitions",
           isFamous: widget.isFamous,
           start: 0,
-          end: 50,
+          end: 20,
         );
   }
 
@@ -39,8 +40,28 @@ class _HomeSeeAllViewState extends State<HomeSeeAllView> {
           if (state.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (list.isEmpty) {
-            return const Center(child: Text("No data found."));
+
+          if (state.errorMessage != null || list.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(state.errorMessage!),
+                  const Gap(10),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<HomeCubit>().fetchObjectList(
+                            query: widget.isFamous ? "Famous%20Artworks" : "Current%20Exhibitions",
+                            isFamous: widget.isFamous,
+                            start: 0,
+                            end: 20,
+                          );
+                    },
+                    child: const Text('Tekrar Dene'),
+                  ),
+                ],
+              ),
+            );
           }
           return Padding(
             padding: const EdgeInsets.all(12),

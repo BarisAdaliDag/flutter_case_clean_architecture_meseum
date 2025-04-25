@@ -22,13 +22,32 @@ class DepartmentDetailView extends StatefulWidget {
   State<DepartmentDetailView> createState() => _DepartmentDetailViewState();
 }
 
-class _DepartmentDetailViewState extends State<DepartmentDetailView> {
+class _DepartmentDetailViewState extends State<DepartmentDetailView> with RouteAware {
+  int departmantId = 0;
   @override
   void initState() {
     super.initState();
-    // İlgili departmanın objelerini yükle
     getIt<DepartmentDetailCubit>().loadListCollection(widget.departmentId);
+    departmantId = widget.departmentId;
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   AppRouter.routeObserver.subscribe(this, ModalRoute.of(context)!);
+  // }
+
+  // @override
+  // void dispose() {
+  //   AppRouter.routeObserver.unsubscribe(this);
+  //   super.dispose();
+  // }
+
+  // @override
+  // void didPopNext() {
+  //   // Sayfa geri gelince tekrar yükle
+  //   getIt<DepartmentDetailCubit>().loadListCollection(widget.departmentId);
+  // }
 
   @override
   Widget build(BuildContext context) {

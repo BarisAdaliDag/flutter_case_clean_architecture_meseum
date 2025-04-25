@@ -123,7 +123,7 @@
     },
     {
       "id": "5:8372765202816072250",
-      "lastPropertyId": "4:7088087958311939770",
+      "lastPropertyId": "5:9003355931203272536",
       "name": "ObjectsIdModel",
       "properties": [
         {
@@ -146,14 +146,39 @@
           "id": "4:7088087958311939770",
           "name": "departmentId",
           "type": 6
+        },
+        {
+          "id": "5:9003355931203272536",
+          "name": "query",
+          "type": 9
         }
       ],
       "relations": []
+    },
+    {
+      "id": "6:7542907522918778874",
+      "lastPropertyId": "1:5536665736572373008",
+      "name": "DepartmentsModel",
+      "properties": [
+        {
+          "id": "1:5536665736572373008",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:6616134580725138794",
+          "name": "departments",
+          "targetId": "2:5475996658203390412"
+        }
+      ]
     }
   ],
-  "lastEntityId": "5:8372765202816072250",
+  "lastEntityId": "6:7542907522918778874",
   "lastIndexId": "0:0",
-  "lastRelationId": "0:0",
+  "lastRelationId": "1:6616134580725138794",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,

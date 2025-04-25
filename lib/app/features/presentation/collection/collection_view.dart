@@ -10,6 +10,7 @@ import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/widget/collection_card.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/widget/collection_header.dart';
 import 'package:metropolitan_museum/app/common/widgets/collection_text_field.dart';
+import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/cubit/departmant_detail_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/view/department_detail_view.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/widgets/home_listview_title.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -68,6 +69,7 @@ class _CollectionViewState extends State<CollectionView> {
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                         child: GestureDetector(
                           onTap: () {
+                            getIt<DepartmentDetailCubit>().loadListCollection(department.departmentId);
                             context.router.push(DepartmentDetailRoute(
                               departmentId: department.departmentId,
                               departmentName: department.displayName,

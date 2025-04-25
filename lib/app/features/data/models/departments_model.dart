@@ -5,14 +5,18 @@ import 'package:objectbox/objectbox.dart';
 class DepartmentsModel extends Equatable {
   @Id()
   int id = 0;
-  final List<DepartmentModel> departments;
 
-  DepartmentsModel({this.id = 0, required this.departments});
+  final departments = ToMany<DepartmentModel>(); // List yerine ToMany
+
+  DepartmentsModel();
 
   factory DepartmentsModel.fromJson(Map<String, dynamic> json) {
-    return DepartmentsModel(
-      departments: (json['departments'] as List<dynamic>).map((e) => DepartmentModel.fromJson(e)).toList(),
+    final model = DepartmentsModel();
+    final List<dynamic> departmentsJson = json['departments'] ?? [];
+    model.departments.addAll(
+      departmentsJson.map((e) => DepartmentModel.fromJson(e)).toList(),
     );
+    return model;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,26 +26,26 @@ class DepartmentsModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [departments];
+  List<Object?> get props => [id, departments];
 }
 
 @Entity()
 class DepartmentModel extends Equatable {
   @Id()
   int id = 0;
+
   final int departmentId;
   final String displayName;
 
   DepartmentModel({
-    this.id = 0,
     required this.departmentId,
     required this.displayName,
   });
 
   factory DepartmentModel.fromJson(Map<String, dynamic> json) {
     return DepartmentModel(
-      departmentId: json['departmentId'],
-      displayName: json['displayName'],
+      departmentId: json['departmentId'] ?? 0,
+      displayName: json['displayName'] ?? '',
     );
   }
 
@@ -53,5 +57,5 @@ class DepartmentModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [departmentId, displayName];
+  List<Object?> get props => [id, departmentId, displayName];
 }

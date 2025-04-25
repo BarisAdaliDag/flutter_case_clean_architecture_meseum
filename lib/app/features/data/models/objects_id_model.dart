@@ -4,23 +4,26 @@ import 'package:objectbox/objectbox.dart';
 @Entity()
 class ObjectsIdModel extends Equatable {
   @Id()
-  int id = 0; // ObjectBox için gerekli
+  int id = 0;
+
   final int total;
   final List<int> objectIDs;
-  final int departmentId; // Yeni alan
+  final int departmentId;
+  String? query; // Yeni alan
 
   ObjectsIdModel({
-    this.id = 0,
     required this.total,
     required this.objectIDs,
     required this.departmentId,
+    this.query,
   });
 
-  factory ObjectsIdModel.fromJson(Map<String, dynamic> json, {required int departmentId}) {
+  factory ObjectsIdModel.fromJson(Map<String, dynamic> json, {required int departmentId, String? query}) {
     return ObjectsIdModel(
-      total: json['total'],
+      total: json['total'] ?? 0,
       objectIDs: List<int>.from(json['objectIDs'] ?? []),
       departmentId: departmentId,
+      query: query,
     );
   }
 
@@ -29,9 +32,10 @@ class ObjectsIdModel extends Equatable {
       'total': total,
       'objectIDs': objectIDs,
       'departmentId': departmentId,
+      'query': query,
     };
   }
 
   @override
-  List<Object?> get props => [total, objectIDs, departmentId];
+  List<Object?> get props => [id, total, objectIDs, departmentId, query];
 }

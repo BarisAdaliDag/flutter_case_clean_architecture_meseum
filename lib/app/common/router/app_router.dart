@@ -18,7 +18,7 @@ part 'app_router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   RouteType get defaultRouteType => const RouteType.adaptive();
-
+  static final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
