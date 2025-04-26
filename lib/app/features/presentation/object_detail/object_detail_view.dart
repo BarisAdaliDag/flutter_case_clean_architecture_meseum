@@ -48,10 +48,10 @@ class ObjectDetailView extends StatelessWidget {
 
                   Text(
                     objectModel.title ?? 'Unknown Title',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: Theme.of(context).brightness != Brightness.dark ? AppColors.lavender : Colors.black87,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -66,9 +66,12 @@ class ObjectDetailView extends StatelessWidget {
                   const SizedBox(height: 16),
 
                   // Açıklama Bölümü
-                  const Text(
+                  Text(
                     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
-                    style: TextStyle(fontSize: 14, color: Colors.black87),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).brightness != Brightness.dark ? AppColors.lavender : Colors.black87,
+                    ),
                   ),
                   const SizedBox(height: 24),
                 ],

@@ -44,8 +44,8 @@ class _SplashViewState extends State<SplashView> {
       title: 'The Metropolitan Museum of Art',
       body: departmentName,
       payload: 'daily_reminder',
-      hour: DateTime.now().hour,
-      minute: DateTime.now().minute + 1,
+      hour: 12,
+      minute: 0,
       context: context,
     );
   }
