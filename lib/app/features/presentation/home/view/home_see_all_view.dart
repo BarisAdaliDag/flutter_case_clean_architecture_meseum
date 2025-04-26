@@ -7,6 +7,7 @@ import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
+import 'package:metropolitan_museum/app/common/widgets/lottie_circular_progress.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_state.dart';
 import 'package:metropolitan_museum/app/common/widgets/home_card_widget.dart';
@@ -87,7 +88,7 @@ class _HomeSeeAllViewState extends State<HomeSeeAllView> {
               final totalPages = (totalItems / itemsPerPage).ceil();
 
               if (state.isLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const LottieCircularProgress();
               }
 
               if (state.errorMessage != null || list.isEmpty) {

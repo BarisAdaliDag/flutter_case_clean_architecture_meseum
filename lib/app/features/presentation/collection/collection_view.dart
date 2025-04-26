@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
+import 'package:metropolitan_museum/app/common/widgets/lottie_circular_progress.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_state.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
@@ -45,7 +46,7 @@ class _CollectionViewState extends State<CollectionView> {
           child: BlocBuilder<CollectionCubit, CollectionState>(
             builder: (context, state) {
               if (state.isLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const LottieCircularProgress();
               }
 
               return ListView(

@@ -6,6 +6,7 @@ import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/common/widgets/collection_text_field.dart';
+import 'package:metropolitan_museum/app/common/widgets/lottie_circular_progress.dart';
 import 'package:metropolitan_museum/app/features/data/models/object_model.dart';
 import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/cubit/departmant_detail_cubit.dart';
 import 'package:metropolitan_museum/app/common/widgets/home_card_widget.dart';
@@ -63,7 +64,7 @@ class _DepartmentDetailViewState extends State<DepartmentDetailView> with RouteA
           builder: (context, state) {
             final objects = state.filteredObjectList;
             if (state.isLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const LottieCircularProgress();
             }
             if (objects.isEmpty) {
               return Center(

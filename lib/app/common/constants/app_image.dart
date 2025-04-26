@@ -5,10 +5,9 @@ extension AppImagePath on AppImage {
 }
 
 enum AppLottie {
-  success,
   loading,
 }
 
 extension AppLottiePath on AppLottie {
-  String get path => 'assets/lottie/$name.json';
+  String get path => 'assets/lotties/$name.json';
 }
