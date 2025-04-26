@@ -27,51 +27,74 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return AutoTabsRouter(
       builder: (context, child) {
-        return Scaffold(
-          body: BlocBuilder<MainCubit, MainState>(
-            builder: (context, state) {
-              // var cubit = context.read<MainCubit>();
+        return Container(
+          color: AppColors.whiteBottomAppbar,
+          child: SafeArea(
+            bottom: false,
+            child: Scaffold(
+              body: BlocBuilder<MainCubit, MainState>(
+                builder: (context, state) {
+                  // var cubit = context.read<MainCubit>();
 
-              // if (state.networkResult == NetworkResult.off) {
-              //   return Container();
-              // }
-              return IndexedStack(
-                key: const ValueKey('main'),
-                index: state.selectedIndex,
-                children: [
-                  child,
-                ],
-              );
-            },
-          ),
-          floatingActionButton: Transform.translate(
-            offset: const Offset(10, 0), // Sağa 20 piksel kaydırır
-            child: SizedBox(
-              width: 80,
-              height: 80,
-              child: FloatingActionButton(
-                backgroundColor: AppColors.whiteBottomAppbar,
-                onPressed: () {
-                  context.tabsRouter.setActiveIndex(1);
+                  // if (state.networkResult == NetworkResult.off) {
+                  //   return Container();
+                  // }
+                  return Column(
+                    children: [
+                      if (state.networkResult == NetworkResult.off)
+                        Container(
+                          height: 50,
+                          color: AppColors.redValencia,
+                          child: const Center(
+                            child: Text(
+                              "No Internet Connection",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      Expanded(
+                        child: IndexedStack(
+                          key: const ValueKey('main'),
+                          index: state.selectedIndex,
+                          children: [
+                            child,
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
                 },
-                shape: const CircleBorder(), // Yuvarlak şekil
-                child: Image.asset(
-                  context.tabsRouter.activeIndex == 1
-                      ? AppIcons.tabbarCollectionSelected.assetPath
-                      : AppIcons.tabbarCollectionUnselected.assetPath,
-                  width: 40,
-                  height: 40,
+              ),
+              floatingActionButton: Transform.translate(
+                offset: const Offset(10, 0), // Sağa 20 piksel kaydırır
+                child: SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: FloatingActionButton(
+                    backgroundColor: AppColors.whiteBottomAppbar,
+                    onPressed: () {
+                      context.tabsRouter.setActiveIndex(1);
+                    },
+                    shape: const CircleBorder(), // Yuvarlak şekil
+                    child: Image.asset(
+                      context.tabsRouter.activeIndex == 1
+                          ? AppIcons.tabbarCollectionSelected.assetPath
+                          : AppIcons.tabbarCollectionUnselected.assetPath,
+                      width: 40,
+                      height: 40,
+                    ),
+                  ),
                 ),
               ),
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+              bottomNavigationBar: BlocBuilder<MainCubit, MainState>(
+                builder: (context, state) {
+                  return SafeArea(
+                    child: buildBottomNavBar(context, context.tabsRouter),
+                  );
+                },
+              ),
             ),
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: BlocBuilder<MainCubit, MainState>(
-            builder: (context, state) {
-              return SafeArea(
-                child: buildBottomNavBar(context, context.tabsRouter),
-              );
-            },
           ),
         );
       },

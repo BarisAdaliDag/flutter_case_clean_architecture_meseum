@@ -8,11 +8,15 @@ import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
 import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
+import 'package:metropolitan_museum/app/common/widgets/logo_image.dart';
 import 'package:metropolitan_museum/app/common/widgets/lottie_circular_progress.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_state.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
+import 'package:metropolitan_museum/app/features/presentation/home/widgets/current_exhibitions_list_view.dart';
+import 'package:metropolitan_museum/app/features/presentation/home/widgets/famous_artwork_list_view.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/widgets/home_listview_title.dart';
+import 'package:metropolitan_museum/app/features/presentation/home/widgets/try_again_bottom_container.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../data/models/object_model.dart';
@@ -48,12 +52,7 @@ class _HomeViewState extends State<HomeView> {
             return ListView(
               children: [
                 const Gap(20),
-                SizedBox(
-                    height: 70,
-                    width: 70,
-                    child: Image.asset(
-                      AppImage.logo.path,
-                    )),
+                const LogoImage(),
                 const Gap(20),
                 const TheMetHeader(),
                 const Gap(20),
@@ -62,94 +61,16 @@ class _HomeViewState extends State<HomeView> {
                   child: Column(
                     children: [
                       if (state.currentList.isNotEmpty)
-                        Column(
-                          children: [
-                            HomeListViewHeader(
-                              onTap: () {
-                                context.router.push(HomeSeeAllRoute(isFamous: false));
-                              },
-                              title: "Current Exhibitions",
-                            ),
-                            const Gap(10),
-                            SizedBox(
-                              height: 300,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: state.currentList.length,
-                                itemBuilder: (context, index) {
-                                  final ObjectModel obj = state.currentList[index];
-                                  return SizedBox(
-                                    width: 195,
-                                    child: HomeCard(
-                                      onTap: () {
-                                        context.router.push(ObjectDetailRoute(objectModel: obj));
-                                      },
-                                      image: obj.primaryImageSmall ?? "",
-                                      title: obj.title ?? "",
-                                      subtitle: obj.objectName ?? "",
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
+                        CurrentExxhibitionsListView(
+                          state: state,
                         ),
                       if (state.famousArtworkList.isNotEmpty)
-                        Column(
-                          children: [
-                            HomeListViewHeader(
-                              onTap: () {
-                                context.router.push(HomeSeeAllRoute(isFamous: true));
-                              },
-                              title: "Famous Artworks",
-                            ),
-                            const Gap(10),
-                            SizedBox(
-                              height: 300,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: state.famousArtworkList.length,
-                                itemBuilder: (context, index) {
-                                  final ObjectModel obj = state.famousArtworkList[index];
-                                  return SizedBox(
-                                    width: 195,
-                                    child: HomeCard(
-                                      onTap: () {
-                                        context.router.push(ObjectDetailRoute(objectModel: obj));
-                                      },
-                                      image: obj.primaryImageSmall ?? "",
-                                      title: obj.title ?? "",
-                                      subtitle: obj.objectName ?? "",
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
+                        FamouArtWorkListView(
+                          state: state,
                         ),
                       if (state.currentList.isEmpty && state.famousArtworkList.isEmpty && state.errorMessage != null)
-                        //todo: solve try again button
-                        Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(state.errorMessage!),
-                              const Gap(10),
-                              TextButton(
-                                onPressed: () {
-                                  getIt<HomeCubit>().fetchHomeData();
-                                },
-                                child: Text(
-                                  'Try Again',
-                                  style: TxStyleHelper.body.copyWith(
-                                    color: AppColors.redValencia,
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: Colors.red,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        TryAgainButtonContainer(
+                          state: state,
                         ),
                     ],
                   ),
