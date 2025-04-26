@@ -14,6 +14,7 @@ class HomeCard extends StatelessWidget {
   final bool isImageLocal;
   final double imageHeight;
   final double imageWidth;
+  final VoidCallback? onTap;
 
   const HomeCard({
     super.key,
@@ -23,47 +24,51 @@ class HomeCard extends StatelessWidget {
     this.isImageLocal = false,
     this.imageHeight = 200,
     this.imageWidth = double.infinity,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: AppColors.greyHomeBackground,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: image.isNotEmpty
-                ? CacheNetworkImageWidget(image: image, imageWidth: imageWidth, imageHeight: imageHeight)
-                : SizedBox(width: imageWidth, height: imageHeight, child: const Icon(Icons.image_not_supported)),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  // height: 40,
-                  child: Text(
-                    subtitle,
-                    style: const TextStyle(color: AppColors.greyNickel),
-                    maxLines: 1,
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        color: AppColors.greyHomeBackground,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              child: image.isNotEmpty
+                  ? CacheNetworkImageWidget(image: image, imageWidth: imageWidth, imageHeight: imageHeight)
+                  : SizedBox(width: imageWidth, height: imageHeight, child: const Icon(Icons.image_not_supported)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    // height: 40,
+                    child: Text(
+                      subtitle,
+                      style: const TextStyle(color: AppColors.greyNickel),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const Gap(4),
+                  Text(
+                    title,
+                    style: TxStyleHelper.body.copyWith(fontWeight: FontWeight.w600),
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                const Gap(4),
-                Text(
-                  title,
-                  style: TxStyleHelper.body.copyWith(fontWeight: FontWeight.w600),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

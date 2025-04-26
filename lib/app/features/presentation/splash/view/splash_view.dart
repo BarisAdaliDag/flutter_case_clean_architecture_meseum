@@ -2,6 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
+import 'package:metropolitan_museum/app/common/service/notification_service.dart';
+import 'package:metropolitan_museum/app/common/service/object_box_service.dart';
+import 'package:metropolitan_museum/app/features/data/models/departments_model.dart';
 import 'package:metropolitan_museum/app/features/presentation/test/cubit/test_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/test/view/test_view.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +21,32 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    init();
-  }
-
-  Future<void> init() async {
+    print('called${DateTime.now().second}');
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // getIt.get<TestCubit>().getAllTests();
+      await scheduleInitialNotification(context); // <-- context burada güvenli
       context.replaceRoute(const MainRoute());
     });
+  }
+
+  Future<void> scheduleInitialNotification(BuildContext context) async {
+    List<DepartmentModel> models = getIt<ObjectBoxService>().departmentBox.getAll();
+    String departmentName = "";
+    if (models.isNotEmpty) {
+      // Rastgele bir department seç
+      final random = (models.length == 1) ? 0 : (DateTime.now().millisecondsSinceEpoch % models.length);
+      departmentName = "Visit the ${models[random].displayName} department today!";
+      return;
+    }
+
+    await NotificationService().scheduleDailyNotification(
+      id: 0,
+      title: 'The Metropolitan Museum of Art',
+      body: departmentName,
+      payload: 'daily_reminder',
+      hour: DateTime.now().hour,
+      minute: DateTime.now().minute + 1,
+      context: context,
+    );
   }
 
   @override

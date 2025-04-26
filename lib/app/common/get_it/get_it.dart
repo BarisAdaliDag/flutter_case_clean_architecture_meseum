@@ -99,7 +99,7 @@ final class ServiceLocator {
     getIt.registerLazySingleton<CollectionCubit>(
       () => CollectionCubit(collectionRepository: getIt<CollectionRepository>()),
     );
-    getIt.registerLazySingleton<HomeCubit>(
+    getIt.registerCachedFactory<HomeCubit>(
       () => HomeCubit(homeRepository: getIt<HomeRepository>()),
     );
     getIt.registerLazySingleton<DepartmentDetailCubit>(

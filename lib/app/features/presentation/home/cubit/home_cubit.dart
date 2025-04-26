@@ -18,14 +18,10 @@ class HomeCubit extends Cubit<HomeState> {
     required int end,
   }) async {
     print('Fetching data for query: $query, isFamous: $isFamous, start: $start, end: $end');
-    // State'i sıfırla
-    emit(HomeState(
+    // Yükleme durumunu güncelle
+    emit(state.copyWith(
       isLoading: true,
       errorMessage: null,
-      famousObjectsIdModel: isFamous ? null : state.famousObjectsIdModel,
-      currentObjectsIdModel: !isFamous ? null : state.currentObjectsIdModel,
-      famousArtworkList: isFamous ? [] : state.famousArtworkList,
-      currentList: !isFamous ? [] : state.currentList,
     ));
 
     // Veritabanı içeriğini kontrol et
@@ -36,7 +32,7 @@ class HomeCubit extends Cubit<HomeState> {
     final bool hasInternet = networkResult == NetworkResult.on;
 
     ObjectsIdModel? objectsIdModel;
-    List<ObjectModel> details = [];
+    List<ObjectModel> details = isFamous ? List.from(state.famousArtworkList) : List.from(state.currentList);
 
     if (hasInternet) {
       // Online veri çekme
@@ -71,13 +67,9 @@ class HomeCubit extends Cubit<HomeState> {
       if (localResult is SuccessDataResult<ObjectsIdModel?> && localResult.data != null) {
         objectsIdModel = localResult.data!;
       } else {
-        emit(HomeState(
+        emit(state.copyWith(
           isLoading: false,
-          errorMessage: 'No object or Offline Network-1',
-          famousObjectsIdModel: isFamous ? null : state.famousObjectsIdModel,
-          currentObjectsIdModel: !isFamous ? null : state.currentObjectsIdModel,
-          famousArtworkList: isFamous ? [] : state.famousArtworkList,
-          currentList: !isFamous ? [] : state.currentList,
+          errorMessage: 'Bu koleksiyon için çevrimdışı veri bulunamadı.',
         ));
         print('No local data for query: $query');
         return;
@@ -96,15 +88,17 @@ class HomeCubit extends Cubit<HomeState> {
       }
     }
 
-    emit(HomeState(
+    emit(state.copyWith(
       isLoading: false,
       famousObjectsIdModel: isFamous ? objectsIdModel : state.famousObjectsIdModel,
       currentObjectsIdModel: !isFamous ? objectsIdModel : state.currentObjectsIdModel,
       famousArtworkList: isFamous ? details : state.famousArtworkList,
       currentList: !isFamous ? details : state.currentList,
-      errorMessage: details.isEmpty ? 'No object or Offline Network .' : null,
+      famousTotal: isFamous ? objectsIdModel.total : state.famousTotal,
+      currentTotal: !isFamous ? objectsIdModel.total : state.currentTotal,
+      errorMessage: details.isEmpty ? 'Bu koleksiyon için obje bulunamadı.' : null,
     ));
-    print('Emitted state for query: $query, Details count: ${details.length}');
+    print('Emitted state for query: $query, Details count: ${details.length}, Total: ${objectsIdModel.total}');
   }
 
   Future<void> fetchHomeData() async {

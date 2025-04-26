@@ -79,6 +79,9 @@ class _HomeViewState extends State<HomeView> {
                                   return SizedBox(
                                     width: 195,
                                     child: HomeCard(
+                                      onTap: () {
+                                        context.router.push(ObjectDetailRoute(objectModel: obj));
+                                      },
                                       image: obj.primaryImageSmall ?? "",
                                       title: obj.title ?? "",
                                       subtitle: obj.objectName ?? "",
@@ -109,6 +112,9 @@ class _HomeViewState extends State<HomeView> {
                                   return SizedBox(
                                     width: 195,
                                     child: HomeCard(
+                                      onTap: () {
+                                        context.router.push(ObjectDetailRoute(objectModel: obj));
+                                      },
                                       image: obj.primaryImageSmall ?? "",
                                       title: obj.title ?? "",
                                       subtitle: obj.objectName ?? "",

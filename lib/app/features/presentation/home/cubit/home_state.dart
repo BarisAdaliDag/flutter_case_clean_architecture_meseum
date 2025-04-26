@@ -4,42 +4,56 @@ import 'package:metropolitan_museum/app/features/data/models/object_model.dart';
 
 class HomeState extends Equatable {
   final bool isLoading;
+  final String? errorMessage;
   final ObjectsIdModel? famousObjectsIdModel;
   final ObjectsIdModel? currentObjectsIdModel;
-
-  final String? errorMessage;
-  final List<ObjectModel> currentList;
   final List<ObjectModel> famousArtworkList;
+  final List<ObjectModel> currentList;
+  final int famousTotal; // Yeni: Ünlü eserlerin toplam sayısı
+  final int currentTotal; // Yeni: Güncel sergilerin toplam sayısı
 
   const HomeState({
     this.isLoading = false,
+    this.errorMessage,
     this.famousObjectsIdModel,
     this.currentObjectsIdModel,
-    this.errorMessage,
-    this.currentList = const [],
     this.famousArtworkList = const [],
+    this.currentList = const [],
+    this.famousTotal = 0,
+    this.currentTotal = 0,
   });
 
   HomeState copyWith({
     bool? isLoading,
+    String? errorMessage,
     ObjectsIdModel? famousObjectsIdModel,
     ObjectsIdModel? currentObjectsIdModel,
-    ObjectModel? objectModel,
-    String? errorMessage,
-    List<ObjectModel>? currentList,
     List<ObjectModel>? famousArtworkList,
+    List<ObjectModel>? currentList,
+    int? famousTotal,
+    int? currentTotal,
   }) {
     return HomeState(
       isLoading: isLoading ?? this.isLoading,
-      famousObjectsIdModel: famousObjectsIdModel ?? famousObjectsIdModel,
-      errorMessage: errorMessage ?? this.errorMessage,
-      currentList: currentList ?? this.currentList,
-      famousArtworkList: famousArtworkList ?? this.famousArtworkList,
+      errorMessage: errorMessage,
+      famousObjectsIdModel: famousObjectsIdModel ?? this.famousObjectsIdModel,
       currentObjectsIdModel: currentObjectsIdModel ?? this.currentObjectsIdModel,
+      famousArtworkList: famousArtworkList ?? this.famousArtworkList,
+      currentList: currentList ?? this.currentList,
+      famousTotal: famousTotal ?? this.famousTotal,
+      currentTotal: currentTotal ?? this.currentTotal,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [isLoading, famousObjectsIdModel, errorMessage, currentList, famousArtworkList, currentObjectsIdModel];
+  List<Object?> get props => [
+        isLoading,
+        errorMessage,
+        famousObjectsIdModel,
+        currentObjectsIdModel,
+        famousArtworkList,
+        currentList,
+        famousTotal,
+        currentTotal,
+      ];
 }

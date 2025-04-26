@@ -90,17 +90,15 @@ class _DepartmentDetailViewState extends State<DepartmentDetailView> with RouteA
                       itemCount: objects.length,
                       itemBuilder: (context, index) {
                         final model = objects[index];
-                        return GestureDetector(
+                        return HomeCard(
                           onTap: () {
                             context.router.push(ObjectDetailRoute(objectModel: model));
                           },
-                          child: HomeCard(
-                            image: model.primaryImageSmall ?? "",
-                            title: model.objectName ?? "",
-                            subtitle: model.title ?? "",
-                            imageWidth: 200,
-                            imageHeight: 200,
-                          ),
+                          image: model.primaryImageSmall ?? "",
+                          title: model.objectName ?? "",
+                          subtitle: model.title ?? "",
+                          imageWidth: 200,
+                          imageHeight: 200,
                         );
                       },
                     ),
