@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class DetailItem extends StatelessWidget {
@@ -23,7 +24,7 @@ class DetailItem extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold, // Başlık bold olacak
-                color: Colors.black87,
+                color: Theme.of(context).brightness != Brightness.dark ? AppColors.smokyBlack : AppColors.lavender,
               ),
             ),
             TextSpan(
@@ -31,7 +32,7 @@ class DetailItem extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.normal, // Değer normal olacak
-                color: Colors.black87,
+                color: Theme.of(context).brightness != Brightness.dark ? AppColors.smokyBlack : AppColors.lavender,
               ),
             ),
           ],

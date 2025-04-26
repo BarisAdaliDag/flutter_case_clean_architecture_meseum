@@ -4,6 +4,7 @@ import 'package:metropolitan_museum/app/features/presentation/collection/cubit/c
 import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/cubit/departmant_detail_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/main/cubit/main_cubit.dart';
+import 'package:metropolitan_museum/app/features/presentation/settings/cubit/theme_cubit.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'package:metropolitan_museum/app/common/constants/app_theme_data.dart';
@@ -47,12 +48,21 @@ class MainApp extends StatelessWidget {
             BlocProvider(
               create: (context) => getIt.get<DepartmentDetailCubit>(),
             ),
+            BlocProvider(
+              create: (context) => getIt.get<ThemeCubit>(),
+            ),
           ],
-          child: MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            routerConfig: _appRouter.config(),
-            scaffoldMessengerKey: AppKeys.scaffoldMessengerKey,
-            theme: AppThemeData.themeData,
+          child: BlocBuilder<ThemeCubit, ThemeMode>(
+            builder: (context, themeMode) {
+              return MaterialApp.router(
+                debugShowCheckedModeBanner: false,
+                routerConfig: _appRouter.config(),
+                scaffoldMessengerKey: AppKeys.scaffoldMessengerKey,
+                theme: AppThemeData.themeData,
+                darkTheme: AppThemeData.darkThemeData,
+                themeMode: themeMode,
+              );
+            },
           ),
         );
       },

@@ -50,7 +50,8 @@ class CollectionCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TxStyleHelper.body.copyWith(fontWeight: FontWeight.w400, fontSize: 15.sp),
+                  style: TxStyleHelper.body
+                      .copyWith(fontWeight: FontWeight.w400, fontSize: 15.sp, color: AppColors.smokyBlack),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
 import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
+import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/features/presentation/info/widget.dart/info_header.dart';
 import 'package:metropolitan_museum/app/features/presentation/info/widget.dart/museum_info_widget.dart';
 
@@ -16,6 +17,13 @@ final class InfoView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Info'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.router.push(const SettingRoute());
+              },
+              icon: const Icon(Icons.settings))
+        ],
       ),
       body: ListView(
         children: [

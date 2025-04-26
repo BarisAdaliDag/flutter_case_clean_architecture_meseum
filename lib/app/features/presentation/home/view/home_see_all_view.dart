@@ -5,12 +5,12 @@ import 'package:gap/gap.dart';
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
-import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/common/widgets/lottie_circular_progress.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_state.dart';
 import 'package:metropolitan_museum/app/common/widgets/home_card_widget.dart';
+import 'package:metropolitan_museum/app/features/presentation/home/mixin/see_all_mixin.dart';
 
 @RoutePage()
 class HomeSeeAllView extends StatefulWidget {
@@ -21,60 +21,14 @@ class HomeSeeAllView extends StatefulWidget {
   State<HomeSeeAllView> createState() => _HomeSeeAllViewState();
 }
 
-class _HomeSeeAllViewState extends State<HomeSeeAllView> {
-  int currentPage = 1;
-  static const int itemsPerPage = 20;
-
-  bool hasInternet = false;
-
+class _HomeSeeAllViewState extends State<HomeSeeAllView> with SeeAllMixin<HomeSeeAllView> {
   @override
-  void initState() {
-    super.initState();
-
-    _fetchData();
-  }
-
-  Future<void> _fetchData() async {
-    hasInternet = await context.read<HomeCubit>().checkInternetControl();
-    print('HomeSeeAllView fetching page $currentPage for isFamous: ${widget.isFamous}');
-
-    widget.isFamous ? context.read<HomeCubit>().resetfamouslist() : context.read<HomeCubit>().resetCurrentlist();
-    int start = (currentPage - 1) * itemsPerPage;
-    int end = currentPage * itemsPerPage;
-    await context.read<HomeCubit>().fetchObjectList(
-          query: widget.isFamous ? "Famous%20Artworks" : "Current%20Exhibitions",
-          isFamous: widget.isFamous,
-          start: start,
-          end: end,
-        );
-  }
-
-  void _nextPage(int totalItems) {
-    final totalPages = (totalItems / itemsPerPage).ceil();
-    if (currentPage < totalPages) {
-      print('Navigating to next page: ${currentPage + 1} / $totalPages');
-
-      setState(() {
-        currentPage++;
-        _fetchData();
-      });
-    }
-  }
-
-  void _previousPage() {
-    if (currentPage > 1) {
-      print('Navigating to previous page: ${currentPage - 1}');
-      setState(() {
-        currentPage--;
-        _fetchData();
-      });
-    }
-  }
+  bool get isFamous => widget.isFamous;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.ghostWhite, // SafeArea alt kısmı ve arka plan beyaz
+      color: Theme.of(context).colorScheme.surface,
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.transparent,
@@ -85,7 +39,7 @@ class _HomeSeeAllViewState extends State<HomeSeeAllView> {
             builder: (context, state) {
               final list = widget.isFamous ? state.famousArtworkList : state.currentList;
               final totalItems = widget.isFamous ? state.famousTotal : state.currentTotal;
-              final totalPages = (totalItems / itemsPerPage).ceil();
+              final totalPages = (totalItems / SeeAllMixin.itemsPerPage).ceil();
 
               if (state.isLoading) {
                 return const LottieCircularProgress();
@@ -99,19 +53,12 @@ class _HomeSeeAllViewState extends State<HomeSeeAllView> {
                       Text(state.errorMessage ?? "Bu koleksiyon için veri bulunamadı."),
                       const Gap(10),
                       ElevatedButton(
-                        onPressed: _fetchData,
+                        onPressed: () => fetchData(context),
                         child: const Text('Try Again'),
                       ),
                     ],
                   ),
                 );
-              }
-
-              // Veri yüklendiğinde kaydırmayı tetikle
-              if (!state.isLoading && list.isNotEmpty) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  //  _scrollToPosition();
-                });
               }
 
               return Column(
@@ -151,7 +98,7 @@ class _HomeSeeAllViewState extends State<HomeSeeAllView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
-                            onPressed: currentPage > 1 ? _previousPage : null,
+                            onPressed: currentPage > 1 ? previousPage : null,
                             child: Text(
                               'Previous',
                               style: TxStyleHelper.body.copyWith(
@@ -162,15 +109,11 @@ class _HomeSeeAllViewState extends State<HomeSeeAllView> {
                             ),
                           ),
                           Container(),
-                          // Padding(
-                          //   padding: const EdgeInsets.only(left: 0),
-                          //   child: Text('Total ${list.length} collections ', style: TxStyleHelper.body),
-                          // ),
                           hasInternet
                               ? TextButton(
                                   onPressed: () {
                                     if (currentPage < totalPages) {
-                                      _nextPage(totalItems);
+                                      nextPage(totalItems);
                                     }
                                   },
                                   child: Text(

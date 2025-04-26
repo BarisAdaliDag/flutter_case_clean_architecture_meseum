@@ -21,8 +21,11 @@ class HomeListViewHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title,
-              style: TxStyleHelper.subheadingBold
-                  .copyWith(fontSize: (19.0).sp, color: AppColors.black, fontWeight: FontWeight.w600)),
+              style: TxStyleHelper.subheadingBold.copyWith(
+                  fontSize: (19.0).sp,
+                  color:
+                      Theme.of(context).brightness == Brightness.dark ? AppColors.whiteBottomAppbar : AppColors.black,
+                  fontWeight: FontWeight.w600)),
           InkWell(
             onTap: onTap,
             child: const Row(

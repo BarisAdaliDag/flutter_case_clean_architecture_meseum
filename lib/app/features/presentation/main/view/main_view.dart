@@ -71,7 +71,9 @@ class _MainViewState extends State<MainView> {
                   width: 80,
                   height: 80,
                   child: FloatingActionButton(
-                    backgroundColor: AppColors.whiteBottomAppbar,
+                    backgroundColor: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.smokyBlack
+                        : AppColors.whiteBottomAppbar,
                     onPressed: () {
                       context.tabsRouter.setActiveIndex(1);
                     },
@@ -127,11 +129,12 @@ class _MainViewState extends State<MainView> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(AppConstants.radiusMedium), // Kenarları yuvarlat
               child: BottomAppBar(
-                color: AppColors.whiteBottomAppbar,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.smokyBlack
+                    : AppColors.whiteBottomAppbar,
                 shape: const CircularNotchedRectangle(),
                 notchMargin: 15.0,
                 child: SizedBox(
-// height: kBottomNavigationBarHeight * 1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

@@ -32,7 +32,7 @@ class HomeCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        color: AppColors.greyHomeBackground,
+        color: Theme.of(context).brightness == Brightness.dark ? AppColors.redValencia : AppColors.greyHomeBackground,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,10 +49,12 @@ class HomeCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    // height: 40,
                     child: Text(
                       subtitle,
-                      style: const TextStyle(color: AppColors.greyNickel),
+                      style: TextStyle(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.whiteBottomAppbar
+                              : AppColors.greyNickel),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

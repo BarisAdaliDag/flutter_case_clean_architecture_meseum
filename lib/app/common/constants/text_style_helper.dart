@@ -8,6 +8,7 @@ class TxStyleHelper {
   static final TextStyle heading1 = TextStyle(
     fontSize: 34.sp,
     fontWeight: FontWeight.w400,
+    
   );
 
   static final TextStyle heading2 = TextStyle(

@@ -4,6 +4,7 @@ import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/common/service/notification_service.dart';
 import 'package:metropolitan_museum/app/common/service/object_box_service.dart';
+import 'package:metropolitan_museum/app/common/widgets/logo_image.dart';
 import 'package:metropolitan_museum/app/features/data/models/departments_model.dart';
 import 'package:metropolitan_museum/app/features/presentation/test/cubit/test_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/test/view/test_view.dart';
@@ -51,15 +52,8 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: SizedBox(
-            height: 70,
-            width: 70,
-            child: Image.asset(
-              AppImage.logo.path,
-            )),
-      ),
+    return const Scaffold(
+      body: Center(child: LogoImage()),
     );
   }
 }
