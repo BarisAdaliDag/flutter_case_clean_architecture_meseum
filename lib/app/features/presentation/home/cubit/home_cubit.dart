@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metropolitan_museum/app/features/data/repositories/home_repository.dart';
 import 'package:metropolitan_museum/app/features/data/models/objects_id_model.dart';
@@ -25,11 +27,11 @@ class HomeCubit extends Cubit<HomeState> {
     ));
 
     // Veritabanı içeriğini kontrol et
-    await homeRepository.debugPrintAllObjectsId();
+    // await homeRepository.debugPrintAllObjectsId();
 
     final networkControl = NetworkControl();
     final networkResult = await networkControl.checkNetworkFirstTime();
-    final bool hasInternet = networkResult == NetworkResult.on;
+    bool hasInternet = await checkInternetControl();
 
     ObjectsIdModel? objectsIdModel;
     List<ObjectModel> details = isFamous ? List.from(state.famousArtworkList) : List.from(state.currentList);
@@ -47,21 +49,28 @@ class HomeCubit extends Cubit<HomeState> {
           start,
           end > objectsIdModel.objectIDs.length ? objectsIdModel.objectIDs.length : end,
         );
+        int succesx = 0;
+        int failx = 0;
         for (final id in ids) {
           final detailResult = await homeRepository.getObjectDetails(objectId: id);
           if (detailResult is SuccessDataResult<ObjectModel> && detailResult.data != null) {
             details.add(detailResult.data!);
             await homeRepository.saveObjectDetailsLocal(detailResult.data!);
             print('Saved ObjectModel for objectId: $id');
+            succesx++;
+          } else {
+            failx++;
+            print('Failed to fetch object details for objectId: $id, Error: ${detailResult.message}');
           }
         }
+        print('Fetched object details for query: $query, Success: $succesx, Fail: $failx');
       } else {
         print('Online fetch failed for query: $query, Error: ${result.message}');
       }
     }
 
     // Çevrimdışı veri çekme
-    if (objectsIdModel == null) {
+    if (objectsIdModel == null || hasInternet == false) {
       final localResult = await homeRepository.getObjectsIdQueryLocal(query: query);
       print('Local fetch for query: $query, Result: $localResult');
       if (localResult is SuccessDataResult<ObjectsIdModel?> && localResult.data != null) {
@@ -75,16 +84,17 @@ class HomeCubit extends Cubit<HomeState> {
         return;
       }
     }
-
-    final ids = objectsIdModel.objectIDs.sublist(
-      start,
-      end > objectsIdModel.objectIDs.length ? objectsIdModel.objectIDs.length : end,
-    );
-    for (final id in ids) {
-      final localDetailResult = await homeRepository.getObjectDetailsLocal(objectId: id);
-      print('Local object fetch for objectId: $id, Result: $localDetailResult');
-      if (localDetailResult is SuccessDataResult<ObjectModel?> && localDetailResult.data != null) {
-        details.add(localDetailResult.data!);
+    if (!hasInternet) {
+      final ids = objectsIdModel.objectIDs.sublist(
+        start,
+        end > objectsIdModel.objectIDs.length ? objectsIdModel.objectIDs.length : end,
+      );
+      for (final id in ids) {
+        final localDetailResult = await homeRepository.getObjectDetailsLocal(objectId: id);
+        print('Local object fetch for objectId: $id, Result: $localDetailResult');
+        if (localDetailResult is SuccessDataResult<ObjectModel?> && localDetailResult.data != null) {
+          details.add(localDetailResult.data!);
+        }
       }
     }
 
@@ -101,6 +111,13 @@ class HomeCubit extends Cubit<HomeState> {
     print('Emitted state for query: $query, Details count: ${details.length}, Total: ${objectsIdModel.total}');
   }
 
+  Future<bool> checkInternetControl() async {
+    final networkControl = NetworkControl();
+    final networkResult = await networkControl.checkNetworkFirstTime();
+    final bool hasInternet = networkResult == NetworkResult.on;
+    return hasInternet;
+  }
+
   Future<void> fetchHomeData() async {
     print('Fetching home data');
     await fetchObjectList(
@@ -115,5 +132,19 @@ class HomeCubit extends Cubit<HomeState> {
       start: 0,
       end: 4,
     );
+  }
+
+  resetCurrentlist() {
+    emit(state.copyWith(
+      currentList: [],
+      currentTotal: 0,
+    ));
+  }
+
+  resetfamouslist() {
+    emit(state.copyWith(
+      famousArtworkList: [],
+      currentTotal: 0,
+    ));
   }
 }
