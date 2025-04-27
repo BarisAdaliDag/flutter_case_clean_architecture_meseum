@@ -19,83 +19,23 @@ class HomeCubit extends Cubit<HomeState> {
     required int start,
     required int end,
   }) async {
-    print('Fetching data for query: $query, isFamous: $isFamous, start: $start, end: $end');
-    // Yükleme durumunu güncelle
-    emit(state.copyWith(
-      isLoading: true,
-      errorMessage: null,
-    ));
-
-    // Veritabanı içeriğini kontrol et
-    // await homeRepository.debugPrintAllObjectsId();
-
-    final networkControl = NetworkControl();
-    final networkResult = await networkControl.checkNetworkFirstTime();
-    bool hasInternet = await checkInternetControl();
-
+    emit(state.copyWith(isLoading: true, errorMessage: null));
+    final bool hasInternet = await checkInternetControl();
     ObjectsIdModel? objectsIdModel;
     List<ObjectModel> details = isFamous ? List.from(state.famousArtworkList) : List.from(state.currentList);
 
     if (hasInternet) {
-      // Online veri çekme
-      final result = await homeRepository.getObjectsIdQuery(query: query);
-      print('Online fetch for query: $query, Result: $result');
-      if (result is SuccessDataResult<ObjectsIdModel> && result.data != null) {
-        objectsIdModel = result.data!;
-        await homeRepository.saveObjectsIdQueryLocal(objectsIdModel, query);
-        print('Saved ObjectsIdModel for query: $query, Total IDs: ${objectsIdModel.objectIDs.length}');
-
-        final ids = objectsIdModel.objectIDs.sublist(
-          start,
-          end > objectsIdModel.objectIDs.length ? objectsIdModel.objectIDs.length : end,
-        );
-        int succesx = 0;
-        int failx = 0;
-        for (final id in ids) {
-          final detailResult = await homeRepository.getObjectDetails(objectId: id);
-          if (detailResult is SuccessDataResult<ObjectModel> && detailResult.data != null) {
-            details.add(detailResult.data!);
-            await homeRepository.saveObjectDetailsLocal(detailResult.data!);
-            print('Saved ObjectModel for objectId: $id');
-            succesx++;
-          } else {
-            failx++;
-            print('Failed to fetch object details for objectId: $id, Error: ${detailResult.message}');
-          }
-        }
-        print('Fetched object details for query: $query, Success: $succesx, Fail: $failx');
-      } else {
-        print('Online fetch failed for query: $query, Error: ${result.message}');
-      }
+      objectsIdModel = await _fetchOnlineObjects(query, start, end, details);
+    } else {
+      objectsIdModel = await _fetchOfflineObjects(query, details);
     }
 
-    // Çevrimdışı veri çekme
-    if (objectsIdModel == null || hasInternet == false) {
-      final localResult = await homeRepository.getObjectsIdQueryLocal(query: query);
-      print('Local fetch for query: $query, Result: $localResult');
-      if (localResult is SuccessDataResult<ObjectsIdModel?> && localResult.data != null) {
-        objectsIdModel = localResult.data!;
-      } else {
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: 'Bu koleksiyon için çevrimdışı veri bulunamadı.',
-        ));
-        print('No local data for query: $query');
-        return;
-      }
-    }
-    if (!hasInternet) {
-      final ids = objectsIdModel.objectIDs.sublist(
-        start,
-        end > objectsIdModel.objectIDs.length ? objectsIdModel.objectIDs.length : end,
-      );
-      for (final id in ids) {
-        final localDetailResult = await homeRepository.getObjectDetailsLocal(objectId: id);
-        print('Local object fetch for objectId: $id, Result: $localDetailResult');
-        if (localDetailResult is SuccessDataResult<ObjectModel?> && localDetailResult.data != null) {
-          details.add(localDetailResult.data!);
-        }
-      }
+    if (objectsIdModel == null) {
+      emit(state.copyWith(
+        isLoading: false,
+        errorMessage: 'Bu koleksiyon için veri bulunamadı.',
+      ));
+      return;
     }
 
     emit(state.copyWith(
@@ -108,7 +48,42 @@ class HomeCubit extends Cubit<HomeState> {
       currentTotal: !isFamous ? objectsIdModel.total : state.currentTotal,
       errorMessage: details.isEmpty ? 'Bu koleksiyon için obje bulunamadı.' : null,
     ));
-    print('Emitted state for query: $query, Details count: ${details.length}, Total: ${objectsIdModel.total}');
+  }
+
+  Future<ObjectsIdModel?> _fetchOnlineObjects(String query, int start, int end, List<ObjectModel> details) async {
+    final result = await homeRepository.getObjectsIdQuery(query: query);
+    if (result is! SuccessDataResult<ObjectsIdModel> || result.data == null) {
+      return null;
+    }
+    final objectsIdModel = result.data!;
+    await homeRepository.saveObjectsIdQueryLocal(objectsIdModel, query);
+    final ids = objectsIdModel.objectIDs.sublist(
+      start,
+      end > objectsIdModel.objectIDs.length ? objectsIdModel.objectIDs.length : end,
+    );
+    for (final id in ids) {
+      final detailResult = await homeRepository.getObjectDetails(objectId: id);
+      if (detailResult is SuccessDataResult<ObjectModel> && detailResult.data != null) {
+        details.add(detailResult.data!);
+        await homeRepository.saveObjectDetailsLocal(detailResult.data!);
+      }
+    }
+    return objectsIdModel;
+  }
+
+  Future<ObjectsIdModel?> _fetchOfflineObjects(String query, List<ObjectModel> details) async {
+    final localResult = await homeRepository.getObjectsIdQueryLocal(query: query);
+    if (localResult is! SuccessDataResult<ObjectsIdModel?> || localResult.data == null) {
+      return null;
+    }
+    final objectsIdModel = localResult.data!;
+    for (final id in objectsIdModel.objectIDs) {
+      final localDetailResult = await homeRepository.getObjectDetailsLocal(objectId: id);
+      if (localDetailResult is SuccessDataResult<ObjectModel?> && localDetailResult.data != null) {
+        details.add(localDetailResult.data!);
+      }
+    }
+    return objectsIdModel;
   }
 
   Future<bool> checkInternetControl() async {
