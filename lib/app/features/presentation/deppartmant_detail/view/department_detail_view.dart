@@ -67,14 +67,21 @@ class _DepartmentDetailViewState extends State<DepartmentDetailView> with RouteA
               return const LottieCircularProgress();
             }
             if (objects.isEmpty) {
-              return Center(
-                  child: SizedBox(
-                      width: 80.w,
-                      child: Image.asset(
-                        Theme.of(context).brightness == Brightness.dark
-                            ? AppImage.nodata_white.path
-                            : AppImage.nodata_black.path,
-                      )));
+              return Column(
+                children: [
+                  CollectionTextField(controller: context.read<DepartmentDetailCubit>().searchController),
+                  Expanded(
+                    child: Center(
+                        child: SizedBox(
+                            width: 80.w,
+                            child: Image.asset(
+                              Theme.of(context).brightness == Brightness.dark
+                                  ? AppImage.nodata_white.path
+                                  : AppImage.nodata_black.path,
+                            ))),
+                  ),
+                ],
+              );
             }
             return Padding(
               padding: const EdgeInsets.all(12),
@@ -98,8 +105,8 @@ class _DepartmentDetailViewState extends State<DepartmentDetailView> with RouteA
                             context.router.push(ObjectDetailRoute(objectModel: model));
                           },
                           image: model.primaryImageSmall ?? "",
-                          title: model.objectName ?? "",
-                          subtitle: model.title ?? "",
+                          title: model.title ?? "",
+                          subtitle: model.objectName ?? "",
                           imageWidth: 200,
                           imageHeight: 200,
                         );
