@@ -69,7 +69,10 @@ class _DepartmentDetailViewState extends State<DepartmentDetailView> with RouteA
             if (objects.isEmpty) {
               return Column(
                 children: [
-                  CollectionTextField(controller: context.read<DepartmentDetailCubit>().searchController),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: CollectionTextField(controller: context.read<DepartmentDetailCubit>().searchController),
+                  ),
                   Expanded(
                     child: Center(
                         child: SizedBox(

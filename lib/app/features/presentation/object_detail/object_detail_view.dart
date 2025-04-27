@@ -28,115 +28,143 @@ class ObjectDetailView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingMedium),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular(AppConstants.radiusMedium), // Adjust the radius for desired roundness
-                      child: CacheNetworkImageWidget(
-                        image: objectModel.primaryImageSmall ?? "",
-                        imageHeight: 300,
-                        imageWidth: double.infinity,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  Text(
-                    objectModel.title ?? 'Unknown Title',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      //     color: Theme.of(context).brightness != Brightness.dark ? AppColors.lavender : Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    objectModel.objectDate ?? 'Unknown Date',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Açıklama Bölümü
-                  const Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
-                    style: TextStyle(
-                      fontSize: 14,
-                      //     color: Theme.of(context).brightness != Brightness.dark ? AppColors.lavender : Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                ],
-              ),
-            ),
-            Container(
-              color: Theme.of(context).brightness != Brightness.dark
-                  ? AppColors.greyHomeBackground
-                  : const Color.fromRGBO(64, 64, 64, 1),
-              padding: const EdgeInsets.all(AppConstants.paddingMedium),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Artwork Details',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      //  color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-
-                  // Detaylar Listesi (Custom Widget Kullanımı)
-                  DetailItem(
-                    title: 'Title: ',
-                    value: objectModel.title ?? 'Unknown Title',
-                  ),
-                  DetailItem(
-                    title: 'Date: ',
-                    value: objectModel.objectDate ?? 'Unknown Date',
-                  ),
-                  DetailItem(
-                    title: 'Geography: ',
-                    value: objectModel.geographyType ?? 'Unknown Geography',
-                  ),
-                  DetailItem(
-                    title: 'Culture: ',
-                    value: objectModel.culture ?? 'Unknown Culture',
-                  ),
-                  DetailItem(
-                    title: 'Medium: ',
-                    value: objectModel.medium ?? 'Unknown Medium',
-                  ),
-                  DetailItem(
-                    title: 'Dimensions: ',
-                    value: objectModel.dimensions ?? 'Unknown Dimensions',
-                  ),
-                  DetailItem(
-                    title: 'Classification: ',
-                    value: objectModel.classification ?? 'Unknown Classification',
-                  ),
-                  DetailItem(
-                    title: 'Credit Line: ',
-                    value: objectModel.creditLine ?? 'Unknown Credit Line',
-                  ),
-                  DetailItem(
-                    title: 'Object Number: ',
-                    value: objectModel.accessionNumber ?? 'Unknown Object Number',
-                  ),
-                ],
-              ),
-            ),
+            TopHeaderContainer(objectModel: objectModel),
+            ArtWorkDetailContainer(objectModel: objectModel),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TopHeaderContainer extends StatelessWidget {
+  const TopHeaderContainer({
+    super.key,
+    required this.objectModel,
+  });
+
+  final ObjectModel objectModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingMedium),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppConstants.radiusMedium), // Adjust the radius for desired roundness
+              child: CacheNetworkImageWidget(
+                image: objectModel.primaryImageSmall ?? "",
+                imageHeight: 300,
+                imageWidth: double.infinity,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          Text(
+            objectModel.title ?? 'Unknown Title',
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              //     color: Theme.of(context).brightness != Brightness.dark ? AppColors.lavender : Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            objectModel.objectDate ?? 'Unknown Date',
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey,
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Açıklama Bölümü
+          const Text(
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley",
+            style: TextStyle(
+              fontSize: 14,
+              //     color: Theme.of(context).brightness != Brightness.dark ? AppColors.lavender : Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 24),
+        ],
+      ),
+    );
+  }
+}
+
+class ArtWorkDetailContainer extends StatelessWidget {
+  const ArtWorkDetailContainer({
+    super.key,
+    required this.objectModel,
+  });
+
+  final ObjectModel objectModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity, // Ekran genişliği kadar yapıldı
+      color: Theme.of(context).brightness != Brightness.dark
+          ? AppColors.greyHomeBackground
+          : const Color.fromRGBO(64, 64, 64, 1),
+      padding: const EdgeInsets.all(AppConstants.paddingMedium),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Artwork Details',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              //  color: Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 8),
+
+          // Detaylar Listesi (Custom Widget Kullanımı)
+          DetailItem(
+            title: 'Title: ',
+            value: objectModel.title ?? 'Unknown Title',
+          ),
+          DetailItem(
+            title: 'Date: ',
+            value: objectModel.objectDate ?? 'Unknown Date',
+          ),
+          DetailItem(
+            title: 'Geography: ',
+            value: objectModel.geographyType ?? 'Unknown Geography',
+          ),
+          DetailItem(
+            title: 'Culture: ',
+            value: objectModel.culture ?? 'Unknown Culture',
+          ),
+          DetailItem(
+            title: 'Medium: ',
+            value: objectModel.medium ?? 'Unknown Medium',
+          ),
+          DetailItem(
+            title: 'Dimensions: ',
+            value: objectModel.dimensions ?? 'Unknown Dimensions',
+          ),
+          DetailItem(
+            title: 'Classification: ',
+            value: objectModel.classification ?? 'Unknown Classification',
+          ),
+          DetailItem(
+            title: 'Credit Line: ',
+            value: objectModel.creditLine ?? 'Unknown Credit Line',
+          ),
+          DetailItem(
+            title: 'Object Number: ',
+            value: objectModel.accessionNumber ?? 'Unknown Object Number',
+          ),
+        ],
       ),
     );
   }
