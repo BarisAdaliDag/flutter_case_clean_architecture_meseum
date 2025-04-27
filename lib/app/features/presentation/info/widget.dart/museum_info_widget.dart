@@ -121,7 +121,3 @@ class MuseumInfoScreen extends StatelessWidget {
     );
   }
 }
-
-void main() {
-  runApp(const MaterialApp(home: MuseumInfoScreen()));
-}

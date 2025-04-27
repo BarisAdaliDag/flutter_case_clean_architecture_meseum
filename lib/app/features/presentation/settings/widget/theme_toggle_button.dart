@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metropolitan_museum/app/features/presentation/settings/cubit/theme_cubit.dart';
 
+import '../../../../common/constants/app_colors.dart';
+
 class ThemeToggleButton extends StatelessWidget {
   const ThemeToggleButton({super.key});
 
@@ -17,15 +19,20 @@ class ThemeToggleButton extends StatelessWidget {
           onTap: () {
             context.read<ThemeCubit>().toggleTheme(!isDark);
           },
-          child: Card(
-            child: ListTile(
-              title: const Text('Dark Mode'),
-              leading: const Icon(Icons.brightness_6),
-              trailing: Switch(
-                value: isDark,
-                onChanged: (value) {
-                  context.read<ThemeCubit>().toggleTheme(value);
-                },
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Card(
+              color: Theme.of(context).brightness == Brightness.dark ? AppColors.smokyBlack : AppColors.whiteGost,
+              child: ListTile(
+                title: const Text('Dark Mode'),
+                leading: const Icon(Icons.brightness_6),
+                trailing: Switch(
+                  inactiveTrackColor: AppColors.whiteGost,
+                  value: isDark,
+                  onChanged: (value) {
+                    context.read<ThemeCubit>().toggleTheme(value);
+                  },
+                ),
               ),
             ),
           ),

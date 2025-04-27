@@ -58,7 +58,7 @@ class MainApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 routerConfig: _appRouter.config(),
                 scaffoldMessengerKey: AppKeys.scaffoldMessengerKey,
-                theme: AppThemeData.themeData,
+                theme: AppThemeData.lightThemeData,
                 darkTheme: AppThemeData.darkThemeData,
                 themeMode: themeMode,
               );

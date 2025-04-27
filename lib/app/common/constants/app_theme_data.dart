@@ -3,13 +3,14 @@ import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 
 final class AppThemeData {
-  static final ThemeData themeData = ThemeData(
+  static final ThemeData lightThemeData = ThemeData(
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.redValencia,
       brightness: Brightness.light,
+      surface: AppColors.whiteGost,
     ),
     useMaterial3: true,
-    scaffoldBackgroundColor: AppColors.ghostWhite,
+    scaffoldBackgroundColor: AppColors.whiteGost,
     bottomNavigationBarTheme: _bottomNavigationBarTheme,
     appBarTheme: _appBarTheme,
     textTheme: _textTheme,
@@ -19,7 +20,7 @@ final class AppThemeData {
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.redValencia,
       brightness: Brightness.dark,
-      background: AppColors.black,
+      surface: AppColors.black,
     ),
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.black,
@@ -30,12 +31,12 @@ final class AppThemeData {
       selectedItemColor: AppColors.redValencia,
       unselectedItemColor: AppColors.greyNickel,
       unselectedLabelStyle: TextStyle(
-        color: AppColors.ghostWhite,
+        color: AppColors.whiteGost,
         fontSize: 12,
         fontWeight: FontWeight.w600,
       ),
       selectedLabelStyle: TextStyle(
-        color: AppColors.ghostWhite,
+        color: AppColors.whiteGost,
         fontSize: 12,
         fontWeight: FontWeight.w600,
       ),
@@ -47,7 +48,7 @@ final class AppThemeData {
       titleTextStyle: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w400,
-        color: AppColors.ghostWhite,
+        color: AppColors.whiteGost,
       ),
       scrolledUnderElevation: 0,
     ),
@@ -55,25 +56,25 @@ final class AppThemeData {
   );
 
   static const BottomNavigationBarThemeData _bottomNavigationBarTheme = BottomNavigationBarThemeData(
-    backgroundColor: AppColors.ghostWhite,
+    backgroundColor: AppColors.whiteGost,
     elevation: 0,
     type: BottomNavigationBarType.fixed,
     selectedItemColor: AppColors.redValencia,
     unselectedItemColor: AppColors.greyNickel,
     unselectedLabelStyle: TextStyle(
-      color: AppColors.ghostWhite,
+      color: AppColors.whiteGost,
       fontSize: 12,
       fontWeight: FontWeight.w600,
     ),
     selectedLabelStyle: TextStyle(
-      color: AppColors.ghostWhite,
+      color: AppColors.whiteGost,
       fontSize: 12,
       fontWeight: FontWeight.w600,
     ),
   );
 
   static const AppBarTheme _appBarTheme = AppBarTheme(
-    backgroundColor: AppColors.ghostWhite,
+    backgroundColor: AppColors.whiteGost,
     centerTitle: true,
     elevation: 0,
     titleTextStyle: TextStyle(

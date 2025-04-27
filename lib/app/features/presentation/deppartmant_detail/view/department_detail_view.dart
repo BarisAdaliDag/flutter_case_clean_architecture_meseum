@@ -71,7 +71,9 @@ class _DepartmentDetailViewState extends State<DepartmentDetailView> with RouteA
                   child: SizedBox(
                       width: 80.w,
                       child: Image.asset(
-                        AppImage.nodata.path,
+                        Theme.of(context).brightness == Brightness.dark
+                            ? AppImage.nodata_white.path
+                            : AppImage.nodata_black.path,
                       )));
             }
             return Padding(

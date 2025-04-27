@@ -32,7 +32,7 @@ class HomeCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        color: Theme.of(context).brightness == Brightness.dark ? AppColors.redValencia : AppColors.greyHomeBackground,
+        color: AppColors.greyHomeBackground,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +41,13 @@ class HomeCard extends StatelessWidget {
               borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
               child: image.isNotEmpty
                   ? CacheNetworkImageWidget(image: image, imageWidth: imageWidth, imageHeight: imageHeight)
-                  : SizedBox(width: imageWidth, height: imageHeight, child: const Icon(Icons.image_not_supported)),
+                  : Container(
+                      width: imageWidth,
+                      height: imageHeight,
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.iconInactiveDark
+                          : AppColors.greyHomeBackground,
+                      child: const Icon(Icons.image_not_supported)),
             ),
             Padding(
               padding: const EdgeInsets.all(10),
@@ -53,7 +59,7 @@ class HomeCard extends StatelessWidget {
                       subtitle,
                       style: TextStyle(
                           color: Theme.of(context).brightness == Brightness.dark
-                              ? AppColors.whiteBottomAppbar
+                              ? AppColors.smokyBlack
                               : AppColors.greyNickel),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -62,7 +68,10 @@ class HomeCard extends StatelessWidget {
                   const Gap(4),
                   Text(
                     title,
-                    style: TxStyleHelper.body.copyWith(fontWeight: FontWeight.w600),
+                    style: TxStyleHelper.body.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color:
+                            Theme.of(context).brightness == Brightness.dark ? AppColors.smokyBlack : AppColors.black),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 
 class LottieCircularProgress extends StatelessWidget {
@@ -10,12 +11,16 @@ class LottieCircularProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Lottie.asset(
-        AppLottie.loading.path,
-        width: 40,
-        height: 40,
-        fit: BoxFit.fill,
-      ),
+      child: Theme.of(context).brightness == Brightness.dark
+          ? const CircularProgressIndicator(
+              color: AppColors.redValencia,
+            )
+          : Lottie.asset(
+              AppLottie.loading.path,
+              width: 40,
+              height: 40,
+              fit: BoxFit.fill,
+            ),
     );
   }
 }

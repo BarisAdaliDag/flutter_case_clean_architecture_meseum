@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_cubit.dart';
 
 class CollectionTextField extends StatefulWidget {
@@ -42,7 +43,11 @@ class _CollectionTextFieldState extends State<CollectionTextField> {
       decoration: InputDecoration(
         hintText: "Search",
         hintStyle: TextStyle(
-          color: _isFocused ? Colors.black : Colors.grey,
+          color: _isFocused
+              ? Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.grey
+                  : AppColors.black
+              : Colors.grey,
         ),
         suffixIcon: Row(
           mainAxisSize: MainAxisSize.min,
@@ -50,7 +55,11 @@ class _CollectionTextFieldState extends State<CollectionTextField> {
             Container(
               width: 1,
               height: 52,
-              color: _isFocused ? Colors.black : Colors.grey,
+              color: _isFocused
+                  ? Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.grey
+                      : AppColors.black
+                  : Colors.grey,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -67,9 +76,11 @@ class _CollectionTextFieldState extends State<CollectionTextField> {
             width: 1.0,
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
+        focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.black,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
             width: 1.0,
           ),
         ),

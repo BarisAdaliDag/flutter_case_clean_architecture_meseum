@@ -28,7 +28,7 @@ class _MainViewState extends State<MainView> {
     return AutoTabsRouter(
       builder: (context, child) {
         return Container(
-          color: AppColors.whiteBottomAppbar,
+          color: Theme.of(context).colorScheme.surface,
           child: SafeArea(
             bottom: false,
             child: Scaffold(
