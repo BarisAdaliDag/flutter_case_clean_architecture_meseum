@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
+import 'package:metropolitan_museum/app/features/presentation/object_detail/widget/detail_item.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MuseumInfoWidget extends StatelessWidget {
@@ -56,28 +57,17 @@ class MuseumInfoWidget extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           // Saatler
-          Text(
-            "Hours: $hours",
-            style: TxStyleHelper.body,
+
+          DetailItem(
+            title: "Hours: ",
+            value: hours,
           ),
-          const SizedBox(height: 8),
-          // Kapalı Gün
-          Text(
-            "Closed: $closedDay",
-            style: TxStyleHelper.body,
-          ),
-          const SizedBox(height: 8),
-          // Adres
-          Text(
-            "Address: $address",
-            style: TxStyleHelper.body,
-          ),
-          const SizedBox(height: 8),
-          // Telefon
-          Text(
-            "Phone: $phone",
-            style: TxStyleHelper.body,
-          ),
+
+          DetailItem(title: "Closed: ", value: closedDay),
+
+          DetailItem(title: "Address: ", value: address),
+
+          DetailItem(title: "Phone: ", value: phone),
         ],
       ),
     );

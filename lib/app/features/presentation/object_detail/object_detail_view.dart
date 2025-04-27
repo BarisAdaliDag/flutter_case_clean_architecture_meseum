@@ -78,7 +78,9 @@ class ObjectDetailView extends StatelessWidget {
               ),
             ),
             Container(
-              color: AppColors.greyHomeBackground,
+              color: Theme.of(context).brightness != Brightness.dark
+                  ? AppColors.greyHomeBackground
+                  : const Color.fromRGBO(64, 64, 64, 1),
               padding: const EdgeInsets.all(AppConstants.paddingMedium),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +90,7 @@ class ObjectDetailView extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      //  color: Colors.black87,
                     ),
                   ),
                   const SizedBox(height: 8),

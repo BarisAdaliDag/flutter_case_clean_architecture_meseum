@@ -24,7 +24,7 @@ class DetailItem extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold, // Başlık bold olacak
-                color: Theme.of(context).brightness != Brightness.dark ? AppColors.smokyBlack : AppColors.smokyBlack,
+                color: Theme.of(context).brightness != Brightness.dark ? AppColors.smokyBlack : AppColors.whiteGost,
               ),
             ),
             TextSpan(
@@ -32,7 +32,7 @@ class DetailItem extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.normal, // Değer normal olacak
-                color: Theme.of(context).brightness != Brightness.dark ? AppColors.smokyBlack : AppColors.smokyBlack,
+                color: Theme.of(context).brightness != Brightness.dark ? AppColors.smokyBlack : AppColors.whiteGost,
               ),
             ),
           ],
