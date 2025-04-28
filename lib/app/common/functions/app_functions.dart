@@ -24,8 +24,8 @@ final class AppFunctions {
     ]);
 
     // Bildirim servisini başlat
-    await NotificationService().init();
 
+    NotiService().initNotification();
     // Android için pil optimizasyonu iznini kontrol et
     if (Platform.isAndroid) {
       final status = await Permission.ignoreBatteryOptimizations.status;

@@ -22,7 +22,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    print('called${DateTime.now().second}');
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await scheduleInitialNotification(context); // <-- context burada güvenli
       context.replaceRoute(const MainRoute());
@@ -31,22 +31,27 @@ class _SplashViewState extends State<SplashView> {
 
   Future<void> scheduleInitialNotification(BuildContext context) async {
     List<DepartmentModel> models = getIt<ObjectBoxService>().departmentBox.getAll();
-    String departmentName = "";
+    String bodyText = "";
     if (models.isNotEmpty) {
       // Rastgele bir department seç
       final random = (models.length == 1) ? 0 : (DateTime.now().millisecondsSinceEpoch % models.length);
-      departmentName = "Visit the ${models[random].displayName} department today!";
-      return;
+      bodyText = "Visit the ${models[random].displayName} department today!";
     }
 
-    await NotificationService().scheduleDailyNotification(
-      id: 0,
-      title: 'The Metropolitan Museum of Art',
-      body: departmentName,
-      payload: 'daily_reminder',
-      hour: 12,
+    // await NotificationService().scheduleDailyNotification(
+    //   id: 0,
+    //   title: 'The Metropolitan Museum of Art',
+    //   body: departmentName,
+    //   payload: 'daily_reminder',
+    //   hour: 12,
+    //   minute: 0,
+    //   context: context,
+    // );
+    NotiService().scheduleNotification(
+      title: "The Metropolitan Museum of Art",
+      body: bodyText,
+      hour: 10,
       minute: 0,
-      context: context,
     );
   }
 
