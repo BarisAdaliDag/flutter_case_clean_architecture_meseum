@@ -5,7 +5,6 @@ import 'package:metropolitan_museum/app/features/data/models/objects_id_model.da
 import 'package:metropolitan_museum/app/features/data/repositories/collection_repository.dart';
 import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/cubit/departmant_detail_state.dart';
 import 'package:metropolitan_museum/core/result/result.dart';
-
 import '../../../../../core/network_control/network_control.dart';
 
 class DepartmentDetailCubit extends Cubit<DepartmentDetailState> {
@@ -19,6 +18,10 @@ class DepartmentDetailCubit extends Cubit<DepartmentDetailState> {
           objectsIdModel: ObjectsIdModel(objectIDs: const [], total: 0, departmentId: 0),
           objectList: const [],
           searchText: '',
+          filteredObjectList: const [],
+          currentPage: 1,
+          itemsPerPage: 20,
+          totalItems: 0,
         )) {
     searchController.addListener(_onSearchChanged);
   }
@@ -28,8 +31,7 @@ class DepartmentDetailCubit extends Cubit<DepartmentDetailState> {
   }
 
   void search(String query) {
-    final objectList = state.objectList;
-    final filtered = objectList.where((d) => d.title!.toLowerCase().contains(query.toLowerCase())).toList();
+    final filtered = state.objectList.where((d) => d.title!.toLowerCase().contains(query.toLowerCase())).toList();
     emit(state.copyWith(
       searchText: query,
       filteredObjectList: filtered,
@@ -43,61 +45,44 @@ class DepartmentDetailCubit extends Cubit<DepartmentDetailState> {
     return super.close();
   }
 
-  Future<void> loadListCollection(int departmentId) async {
-    // Eski verileri sıfırla
-    emit(DepartmentDetailState(
-      isLoading: true,
-      objectsIdModel: ObjectsIdModel(objectIDs: const [], total: 0, departmentId: departmentId),
-      objectList: const [],
-      searchText: '',
-      filteredObjectList: const [],
-      error: "",
-    ));
-    final networkControl = NetworkControl();
-    final networkResult = await networkControl.checkNetworkFirstTime();
-    final bool hasInternet = networkResult == NetworkResult.on;
+  Future<void> loadListCollection({
+    required int departmentId,
+    int? page,
+  }) async {
+    final currentPage = page ?? state.currentPage;
+    final start = (currentPage - 1) * state.itemsPerPage;
+    final end = currentPage * state.itemsPerPage;
 
+    emit(state.copyWith(
+      isLoading: true,
+      error: '',
+      currentPage: currentPage,
+      objectList: [],
+      filteredObjectList: [],
+    ));
+
+    final bool hasInternet = await checkInternetControl();
     ObjectsIdModel? departmentIdModel;
     List<ObjectModel> objectDetails = [];
 
     if (hasInternet) {
-      // Online veri çekme
-      final objectsResult = await collectionRepository.getObjectsByDepartmentId(departmentId: departmentId);
-      if (objectsResult is SuccessDataResult<ObjectsIdModel> && objectsResult.data != null) {
-        departmentIdModel = objectsResult.data!;
-        await collectionRepository.saveObjectsByDepartmentIdLocal(departmentIdModel);
-        print('Saved ObjectsIdModel for departmentId: $departmentId');
-        final objectIds = departmentIdModel.objectIDs.take(5).toList();
-        for (final objectId in objectIds) {
-          final detailResult = await collectionRepository.getObjectDetails(objectId: objectId);
-          if (detailResult is SuccessDataResult<ObjectModel> && detailResult.data != null) {
-            objectDetails.add(detailResult.data!);
-            await collectionRepository.saveObjectDetailsLocal(detailResult.data!);
-          }
-        }
-      }
+      final result = await _fetchOnlineData(departmentId, start, end);
+      departmentIdModel = result.$1;
+      objectDetails = result.$2;
+    } else {
+      final result = await _fetchOfflineData(departmentId, start, end);
+      departmentIdModel = result.$1;
+      objectDetails = result.$2;
     }
 
-    // Çevrimdışı veri çekme
     if (departmentIdModel == null) {
-      final localObjectsResult = await collectionRepository.getObjectsByDepartmentIdLocal(departmentId: departmentId);
-      if (localObjectsResult is SuccessDataResult<ObjectsIdModel?> && localObjectsResult.data != null) {
-        departmentIdModel = localObjectsResult.data!;
-      } else {
-        emit(state.copyWith(
-          isLoading: false,
-          error: 'Veri bulunamadı (çevrimdışı veya çevrimiçi)',
-        ));
-        return;
-      }
-    }
-
-    final objectIds = departmentIdModel.objectIDs.take(5).toList();
-    for (final objectId in objectIds) {
-      final localDetailResult = await collectionRepository.getObjectDetailsLocal(objectId: objectId);
-      if (localDetailResult is SuccessDataResult<ObjectModel?> && localDetailResult.data != null) {
-        objectDetails.add(localDetailResult.data!);
-      }
+      emit(state.copyWith(
+        isLoading: false,
+        error: hasInternet
+            ? 'Veri alınamadı. Lütfen tekrar deneyin.'
+            : 'İnternet bağlantısı yok ve yerel veri bulunamadı.',
+      ));
+      return;
     }
 
     emit(state.copyWith(
@@ -105,7 +90,89 @@ class DepartmentDetailCubit extends Cubit<DepartmentDetailState> {
       objectList: objectDetails,
       objectsIdModel: departmentIdModel,
       filteredObjectList: objectDetails,
-      error: null,
+      totalItems: departmentIdModel.total,
+      error: objectDetails.isEmpty ? 'Bu departman için obje bulunamadı.' : null,
     ));
+  }
+
+  Future<(ObjectsIdModel?, List<ObjectModel>)> _fetchOnlineData(int departmentId, int start, int end) async {
+    List<ObjectModel> objectDetails = [];
+    final objectsResult = await collectionRepository.getObjectsByDepartmentId(departmentId: departmentId);
+    if (objectsResult is! SuccessDataResult<ObjectsIdModel> || objectsResult.data == null) {
+      return (null, objectDetails);
+    }
+
+    final departmentIdModel = objectsResult.data!;
+    await collectionRepository.saveObjectsByDepartmentIdLocal(departmentIdModel);
+    print('Saved ObjectsIdModel for departmentId: $departmentId');
+
+    final objectIds = departmentIdModel.objectIDs.sublist(
+      start,
+      end > departmentIdModel.objectIDs.length ? departmentIdModel.objectIDs.length : end,
+    );
+
+    for (final objectId in objectIds) {
+      final detailResult = await collectionRepository.getObjectDetails(objectId: objectId);
+      if (detailResult is SuccessDataResult<ObjectModel> && detailResult.data != null) {
+        objectDetails.add(detailResult.data!);
+        await collectionRepository.saveObjectDetailsLocal(detailResult.data!);
+      }
+    }
+
+    return (departmentIdModel, objectDetails);
+  }
+
+  Future<(ObjectsIdModel?, List<ObjectModel>)> _fetchOfflineData(int departmentId, int start, int end) async {
+    List<ObjectModel> objectDetails = [];
+    final localObjectsResult = await collectionRepository.getObjectsByDepartmentIdLocal(departmentId: departmentId);
+    if (localObjectsResult is! SuccessDataResult<ObjectsIdModel?> || localObjectsResult.data == null) {
+      return (null, objectDetails);
+    }
+
+    final departmentIdModel = localObjectsResult.data!;
+    final objectIds = departmentIdModel.objectIDs.sublist(
+      start,
+      end > departmentIdModel.objectIDs.length ? departmentIdModel.objectIDs.length : end,
+    );
+
+    for (final objectId in objectIds) {
+      final localDetailResult = await collectionRepository.getObjectDetailsLocal(objectId: objectId);
+      if (localDetailResult is SuccessDataResult<ObjectModel?> && localDetailResult.data != null) {
+        objectDetails.add(localDetailResult.data!);
+      }
+    }
+
+    return (departmentIdModel, objectDetails);
+  }
+
+  Future<bool> checkInternetControl() async {
+    final networkControl = NetworkControl();
+    final networkResult = await networkControl.checkNetworkFirstTime();
+    return networkResult == NetworkResult.on;
+  }
+
+  void nextPage({required int departmentId}) {
+    final totalPages = (state.totalItems / state.itemsPerPage).ceil();
+    if (state.currentPage < totalPages) {
+      print('Navigating to next page: ${state.currentPage + 1} / $totalPages');
+      loadListCollection(
+        departmentId: departmentId,
+        page: state.currentPage + 1,
+      );
+    }
+  }
+
+  void previousPage({required int departmentId}) {
+    if (state.currentPage > 1) {
+      print('Navigating to previous page: ${state.currentPage - 1}');
+      loadListCollection(
+        departmentId: departmentId,
+        page: state.currentPage - 1,
+      );
+    }
+  }
+
+  void init({required int departmentId}) {
+    loadListCollection(departmentId: departmentId, page: 1);
   }
 }

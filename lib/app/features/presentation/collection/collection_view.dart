@@ -70,7 +70,7 @@ class _CollectionViewState extends State<CollectionView> {
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                         child: GestureDetector(
                           onTap: () {
-                            getIt<DepartmentDetailCubit>().loadListCollection(department.departmentId);
+                            //  getIt<DepartmentDetailCubit>().loadListCollection(department.departmentId);
                             context.router.push(DepartmentDetailRoute(
                               departmentId: department.departmentId,
                               departmentName: department.displayName,

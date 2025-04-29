@@ -46,7 +46,7 @@ class HomeCard extends StatelessWidget {
                       height: imageHeight,
                       color: Theme.of(context).brightness == Brightness.dark
                           ? AppColors.iconInactiveDark
-                          : AppColors.greyHomeBackground,
+                          : AppColors.iconInactiveDark,
                       child: const Icon(Icons.image_not_supported)),
             ),
             Padding(

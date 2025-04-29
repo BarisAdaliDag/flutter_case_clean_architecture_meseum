@@ -52,21 +52,24 @@ class CollectionCubit extends Cubit<CollectionState> {
 
   Future<void> loadDepartments() async {
     emit(state.copyWith(isLoading: true));
-    final networkControl = NetworkControl();
-    final networkResult = await networkControl.checkNetworkFirstTime();
-    final bool hasInternet = networkResult == NetworkResult.on;
     List<DepartmentModel> departments = [];
+
+    final hasInternet = await NetworkControl().checkNetworkFirstTime() == NetworkResult.on;
     if (hasInternet) {
-      final departmentsResult = await collectionRepository.getDepartments();
-      if (departmentsResult is SuccessDataResult<DepartmentsModel> && departmentsResult.data != null) {
-        departments = departmentsResult.data!.departments;
+      final result = await collectionRepository.getDepartments();
+      if (result is SuccessDataResult<DepartmentsModel> && result.data != null) {
+        departments = result.data!.departments;
         await collectionRepository.saveDepartmentsLocal(departments);
       }
     }
-    final localResult = await collectionRepository.getDepartmentsLocal();
-    if (localResult is SuccessDataResult<List<DepartmentModel>> && localResult.data != null) {
-      departments = localResult.data!;
+
+    if (!hasInternet) {
+      final localResult = await collectionRepository.getDepartmentsLocal();
+      if (localResult is SuccessDataResult<List<DepartmentModel>> && localResult.data != null) {
+        departments = localResult.data!;
+      }
     }
+
     emit(state.copyWith(
       isLoading: false,
       departmentList: departments,
