@@ -10,20 +10,12 @@ import 'package:metropolitan_museum/app/common/widgets/lottie_circular_progress.
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_state.dart';
 import 'package:metropolitan_museum/app/common/widgets/home_card_widget.dart';
-import 'package:metropolitan_museum/app/features/presentation/home/mixin/see_all_mixin.dart';
 
 @RoutePage()
-class HomeSeeAllView extends StatefulWidget {
+class HomeSeeAllView extends StatelessWidget {
   final bool isFamous;
+
   const HomeSeeAllView({super.key, required this.isFamous});
-
-  @override
-  State<HomeSeeAllView> createState() => _HomeSeeAllViewState();
-}
-
-class _HomeSeeAllViewState extends State<HomeSeeAllView> with SeeAllMixin<HomeSeeAllView> {
-  @override
-  bool get isFamous => widget.isFamous;
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +25,15 @@ class _HomeSeeAllViewState extends State<HomeSeeAllView> with SeeAllMixin<HomeSe
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Text(widget.isFamous ? "Famous Artworks" : "Current Exhibitions"),
+            title: Text(isFamous ? "Famous Artworks" : "Current Exhibitions"),
           ),
           body: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
-              final list = widget.isFamous ? state.famousArtworkList : state.currentList;
-              final totalItems = widget.isFamous ? state.famousTotal : state.currentTotal;
-              final totalPages = (totalItems / SeeAllMixin.itemsPerPage).ceil();
+              final list = isFamous ? state.famousArtworkList : state.currentList;
+              final totalItems = isFamous ? state.famousTotal : state.currentTotal;
+              final currentPage = isFamous ? state.famousCurrentPage : state.currentExhibitionsCurrentPage;
+              final totalPages = (totalItems / state.itemsPerPage).ceil();
+              final hasInternet = context.read<HomeCubit>().checkInternetControl();
 
               if (state.isLoading) {
                 return const LottieCircularProgress();
@@ -53,7 +47,13 @@ class _HomeSeeAllViewState extends State<HomeSeeAllView> with SeeAllMixin<HomeSe
                       Text(state.errorMessage ?? "Bu koleksiyon için veri bulunamadı."),
                       const Gap(10),
                       ElevatedButton(
-                        onPressed: () => fetchData(context),
+                        onPressed: () {
+                          context.read<HomeCubit>().fetchObjectList(
+                                query: isFamous ? "Famous%20Artworks" : "Current%20Exhibitions",
+                                isFamous: isFamous,
+                                page: currentPage,
+                              );
+                        },
                         child: const Text('Try Again'),
                       ),
                     ],
@@ -91,44 +91,49 @@ class _HomeSeeAllViewState extends State<HomeSeeAllView> with SeeAllMixin<HomeSe
                       ),
                     ),
                   ),
-                  if (hasInternet)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            onPressed: currentPage > 1 ? previousPage : null,
-                            child: Text(
-                              'Previous',
-                              style: TxStyleHelper.body.copyWith(
-                                color: currentPage > 1 ? AppColors.redValencia : Colors.grey,
-                                decoration: TextDecoration.underline,
-                                decorationColor: currentPage > 1 ? Colors.red : Colors.grey,
-                              ),
-                            ),
-                          ),
-                          Container(),
-                          hasInternet
-                              ? TextButton(
-                                  onPressed: () {
-                                    if (currentPage < totalPages) {
-                                      nextPage(totalItems);
-                                    }
-                                  },
-                                  child: Text(
-                                    'Next',
-                                    style: TxStyleHelper.body.copyWith(
-                                      color: currentPage < totalPages ? AppColors.redValencia : Colors.grey,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: currentPage < totalPages ? Colors.red : Colors.grey,
-                                    ),
+                  FutureBuilder<bool>(
+                    future: hasInternet,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData && snapshot.data == true) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                onPressed: currentPage > 1
+                                    ? () => context.read<HomeCubit>().previousPage(isFamous: isFamous)
+                                    : null,
+                                child: Text(
+                                  'Previous',
+                                  style: TxStyleHelper.body.copyWith(
+                                    color: currentPage > 1 ? AppColors.redValencia : Colors.grey,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: currentPage > 1 ? Colors.red : Colors.grey,
                                   ),
-                                )
-                              : const SizedBox(),
-                        ],
-                      ),
-                    ),
+                                ),
+                              ),
+                              Container(),
+                              TextButton(
+                                onPressed: currentPage < totalPages
+                                    ? () => context.read<HomeCubit>().nextPage(isFamous: isFamous)
+                                    : null,
+                                child: Text(
+                                  'Next',
+                                  style: TxStyleHelper.body.copyWith(
+                                    color: currentPage < totalPages ? AppColors.redValencia : Colors.grey,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: currentPage < totalPages ? Colors.red : Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      return const SizedBox();
+                    },
+                  ),
                 ],
               );
             },

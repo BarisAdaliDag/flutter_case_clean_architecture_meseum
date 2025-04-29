@@ -9,8 +9,11 @@ class HomeState extends Equatable {
   final ObjectsIdModel? currentObjectsIdModel;
   final List<ObjectModel> famousArtworkList;
   final List<ObjectModel> currentList;
-  final int famousTotal; // Yeni: Ünlü eserlerin toplam sayısı
-  final int currentTotal; // Yeni: Güncel sergilerin toplam sayısı
+  final int famousTotal;
+  final int currentTotal;
+  final int famousCurrentPage;
+  final int currentExhibitionsCurrentPage;
+  final int itemsPerPage;
 
   const HomeState({
     this.isLoading = false,
@@ -21,6 +24,9 @@ class HomeState extends Equatable {
     this.currentList = const [],
     this.famousTotal = 0,
     this.currentTotal = 0,
+    this.famousCurrentPage = 1,
+    this.currentExhibitionsCurrentPage = 1,
+    this.itemsPerPage = 20, // SeeAllMixin'den alındı
   });
 
   HomeState copyWith({
@@ -32,6 +38,9 @@ class HomeState extends Equatable {
     List<ObjectModel>? currentList,
     int? famousTotal,
     int? currentTotal,
+    int? famousCurrentPage,
+    int? currentExhibitionsCurrentPage,
+    int? itemsPerPage,
   }) {
     return HomeState(
       isLoading: isLoading ?? this.isLoading,
@@ -42,6 +51,9 @@ class HomeState extends Equatable {
       currentList: currentList ?? this.currentList,
       famousTotal: famousTotal ?? this.famousTotal,
       currentTotal: currentTotal ?? this.currentTotal,
+      famousCurrentPage: famousCurrentPage ?? this.famousCurrentPage,
+      currentExhibitionsCurrentPage: currentExhibitionsCurrentPage ?? this.currentExhibitionsCurrentPage,
+      itemsPerPage: itemsPerPage ?? this.itemsPerPage,
     );
   }
 
@@ -55,5 +67,8 @@ class HomeState extends Equatable {
         currentList,
         famousTotal,
         currentTotal,
+        famousCurrentPage,
+        currentExhibitionsCurrentPage,
+        itemsPerPage,
       ];
 }

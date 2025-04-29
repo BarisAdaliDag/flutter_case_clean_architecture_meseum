@@ -16,10 +16,20 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> fetchObjectList({
     required String query,
     required bool isFamous,
-    required int start,
-    required int end,
+    int? page, // Yeni: Belirli bir sayfa için veri çek
   }) async {
-    emit(state.copyWith(isLoading: true, errorMessage: null));
+    final currentPage =
+        page ?? (isFamous ? state.famousCurrentPage : state.currentExhibitionsCurrentPage); // Varsayılan: Mevcut sayfa
+    final start = (currentPage - 1) * state.itemsPerPage;
+    final end = currentPage * state.itemsPerPage;
+
+    emit(state.copyWith(
+      isLoading: true,
+      errorMessage: null,
+      famousCurrentPage: isFamous ? currentPage : state.famousCurrentPage,
+      currentExhibitionsCurrentPage: !isFamous ? currentPage : state.currentExhibitionsCurrentPage,
+    ));
+
     final bool hasInternet = await checkInternetControl();
     ObjectsIdModel? objectsIdModel;
     List<ObjectModel> details = isFamous ? List.from(state.famousArtworkList) : List.from(state.currentList);
@@ -46,6 +56,8 @@ class HomeCubit extends Cubit<HomeState> {
       currentList: !isFamous ? details : state.currentList,
       famousTotal: isFamous ? objectsIdModel.total : state.famousTotal,
       currentTotal: !isFamous ? objectsIdModel.total : state.currentTotal,
+      famousCurrentPage: isFamous ? currentPage : state.famousCurrentPage,
+      currentExhibitionsCurrentPage: !isFamous ? currentPage : state.currentExhibitionsCurrentPage,
       errorMessage: details.isEmpty ? 'Bu koleksiyon için obje bulunamadı.' : null,
     ));
   }
@@ -98,28 +110,55 @@ class HomeCubit extends Cubit<HomeState> {
     await fetchObjectList(
       query: "Current%20Exhibitions",
       isFamous: false,
-      start: 0,
-      end: 4,
+      page: 1,
     );
     await fetchObjectList(
       query: "Famous%20Artworks",
       isFamous: true,
-      start: 0,
-      end: 4,
+      page: 1,
     );
+  }
+
+  void nextPage({required bool isFamous}) {
+    final totalItems = isFamous ? state.famousTotal : state.currentTotal;
+    final totalPages = (totalItems / state.itemsPerPage).ceil();
+    final currentPage = isFamous ? state.famousCurrentPage : state.currentExhibitionsCurrentPage;
+
+    if (currentPage < totalPages) {
+      print('Navigating to next page: ${currentPage + 1} / $totalPages');
+      fetchObjectList(
+        query: isFamous ? "Famous%20Artworks" : "Current%20Exhibitions",
+        isFamous: isFamous,
+        page: currentPage + 1,
+      );
+    }
+  }
+
+  void previousPage({required bool isFamous}) {
+    final currentPage = isFamous ? state.famousCurrentPage : state.currentExhibitionsCurrentPage;
+    if (currentPage > 1) {
+      print('Navigating to previous page: ${currentPage - 1}');
+      fetchObjectList(
+        query: isFamous ? "Famous%20Artworks" : "Current%20Exhibitions",
+        isFamous: isFamous,
+        page: currentPage - 1,
+      );
+    }
   }
 
   resetCurrentlist() {
     emit(state.copyWith(
       currentList: [],
       currentTotal: 0,
+      currentExhibitionsCurrentPage: 1, // Sıfırlarken sayfa 1'e dönsün
     ));
   }
 
   resetfamouslist() {
     emit(state.copyWith(
       famousArtworkList: [],
-      currentTotal: 0,
+      famousTotal: 0,
+      famousCurrentPage: 1, // Sıfırlarken sayfa 1'e dönsün
     ));
   }
 }
