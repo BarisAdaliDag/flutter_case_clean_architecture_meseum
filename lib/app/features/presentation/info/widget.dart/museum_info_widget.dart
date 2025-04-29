@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
-import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 import 'package:metropolitan_museum/app/features/presentation/object_detail/widget/detail_item.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 

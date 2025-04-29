@@ -17,7 +17,6 @@ import 'package:metropolitan_museum/app/features/presentation/test/cubit/test_cu
 import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:metropolitan_museum/objectbox.g.dart';
-import 'package:objectbox/objectbox.dart';
 
 final getIt = GetIt.instance;
 

@@ -2,27 +2,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:lottie/lottie.dart';
-import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
-import 'package:metropolitan_museum/app/common/constants/app_image.dart';
-import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
-import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/common/widgets/logo_image.dart';
 import 'package:metropolitan_museum/app/common/widgets/lottie_circular_progress.dart';
-import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_cubit.dart';
-import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_state.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/widgets/current_exhibitions_list_view.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/widgets/famous_artwork_list_view.dart';
-import 'package:metropolitan_museum/app/features/presentation/home/widgets/home_listview_title.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/widgets/try_again_bottom_container.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../data/models/object_model.dart';
 import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
-import '../../../../common/widgets/home_card_widget.dart';
 import '../widgets/the_meat_header.dart';
 
 @RoutePage()

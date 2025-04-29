@@ -1,13 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:metropolitan_museum/app/common/constants/app_image.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/common/service/notification_service.dart';
 import 'package:metropolitan_museum/app/common/service/object_box_service.dart';
 import 'package:metropolitan_museum/app/common/widgets/logo_image.dart';
 import 'package:metropolitan_museum/app/features/data/models/departments_model.dart';
-import 'package:metropolitan_museum/app/features/presentation/test/cubit/test_cubit.dart';
-import 'package:metropolitan_museum/app/features/presentation/test/view/test_view.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
