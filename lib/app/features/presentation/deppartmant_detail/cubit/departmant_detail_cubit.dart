@@ -104,7 +104,7 @@ class DepartmentDetailCubit extends Cubit<DepartmentDetailState> {
 
     final departmentIdModel = objectsResult.data!;
     await collectionRepository.saveObjectsByDepartmentIdLocal(departmentIdModel);
-    print('Saved ObjectsIdModel for departmentId: $departmentId');
+    debugPrint('Saved ObjectsIdModel for departmentId: $departmentId');
 
     final objectIds = departmentIdModel.objectIDs.sublist(
       start,
@@ -154,7 +154,7 @@ class DepartmentDetailCubit extends Cubit<DepartmentDetailState> {
   void nextPage({required int departmentId}) {
     final totalPages = (state.totalItems / state.itemsPerPage).ceil();
     if (state.currentPage < totalPages) {
-      print('Navigating to next page: ${state.currentPage + 1} / $totalPages');
+      debugPrint('Navigating to next page: ${state.currentPage + 1} / $totalPages');
       loadListCollection(
         departmentId: departmentId,
         page: state.currentPage + 1,
@@ -164,7 +164,7 @@ class DepartmentDetailCubit extends Cubit<DepartmentDetailState> {
 
   void previousPage({required int departmentId}) {
     if (state.currentPage > 1) {
-      print('Navigating to previous page: ${state.currentPage - 1}');
+      debugPrint('Navigating to previous page: ${state.currentPage - 1}');
       loadListCollection(
         departmentId: departmentId,
         page: state.currentPage - 1,

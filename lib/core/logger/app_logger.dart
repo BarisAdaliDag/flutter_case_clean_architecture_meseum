@@ -16,7 +16,7 @@ final class AppLogger {
 
     if (kDebugMode) {
       // Print directly to screen in debug mode
-      print(logMessage);
+      debugPrint(logMessage);
       x.log(logMessage);
     } else {
       // Save to log file in Production mode

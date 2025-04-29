@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
@@ -108,7 +109,7 @@ Schedule a notification at a specified time (e.g., 11pm)
       //! time gunluk calisma ayari,baska ayarlarda var
       matchDateTimeComponents: DateTimeComponents.time,
     );
-    print("Notification Scaculed");
+    debugPrint("Notification Scaculed");
   }
 
 // CANCEL ALL NOTIFICATIONS

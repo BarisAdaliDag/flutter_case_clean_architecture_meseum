@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:metropolitan_museum/core/dio_manager/api_response_model.dart';
 import 'package:metropolitan_museum/core/dio_manager/dio_manager.dart';
 import 'package:metropolitan_museum/app/features/data/models/departments_model.dart';
@@ -42,7 +43,7 @@ final class CollectionRemoteDatasourceImpl implements CollectionRemoteDatasource
       final response = await _dioApiManager.get(
         '/objects?departmentIds=$departmentId',
         converter: (data) {
-          print('API Response for departmentId $departmentId: $data');
+          debugPrint('API Response for departmentId $departmentId: $data');
           return ObjectsIdModel.fromJson(data, departmentId: departmentId);
         },
       );

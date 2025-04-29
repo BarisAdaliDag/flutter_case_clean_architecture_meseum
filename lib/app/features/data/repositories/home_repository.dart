@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:metropolitan_museum/app/features/data/datasources/remote/home_remote_datasource.dart';
 import 'package:metropolitan_museum/app/features/data/models/objects_id_model.dart';
 import 'package:metropolitan_museum/app/features/data/models/object_model.dart';
@@ -67,7 +68,7 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<DataResult<ObjectsIdModel?>> getObjectsIdQueryLocal({required String query}) async {
     try {
       final objectsIdModel = await _localDatasource.getObjectsIdQuery(query: query);
-      print('Fetched local ObjectsIdModel for query: $query, Result: $objectsIdModel');
+      debugPrint('Fetched local ObjectsIdModel for query: $query, Result: $objectsIdModel');
       return SuccessDataResult(data: objectsIdModel, message: "$runtimeType getObjectsIdQueryLocal()");
     } catch (e) {
       AppLogger.instance.error("$runtimeType getObjectsIdQueryLocal() $e");
@@ -79,7 +80,7 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<DataResult<ObjectModel?>> getObjectDetailsLocal({required int objectId}) async {
     try {
       final objectDetail = await _localDatasource.getObjectDetails(objectId: objectId);
-      print('Fetched local ObjectModel for objectId: $objectId, Result: $objectDetail');
+      debugPrint('Fetched local ObjectModel for objectId: $objectId, Result: $objectDetail');
       return SuccessDataResult(data: objectDetail, message: "$runtimeType getObjectDetailsLocal()");
     } catch (e) {
       AppLogger.instance.error("$runtimeType getObjectDetailsLocal() $e");
@@ -90,13 +91,13 @@ class HomeRepositoryImpl implements HomeRepository {
   @override
   Future<void> saveObjectsIdQueryLocal(ObjectsIdModel objectsIdModel, String query) async {
     await _localDatasource.saveObjectsIdQuery(objectsIdModel, query);
-    print('Saved ObjectsIdModel for query: $query');
+    debugPrint('Saved ObjectsIdModel for query: $query');
   }
 
   @override
   Future<void> saveObjectDetailsLocal(ObjectModel objectModel) async {
     await _localDatasource.saveObjectDetails(objectModel);
-    print('Saved ObjectModel for objectId: ${objectModel.objectID}');
+    debugPrint('Saved ObjectModel for objectId: ${objectModel.objectID}');
   }
 
   @override

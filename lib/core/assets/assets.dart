@@ -8,13 +8,11 @@ class Assets {
   Assets._();
   final Assets instance = Assets._();
 
-  Image image(String assetPath,
-      {double? width, double? height, BoxFit fit = BoxFit.cover}) {
+  Image image(String assetPath, {double? width, double? height, BoxFit fit = BoxFit.cover}) {
     return Image.asset(assetPath, width: width, height: height, fit: fit);
   }
 
-  Widget svgIcon(String assetPath,
-      {double width = 24, double height = 24, Color? color}) {
+  Widget svgIcon(String assetPath, {double width = 24, double height = 24, Color? color}) {
     return SvgPicture.asset(assetPath,
         width: width,
         height: height,

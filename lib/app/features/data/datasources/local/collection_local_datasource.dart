@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:metropolitan_museum/app/common/service/object_box_service.dart';
 import 'package:metropolitan_museum/app/features/data/models/departments_model.dart';
 import 'package:metropolitan_museum/app/features/data/models/objects_id_model.dart';
@@ -43,7 +44,7 @@ class CollectionLocalDatasourceImpl implements CollectionLocalDatasource {
 
   @override
   Future<void> saveObjectsByDepartmentId(ObjectsIdModel departmentIdModel) async {
-    print('Saving ObjectsIdModel for departmentId: ${departmentIdModel.departmentId}');
+    debugPrint('Saving ObjectsIdModel for departmentId: ${departmentIdModel.departmentId}');
     final existing =
         _departmentIdBox.query(ObjectsIdModel_.departmentId.equals(departmentIdModel.departmentId)).build().findFirst();
     if (existing != null) {

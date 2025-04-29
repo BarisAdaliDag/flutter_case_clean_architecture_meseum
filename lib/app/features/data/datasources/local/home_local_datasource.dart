@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:metropolitan_museum/app/common/service/object_box_service.dart';
 import 'package:metropolitan_museum/app/features/data/models/objects_id_model.dart';
 import 'package:metropolitan_museum/app/features/data/models/object_model.dart';
@@ -31,13 +32,13 @@ class HomeLocalDatasourceImpl implements HomeLocalDatasource {
     }
     objectsIdModel.query = query; // Query alanını set et
     _objectsIdBox.put(objectsIdModel);
-    print('Saved ObjectsIdModel for query: $query');
+    debugPrint('Saved ObjectsIdModel for query: $query');
   }
 
   @override
   Future<ObjectsIdModel?> getObjectsIdQuery({required String query}) async {
     final result = _objectsIdBox.query(ObjectsIdModel_.query.equals(query)).build().findFirst();
-    print('Local ObjectsIdModel for query $query: $result');
+    debugPrint('Local ObjectsIdModel for query $query: $result');
     return result;
   }
 
@@ -48,26 +49,26 @@ class HomeLocalDatasourceImpl implements HomeLocalDatasource {
       objectModel.id = existing.id; // Var olan ID'yi koru
     }
     _objectBox.put(objectModel);
-    print('Saved ObjectModel for objectId: ${objectModel.objectID}');
+    debugPrint('Saved ObjectModel for objectId: ${objectModel.objectID}');
   }
 
   @override
   Future<ObjectModel?> getObjectDetails({required int objectId}) async {
     final result = _objectBox.query(ObjectModel_.objectID.equals(objectId)).build().findFirst();
-    print('Local ObjectModel for objectId $objectId: $result');
+    debugPrint('Local ObjectModel for objectId $objectId: $result');
     return result;
   }
 
   @override
   Future<void> debugPrintAllObjectsId() async {
     final allObjects = _objectsIdBox.getAll();
-    print('All ObjectsIdModel in database: $allObjects');
+    debugPrint('All ObjectsIdModel in database: $allObjects');
   }
 
   @override
   Future<void> clearAllData() async {
     _objectsIdBox.removeAll();
     _objectBox.removeAll();
-    print('Cleared all local data for Home');
+    debugPrint('Cleared all local data for Home');
   }
 }

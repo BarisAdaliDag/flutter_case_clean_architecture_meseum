@@ -1,4 +1,4 @@
-
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metropolitan_museum/app/features/data/repositories/home_repository.dart';
 import 'package:metropolitan_museum/app/features/data/models/objects_id_model.dart';
@@ -105,7 +105,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> fetchHomeData() async {
-    print('Fetching home data');
+    debugPrint('Fetching home data');
     await fetchObjectList(
       query: "Current%20Exhibitions",
       isFamous: false,
@@ -124,7 +124,7 @@ class HomeCubit extends Cubit<HomeState> {
     final currentPage = isFamous ? state.famousCurrentPage : state.currentExhibitionsCurrentPage;
 
     if (currentPage < totalPages) {
-      print('Navigating to next page: ${currentPage + 1} / $totalPages');
+      debugPrint('Navigating to next page: ${currentPage + 1} / $totalPages');
       fetchObjectList(
         query: isFamous ? "Famous%20Artworks" : "Current%20Exhibitions",
         isFamous: isFamous,
@@ -136,7 +136,7 @@ class HomeCubit extends Cubit<HomeState> {
   void previousPage({required bool isFamous}) {
     final currentPage = isFamous ? state.famousCurrentPage : state.currentExhibitionsCurrentPage;
     if (currentPage > 1) {
-      print('Navigating to previous page: ${currentPage - 1}');
+      debugPrint('Navigating to previous page: ${currentPage - 1}');
       fetchObjectList(
         query: isFamous ? "Famous%20Artworks" : "Current%20Exhibitions",
         isFamous: isFamous,
