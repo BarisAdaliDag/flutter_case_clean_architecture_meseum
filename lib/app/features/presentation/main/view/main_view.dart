@@ -11,6 +11,8 @@ import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart'
 import 'package:metropolitan_museum/app/features/presentation/main/cubit/main_cubit.dart';
 import 'package:metropolitan_museum/core/network_control/network_control.dart';
 
+import '../../../../common/constants/app_strings.dart';
+
 @RoutePage()
 
 /// Main View Page
@@ -47,7 +49,7 @@ class _MainViewState extends State<MainView> {
                           color: AppColors.redValencia,
                           child: const Center(
                             child: Text(
-                              "No Internet Connection",
+                              AppStrings.noDataConnection,
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -150,7 +152,7 @@ class _MainViewState extends State<MainView> {
                               height: iconSize,
                             ),
                             Text(
-                              "Home",
+                              AppStrings.home,
                               style: TxStyleHelper.body.copyWith(
                                 color: activeIndex == 0 ? AppColors.redValencia : Colors.grey,
                               ),
@@ -174,7 +176,7 @@ class _MainViewState extends State<MainView> {
                             //
                             //   onPressed: () => tabsRouter.setActiveIndex(0),
                             Text(
-                              "Info",
+                              AppStrings.info,
                               style: TxStyleHelper.body.copyWith(
                                 color: activeIndex == 2 ? AppColors.redValencia : Colors.grey,
                               ),
@@ -190,4 +192,3 @@ class _MainViewState extends State<MainView> {
           );
   }
 }
-//

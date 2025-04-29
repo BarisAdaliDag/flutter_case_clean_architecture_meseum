@@ -28,4 +28,7 @@ final class AppStrings {
   static const String next = "Next";
   static const String welcomeToTheMet = 'Welcome\nto The Met';
   static const String exploreCollection = 'Explore Collection';
+  static const String home = "Home";
+  static const String info = "Info";
+  static const String noDataConnection = "No Internet Connection";
 }
