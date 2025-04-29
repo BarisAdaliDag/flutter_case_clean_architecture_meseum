@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
+// ignore: must_be_immutable
 class ObjectsIdModel extends Equatable {
   @Id()
   int id = 0;

@@ -3,6 +3,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:metropolitan_museum/app/common/constants/app_strings.dart';
+import 'package:metropolitan_museum/app/common/widgets/page_transactions_text_button.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
@@ -74,7 +76,7 @@ class DepartmentDetailView extends StatelessWidget {
                             ),
                           ),
                           const Gap(10),
-                          Text(state.error.isNotEmpty ? state.error : 'Bu departman için obje bulunamadı.'),
+                          Text(state.error.isNotEmpty ? state.error : AppStrings.noData),
                           const Gap(10),
                           ElevatedButton(
                             onPressed: () {
@@ -83,7 +85,7 @@ class DepartmentDetailView extends StatelessWidget {
                                     page: state.currentPage,
                                   );
                             },
-                            child: const Text('Try Again'),
+                            child: const Text(AppStrings.tryAgain),
                           ),
                         ],
                       ),
@@ -139,7 +141,7 @@ class DepartmentDetailView extends StatelessWidget {
                                     ? () =>
                                         context.read<DepartmentDetailCubit>().previousPage(departmentId: departmentId)
                                     : () {},
-                                text: "Previous",
+                                text: AppStrings.previous,
                                 isButtonEnabled: state.currentPage > 1,
                               ),
                               Container(),
@@ -147,7 +149,7 @@ class DepartmentDetailView extends StatelessWidget {
                                 onPressed: state.currentPage < totalPages
                                     ? () => context.read<DepartmentDetailCubit>().nextPage(departmentId: departmentId)
                                     : () {},
-                                text: "Next",
+                                text: AppStrings.next,
                                 isButtonEnabled: state.currentPage < totalPages,
                               ),
                             ],
@@ -161,34 +163,6 @@ class DepartmentDetailView extends StatelessWidget {
               ),
             );
           },
-        ),
-      ),
-    );
-  }
-}
-
-class PageTransActionTextButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-  final bool isButtonEnabled;
-
-  const PageTransActionTextButton({
-    super.key,
-    required this.onPressed,
-    required this.text,
-    required this.isButtonEnabled,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      child: Text(
-        text,
-        style: TxStyleHelper.body.copyWith(
-          color: isButtonEnabled ? AppColors.redValencia : Colors.grey,
-          decoration: TextDecoration.underline,
-          decorationColor: isButtonEnabled ? Colors.red : Colors.grey,
         ),
       ),
     );

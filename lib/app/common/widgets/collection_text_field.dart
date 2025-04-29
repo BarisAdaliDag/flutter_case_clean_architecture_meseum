@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
-import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_cubit.dart';
+import 'package:metropolitan_museum/app/common/constants/app_strings.dart';
 
 class CollectionTextField extends StatefulWidget {
   const CollectionTextField({
@@ -41,7 +41,7 @@ class _CollectionTextFieldState extends State<CollectionTextField> {
       focusNode: _focusNode, // FocusNode'u TextField'a bağlıyoruz
       controller: widget.controller,
       decoration: InputDecoration(
-        hintText: "Search",
+        hintText: AppStrings.search,
         hintStyle: TextStyle(
           color: _isFocused
               ? Theme.of(context).brightness == Brightness.dark

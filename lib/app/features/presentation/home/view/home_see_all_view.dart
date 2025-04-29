@@ -4,9 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
+import 'package:metropolitan_museum/app/common/constants/app_strings.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
+import 'package:metropolitan_museum/app/common/widgets/home_header_button.dart';
 import 'package:metropolitan_museum/app/common/widgets/lottie_circular_progress.dart';
+import 'package:metropolitan_museum/app/common/widgets/page_transactions_text_button.dart';
+import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/view/department_detail_view.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_state.dart';
 import 'package:metropolitan_museum/app/common/widgets/home_card_widget.dart';
@@ -25,7 +29,7 @@ class HomeSeeAllView extends StatelessWidget {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: Text(isFamous ? "Famous Artworks" : "Current Exhibitions"),
+            title: Text(isFamous ? AppStrings.famaousArtworks : AppStrings.currentExhibitions),
           ),
           body: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
@@ -44,18 +48,17 @@ class HomeSeeAllView extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(state.errorMessage ?? "Bu koleksiyon için veri bulunamadı."),
+                      Text(state.errorMessage ?? AppStrings.noData),
                       const Gap(10),
-                      ElevatedButton(
-                        onPressed: () {
-                          context.read<HomeCubit>().fetchObjectList(
-                                query: isFamous ? "Famous%20Artworks" : "Current%20Exhibitions",
-                                isFamous: isFamous,
-                                page: currentPage,
-                              );
-                        },
-                        child: const Text('Try Again'),
-                      ),
+                      HomeHeaderButton(
+                          ontap: () {
+                            context.read<HomeCubit>().fetchObjectList(
+                                  query: isFamous ? "Famous%20Artworks" : "Current%20Exhibitions",
+                                  isFamous: isFamous,
+                                  page: currentPage,
+                                );
+                          },
+                          title: AppStrings.tryAgain)
                     ],
                   ),
                 );
@@ -100,32 +103,20 @@ class HomeSeeAllView extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              TextButton(
+                              PageTransActionTextButton(
                                 onPressed: currentPage > 1
                                     ? () => context.read<HomeCubit>().previousPage(isFamous: isFamous)
-                                    : null,
-                                child: Text(
-                                  'Previous',
-                                  style: TxStyleHelper.body.copyWith(
-                                    color: currentPage > 1 ? AppColors.redValencia : Colors.grey,
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: currentPage > 1 ? Colors.red : Colors.grey,
-                                  ),
-                                ),
+                                    : () {},
+                                text: AppStrings.previous,
+                                isButtonEnabled: currentPage > 1,
                               ),
                               Container(),
-                              TextButton(
-                                onPressed: currentPage < totalPages
+                              PageTransActionTextButton(
+                                onPressed: currentPage > 1
                                     ? () => context.read<HomeCubit>().nextPage(isFamous: isFamous)
-                                    : null,
-                                child: Text(
-                                  'Next',
-                                  style: TxStyleHelper.body.copyWith(
-                                    color: currentPage < totalPages ? AppColors.redValencia : Colors.grey,
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: currentPage < totalPages ? Colors.red : Colors.grey,
-                                  ),
-                                ),
+                                    : () {},
+                                text: AppStrings.next,
+                                isButtonEnabled: currentPage > 1,
                               ),
                             ],
                           ),

@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:metropolitan_museum/app/common/constants/app_image.dart';
+import 'package:metropolitan_museum/app/common/constants/app_strings.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/common/widgets/lottie_circular_progress.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/cubit/collection_cubit.dart';
@@ -11,10 +11,6 @@ import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/widget/collection_card.dart';
 import 'package:metropolitan_museum/app/features/presentation/collection/widget/collection_header.dart';
 import 'package:metropolitan_museum/app/common/widgets/collection_text_field.dart';
-import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/cubit/departmant_detail_cubit.dart';
-import 'package:metropolitan_museum/app/features/presentation/deppartmant_detail/view/department_detail_view.dart';
-import 'package:metropolitan_museum/app/features/presentation/home/widgets/home_listview_title.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 @RoutePage()
 final class CollectionView extends StatefulWidget {
@@ -40,7 +36,7 @@ class _CollectionViewState extends State<CollectionView> {
       child: Scaffold(
         appBar: AppBar(
           // automaticallyImplyLeading: false,
-          title: const Text("The Met Collection"),
+          title: const Text(AppStrings.theMetCollection),
         ),
         body: SafeArea(
           child: BlocBuilder<CollectionCubit, CollectionState>(

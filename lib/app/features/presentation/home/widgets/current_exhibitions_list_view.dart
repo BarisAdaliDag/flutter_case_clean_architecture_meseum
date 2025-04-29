@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:metropolitan_museum/app/common/constants/app_strings.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
 import 'package:metropolitan_museum/app/common/widgets/home_card_widget.dart';
 import 'package:metropolitan_museum/app/features/data/models/object_model.dart';
@@ -20,7 +21,7 @@ class CurrentExxhibitionsListView extends StatelessWidget {
           onTap: () {
             context.router.push(HomeSeeAllRoute(isFamous: false));
           },
-          title: "Current Exhibitions",
+          title: AppStrings.currentExhibitions,
         ),
         const Gap(10),
         SizedBox(

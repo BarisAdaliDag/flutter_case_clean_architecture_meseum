@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
+import 'package:metropolitan_museum/app/common/constants/app_strings.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 import 'package:metropolitan_museum/app/common/get_it/get_it.dart';
 import 'package:metropolitan_museum/app/features/presentation/home/cubit/home_cubit.dart';
@@ -24,7 +25,7 @@ class TryAgainButtonContainer extends StatelessWidget {
               getIt<HomeCubit>().fetchHomeData();
             },
             child: Text(
-              'Try Again',
+              AppStrings.tryAgain,
               style: TxStyleHelper.body.copyWith(
                 color: AppColors.redValencia,
                 decoration: TextDecoration.underline,

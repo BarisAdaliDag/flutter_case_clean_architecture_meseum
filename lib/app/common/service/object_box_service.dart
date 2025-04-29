@@ -1,12 +1,9 @@
-import 'package:objectbox/objectbox.dart';
+import 'package:flutter/material.dart';
+
 import '../../../objectbox.g.dart';
 import '../../features/data/models/object_model.dart';
 import '../../features/data/models/objects_id_model.dart';
-
 import 'package:metropolitan_museum/app/features/data/models/departments_model.dart';
-import 'package:metropolitan_museum/app/features/data/models/objects_id_model.dart';
-import 'package:metropolitan_museum/app/features/data/models/object_model.dart';
-import 'package:objectbox/objectbox.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ObjectBoxService {
@@ -22,7 +19,7 @@ class ObjectBoxService {
   }
 
   static Future<ObjectBoxService> create() async {
-    print('ObjectBoxService.create called');
+    debugPrint('ObjectBoxService.create called');
     final dir = await getApplicationDocumentsDirectory();
     final store = await openStore(directory: '${dir.path}/objectbox');
     return ObjectBoxService._create(store);

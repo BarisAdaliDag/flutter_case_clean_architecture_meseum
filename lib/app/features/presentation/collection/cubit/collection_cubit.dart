@@ -3,16 +3,6 @@ import 'package:metropolitan_museum/core/network_control/network_control.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metropolitan_museum/app/features/data/repositories/collection_repository.dart';
 import 'package:metropolitan_museum/app/features/data/models/departments_model.dart';
-import 'package:metropolitan_museum/app/features/data/models/objects_id_model.dart';
-import 'package:metropolitan_museum/app/features/data/models/object_model.dart';
-import 'package:metropolitan_museum/core/result/result.dart';
-import 'collection_state.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:metropolitan_museum/core/network_control/network_control.dart';
-import 'package:metropolitan_museum/app/features/data/repositories/collection_repository.dart';
-import 'package:metropolitan_museum/app/features/data/models/departments_model.dart';
 import 'package:metropolitan_museum/core/result/result.dart';
 import 'collection_state.dart';
 

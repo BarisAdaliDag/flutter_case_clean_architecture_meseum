@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:metropolitan_museum/app/common/constants/app_image.dart';
+import 'package:metropolitan_museum/app/common/constants/app_strings.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -28,7 +29,7 @@ class CollectionHeader extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 textAlign: TextAlign.center,
-                'Travel around the\nworld and across \n5,000 years of history \nthrough 490,000+\nworks of art.',
+                AppStrings.travelAroundWorld,
                 style: TxStyleHelper.heading3.copyWith(
                   color: AppColors.white,
                   fontSize: 23.sp,

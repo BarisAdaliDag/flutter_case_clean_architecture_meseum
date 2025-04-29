@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -44,9 +42,7 @@ class HomeCard extends StatelessWidget {
                   : Container(
                       width: imageWidth,
                       height: imageHeight,
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? AppColors.iconInactiveDark
-                          : AppColors.iconInactiveDark,
+                      color: AppColors.iconInactiveDark,
                       child: const Icon(Icons.image_not_supported)),
             ),
             Padding(

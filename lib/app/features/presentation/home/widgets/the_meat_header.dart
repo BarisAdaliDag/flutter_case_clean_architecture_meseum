@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:metropolitan_museum/app/common/router/app_router.dart';
+import 'package:metropolitan_museum/app/common/widgets/home_header_button.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
@@ -43,37 +44,12 @@ class TheMetHeader extends StatelessWidget {
                   ontap: () {
                     context.tabsRouter.setActiveIndex(1);
                   },
+                  title: "'Explore Collection'",
                 )
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class HomeHeaderButton extends StatelessWidget {
-  final VoidCallback ontap;
-  const HomeHeaderButton({
-    super.key,
-    required this.ontap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.redValencia,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // <- köşe yuvarlaklığı burada
-        ),
-      ),
-      onPressed: ontap,
-      child: Text(
-        'Explore Collection',
-        style: TxStyleHelper.body.copyWith(color: AppColors.white),
       ),
     );
   }

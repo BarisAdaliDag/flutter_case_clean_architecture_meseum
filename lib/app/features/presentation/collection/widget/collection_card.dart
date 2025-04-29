@@ -1,12 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 import 'package:metropolitan_museum/app/common/constants/app_colors.dart';
 import 'package:metropolitan_museum/app/common/constants/app_constants.dart';
 import 'package:metropolitan_museum/app/common/constants/text_style_helper.dart';
-import 'package:metropolitan_museum/app/features/presentation/home/view/home_view.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CollectionCard extends StatelessWidget {

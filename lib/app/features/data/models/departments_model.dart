@@ -1,7 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:equatable/equatable.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
+// ignore: must_be_immutable
 class DepartmentsModel extends Equatable {
   @Id()
   int id = 0;
