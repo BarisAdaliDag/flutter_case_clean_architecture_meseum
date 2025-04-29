@@ -26,4 +26,6 @@ final class AppStrings {
   static const String empty = "";
   static const String previous = "Previous";
   static const String next = "Next";
+  static const String welcomeToTheMet = 'Welcome\nto The Met';
+  static const String exploreCollection = 'Explore Collection';
 }

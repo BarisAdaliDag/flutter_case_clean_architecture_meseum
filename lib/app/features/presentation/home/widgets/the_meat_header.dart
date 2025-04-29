@@ -2,6 +2,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:metropolitan_museum/app/common/constants/app_strings.dart';
 import 'package:metropolitan_museum/app/common/widgets/home_header_button.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -35,14 +36,14 @@ class TheMetHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Welcome\nto The Met',
+                Text(AppStrings.welcomeToTheMet,
                     style: TxStyleHelper.heading3.copyWith(color: AppColors.white, fontSize: (25.0).sp)),
                 const Gap(10),
                 HomeHeaderButton(
                   ontap: () {
                     context.tabsRouter.setActiveIndex(1);
                   },
-                  title: "'Explore Collection'",
+                  title: AppStrings.exploreCollection,
                 )
               ],
             ),
